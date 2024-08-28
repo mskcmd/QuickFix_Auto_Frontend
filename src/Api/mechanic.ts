@@ -233,7 +233,7 @@ export const fetchUsers = async (mechanicId: string) => {
 
 export const statusUpdate = async (bookingId: string, newStatus: string) => {
     try {
-        console.log(`Changing status for user 2  ${bookingId} to ${newStatus}`);
+        console.log(`Changing status for user 2ff  ${bookingId} to ${newStatus}`);
         const result = await Api.put(mechanicRoute.statusChange, { params: { Id: bookingId, Status: newStatus } });
         return result;
     } catch (error) {

@@ -8,7 +8,7 @@ function MechanicHome() {
     <div className="min-w-screen bg-gray-50">
       <Header />
       <Navigation />
-      <main className="container mx-auto mt-8 px-4">
+      <main className="container mx-auto mt-8 px-4 ">
       <Outlet/>
       </main>
     </div>

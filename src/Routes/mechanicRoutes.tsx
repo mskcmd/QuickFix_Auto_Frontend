@@ -17,6 +17,9 @@ import ChatPage from "../Pages/mechanic/ChatPage.tsx";
 import NotificationPage from "../Pages/mechanic/NotificationPage.tsx";
 import Customers from "../Components/Mechanic/Customers.tsx";
 import Bookings from "../Components/Mechanic/Bookings.tsx";
+import Service from "../Components/Mechanic/Service.tsx";
+import BlogMech from "../Components/Mechanic/BlogMech.tsx";
+import Payments from "../Components/Mechanic/Payments.tsx";
 
 function mechanicRoutes() {
   return (
@@ -42,7 +45,9 @@ function mechanicRoutes() {
           <Route path="dashbord" element={<Dashboard />} />
           <Route path="customers" element={<Customers />} />
           <Route path="bookings" element={<Bookings />} />
-
+          <Route path="service" element={<Service />} />
+          <Route path="blog" element={<BlogMech />} />
+          <Route path="payments" element={<Payments />} />
         </Route>
       </Route>
     </Routes>

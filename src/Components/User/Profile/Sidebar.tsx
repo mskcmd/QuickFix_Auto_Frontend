@@ -6,6 +6,7 @@ import { logout } from "../../../Api/user";
 import { userLogout } from "../../../app/slice/AuthSlice";
 import toast from "react-hot-toast";
 import { useDispatch } from "react-redux";
+import { useAppSelector } from "../../../app/store";
 
 interface SidebarProps {
   isOpen: boolean;
@@ -16,6 +17,8 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
   const location = useLocation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const userData = useAppSelector((state) => state.auth.userData);
+
   const activeTab = location.pathname.split("/").pop() || "profile";
   const handleLogout = () => {
     Swal.fire({
@@ -61,7 +64,15 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
         </button>
         <div className="flex flex-col items-center">
           <div className="bg-gray-100 rounded-full h-24 w-24 flex items-center justify-center mb-4">
-            <FaUserCircle className="text-gray-400 text-4xl" />
+            {userData?.data.imageUrl ? (
+              <img
+                src={userData.data.imageUrl}
+                alt="Profile"
+                className="h-full w-full rounded-full object-cover"
+              />
+            ) : (
+              <FaUserCircle className="text-white text-7xl" />
+            )}{" "}
           </div>
           <h2 className="text-lg font-semibold text-gray-800">SUHAIL K</h2>
         </div>

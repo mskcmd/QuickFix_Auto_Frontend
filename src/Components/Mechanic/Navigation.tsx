@@ -43,7 +43,7 @@ const Navigation: React.FC = () => {
               </Link>
             </li>
             <li className="relative group">
-              <Link to="/mechanic/service" className="block px-4 py-3 transition duration-300 ease-in-out text-blue-100 hover:text-white">
+              <Link to="/mechanic/home/service" className="block px-4 py-3 transition duration-300 ease-in-out text-blue-100 hover:text-white">
                 Service
                 <span className="absolute bottom-0 left-0 w-full h-1 bg-white transform transition-transform duration-300 ease-in-out scale-x-0 group-hover:scale-x-100"></span>
               </Link>
@@ -55,13 +55,13 @@ const Navigation: React.FC = () => {
               </Link>
             </li>
             <li className="relative group">
-              <Link to="/mechanic/payments" className="block px-4 py-3 transition duration-300 ease-in-out text-blue-100 hover:text-white">
+              <Link to="/mechanic/home/payments" className="block px-4 py-3 transition duration-300 ease-in-out text-blue-100 hover:text-white">
                 Payments
                 <span className="absolute bottom-0 left-0 w-full h-1 bg-white transform transition-transform duration-300 ease-in-out scale-x-0 group-hover:scale-x-100"></span>
               </Link>
             </li>
             <li className="relative group">
-              <Link to="/mechanic/blog" className="block px-4 py-3 transition duration-300 ease-in-out text-blue-100 hover:text-white">
+              <Link to="/mechanic/home/blog" className="block px-4 py-3 transition duration-300 ease-in-out text-blue-100 hover:text-white">
                 Blog
                 <span className="absolute bottom-0 left-0 w-full h-1 bg-white transform transition-transform duration-300 ease-in-out scale-x-0 group-hover:scale-x-100"></span>
               </Link>
