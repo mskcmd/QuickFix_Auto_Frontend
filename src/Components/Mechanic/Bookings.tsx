@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useAppSelector } from "../../app/store";
 import { fetchUsers, statusUpdate } from "../../Api/mechanic";
-import Search from "./miscellaneous/Search";
-import Table from "./miscellaneous/Table";
-import SelectedUser from "./miscellaneous/SelectedUser";
+import Search from "./miscellaneous/Booking/Search";
+import Table from "./miscellaneous/Booking/Table";
+import SelectedUser from "./miscellaneous/Booking/SelectedUser";
 import { User } from "../Type/MType";
 
 const Customers: React.FC = () => {
@@ -18,6 +18,8 @@ const Customers: React.FC = () => {
       if (mechanicData?.mechnicId) {
         try {
           const result = await fetchUsers(mechanicData.mechnicId);
+          console.log("haii",result.data);
+
           setUsers(result.data);
         } catch (error) {
           console.error("Failed to fetch mechanic data:", error);

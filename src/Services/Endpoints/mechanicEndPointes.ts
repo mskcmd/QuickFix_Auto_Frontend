@@ -13,8 +13,12 @@ const mechanicRoute={
     getData:"/mechanic/getData",
     getMcechData:"/mechanic/getmechData",
     fetchUsers:"/mechanic/users",
-    statusChange:"/mechanic/statusUpdate"
+    statusChange:"/mechanic/statusUpdate",
+    addService:"/mechanic/addService",
+    fetchService:"/mechanic/fetchService",
 
+
+    
 }
 
 export default mechanicRoute

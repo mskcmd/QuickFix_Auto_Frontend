@@ -241,3 +241,37 @@ export const statusUpdate = async (bookingId: string, newStatus: string) => {
         throw error;
     }
 };
+
+export const addService = async (name: string, details: string, price: string, imageFile: File, id: string) => {
+    try {
+        const formData = new FormData();
+        formData.append('id', id);
+        formData.append('image', imageFile);
+        formData.append('name', name);
+        formData.append('details', details);
+        formData.append('price', price.toString());
+
+        console.log(formData);
+
+        const uploadResponse = await Api.post(mechanicRoute.addService, formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data',
+            },
+        });
+
+        console.log('Service added successfully', uploadResponse.data);
+        return uploadResponse.data
+    } catch (error) {
+        console.error('Error adding service:', error);
+    }
+};
+
+export const fetchService = async (id: string) => {
+    try {        
+        const result = await Api.get(mechanicRoute.fetchService, { params: { id } });        
+        return result.data;
+    } catch (error) {
+        console.error("Error in fetchService:", error);
+        throw error; // Re-throw the error if you want the calling function to handle it
+    }
+};

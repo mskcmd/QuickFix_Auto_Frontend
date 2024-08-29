@@ -1,7 +1,7 @@
 import React from "react";
 import { FaMapMarkerAlt, FaEye, FaUser } from "react-icons/fa";
 import dayjs from "dayjs";
-import { User } from "../../Type/MType";
+import { User } from "../../../Type/MType";
 import {
   Dropdown,
   DropdownTrigger,
@@ -9,6 +9,7 @@ import {
   DropdownItem,
   Button,
 } from "@nextui-org/react";
+import { ChevronUpDownIcon } from "@heroicons/react/24/outline";
 
 const items = [
   {
@@ -73,7 +74,15 @@ const TableBody: React.FC<TableBodyProps> = ({
           <td className="px-6 py-4 whitespace-nowrap">
             <div className="flex items-center">
               <div className="flex-shrink-0 h-10 w-10">
-                <FaUser className="h-10 w-10 rounded-full text-gray-400" />
+                {user.user.imageUrl ? (
+                  <img
+                    src={user.user.imageUrl}
+                    alt="Profile"
+                    className="h-full w-full rounded-full object-cover"
+                  />
+                ) : (
+                  <FaUser className="h-10 w-10 rounded-full text-gray-400" />
+                )}
               </div>
               <div className="ml-4">
                 <div className="text-sm font-medium text-gray-900">
@@ -105,6 +114,7 @@ const TableBody: React.FC<TableBodyProps> = ({
                   variant="bordered"
                 >
                   {user.status}
+                  <ChevronUpDownIcon className="w-5 h-5 ml-2" />
                 </Button>
               </DropdownTrigger>
               <DropdownMenu aria-label="Dynamic Actions" items={items}>

@@ -1,5 +1,5 @@
 import React from "react";
-import { User } from "../../Type/MType";
+import { User } from "../../../Type/MType";
 import dayjs from "dayjs";
 
 interface SelectedUserProps {

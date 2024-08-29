@@ -1,7 +1,7 @@
 import React from "react";
 import TableBody from "./TableBody";
 import TableHeading from "./TableHeading ";
-import { User } from "../../Type/MType";
+import { User } from "../../../Type/MType";
 
 interface TableProps {
   users: User[];
