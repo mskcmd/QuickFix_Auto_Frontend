@@ -12,7 +12,9 @@ const userRoutes={
 
     booking:"/user/booking",
     fetchBookData:"/user/fetchBookData",
-    updateProfle:"/user/updateProfle"
+    updateProfle:"/user/updateProfle",
+
+    allchat:"/user/chat/allUsers"
 
 
 

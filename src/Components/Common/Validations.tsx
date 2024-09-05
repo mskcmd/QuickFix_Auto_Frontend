@@ -74,3 +74,17 @@ export const updateProfileValidation  =  Yup.object({
     .matches(/^[0-9]+$/, "Phone number is not valid"),
 })
 
+
+
+export const generateNewBillSchema = Yup.object().shape({
+  userId: Yup.string().required("User ID is required"),
+  name: Yup.string().required("Customer name is required"),
+  vehicleNumber: Yup.string().required("Vehicle number is required"),
+  services: Yup.array().of(
+    Yup.object().shape({
+      name: Yup.string().required("Service name is required"),
+      price: Yup.number().min(0, "Price must be non-negative").required("Price is required"),
+    })
+  ).min(1, "At least one service is required"),
+  mechId: Yup.string().required("Mechanic ID is required"),
+});

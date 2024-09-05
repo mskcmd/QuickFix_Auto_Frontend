@@ -93,7 +93,7 @@ const ChatInterface: React.FC = () => {
               </div>
             </li>
           ))}
-        </ul>
+        </ul> 
       </div>
 
       {/* Chat Area */}

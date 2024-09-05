@@ -43,7 +43,7 @@ function Header() {
     setIsDropdownOpen(!isDropdownOpen);
   };
 
-    const handleLogout = () => {
+  const handleLogout = () => {
     Swal.fire({
       title: "Are you sure you want to logout?",
       icon: "warning",
@@ -159,7 +159,12 @@ function Header() {
         </nav>
 
         <div className="flex items-center space-x-3">
-          <NavButton icon={FaComments} />
+          <NavLink
+            to="/chatInterface"
+            icon={FaComments}
+            children={undefined}
+          ></NavLink>
+
           {userData ? (
             <NavLink to="/profiler" icon={FaUser}>
               {" "}

@@ -18,6 +18,7 @@ import Bookings from "../Components/User/Profile/Bookings";
 import Payment from "../Components/User/Profile/Payment";
 import Privacy from "../Components/User/Profile/Privacy";
 import ProfileEditContent from "../Components/User/miscellaneous/ProfileEdit";
+import ChatPage from "../Pages/user/ChatPage";
 
 function UserRoutes() {
   return (
@@ -45,6 +46,8 @@ function UserRoutes() {
           <Route path="editProfile" element={<ProfileEditContent />} />
         </Route>
         <Route path="booking/:id" element={<MechBooking />} />
+        <Route path="chatInterface" element={<ChatPage />} />
+
       </Route>
 
       <Route path="*" element={<Erorr404 />} />

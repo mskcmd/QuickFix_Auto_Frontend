@@ -267,11 +267,37 @@ export const addService = async (name: string, details: string, price: string, i
 };
 
 export const fetchService = async (id: string) => {
-    try {        
-        const result = await Api.get(mechanicRoute.fetchService, { params: { id } });        
+    try {
+        const result = await Api.get(mechanicRoute.fetchService, { params: { id } });
         return result.data;
     } catch (error) {
         console.error("Error in fetchService:", error);
         throw error; // Re-throw the error if you want the calling function to handle it
     }
 };
+
+export const searchUsers = async (search: string, id: string) => {
+    try {
+        console.log(search, id);
+        const result = await Api.get(`${mechanicRoute.searchUsers}?search=${search}&id=${id}`)
+        return result.data;
+    } catch (error) {
+        console.error("Error in fetchUsers:", error);
+        throw error;
+    }
+};
+
+
+export const searchServices = async (search: string, id: string) => {
+    try {
+        console.log(search, id);
+        const result = await Api.get(`${mechanicRoute.searchServices}?search=${search}&id=${id}`)
+        console.log("ss",result.data);
+        return result.data;
+    } catch (error) {
+        console.error("Error in fetchUsers:", error);
+        throw error;
+    }
+};
+
+

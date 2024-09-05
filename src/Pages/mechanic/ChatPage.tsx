@@ -7,7 +7,7 @@ const ChatPage: FC = () => {
     <>
     <div className="">
     <Header />
-      <ChatInterface />
+    <ChatInterface />
     </div>
     </>
   );

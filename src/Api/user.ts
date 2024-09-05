@@ -37,8 +37,6 @@ export const verifyOtp = async (otpnum: string) => {
 
 export const Login = async (email: string, password: string) => {
     try {
-        console.log("hai sir");
-
         const result = await Api.post(userRoutes.Login, { email, password })
         console.log("eeee", result);
         return result
@@ -68,6 +66,7 @@ export const forgetPassword = async (email: string) => {
         console.log(error);
     }
 };
+
 export const resetPassword = async (password: string, userId: string) => {
     try {
         console.log("rgtre", password, userId);
@@ -79,8 +78,6 @@ export const resetPassword = async (password: string, userId: string) => {
         console.log(error);
     }
 };
-
-
 
 export const verifyOtpReset = async (otpnum: string, userId: string) => {
     try {
@@ -138,7 +135,7 @@ export const fetchBookData = async (id: string, type: string) => {
         const result = await Api.get(userRoutes.fetchBookData, {
             params: { id, type }
         });
-        return result.data; 
+        return result.data;
     } catch (error) {
         console.error("Error during fetchBookData API call:", error);
         throw error;
@@ -146,33 +143,111 @@ export const fetchBookData = async (id: string, type: string) => {
 };
 
 export const updateProfile = async (
-    id: string, 
-    name: string, 
-    phone: string, 
+    id: string,
+    name: string,
+    phone: string,
     image: File | null
-  ) => {
+) => {
     try {
-      console.log("updateProfile data:", { id, name, phone, image });
-  
-      const formData = new FormData();
-      formData.append("id", id);
-      formData.append("name", name);
-      formData.append("phone", phone);
-      if (image) {
-        formData.append("image", image);
-      }
-      
-      const result = await Api.post(userRoutes.updateProfle, formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-      });
+        console.log("updateProfile data:", { id, name, phone, image });
 
-      
-      console.log("Successfully updated:", result);
+        const formData = new FormData();
+        formData.append("id", id);
+        formData.append("name", name);
+        formData.append("phone", phone);
+        if (image) {
+            formData.append("image", image);
+        }
+
+        const result = await Api.post(userRoutes.updateProfle, formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data',
+            },
+        });
+
+
+        console.log("Successfully updated:", result);
     } catch (error) {
-      console.error("Error during updateProfile API call:", error);
-      throw error;
+        console.error("Error during updateProfile API call:", error);
+        throw error;
     }
-  };
-  
+};
+
+
+export const searchChatData = async (search: string) => {
+    try {
+        console.log(search);
+        const result = await Api.get(`/user/chat/allUsers?search=${search}`);
+        console.log("users", result.data);
+        return result.data;
+    } catch (error) {
+        console.error("Error fetching chat data:", error);
+        throw error;
+    }
+};
+
+export const allAccessChat = async (receiverId: string, senderId: string) => {
+    try {
+        console.log(receiverId, senderId);
+
+        const result = await Api.post(`/user/chat/create`, { senderId, receiverId });
+        console.log("chat",result.data);
+        
+        return result.data; // Make sure to return the actual data
+    } catch (error) {
+        console.error("Error fetching chat data:", error);
+        throw error; // Ensure errors are thrown to be caught in the component
+    }
+};
+
+
+export const fetchChats = async (senderId: string) => {
+    try {
+        const result = await Api.get('/user/chat/fetchChats', {
+            params: { senderId }
+        });
+        console.log("sd",result.data);
+        
+        return result.data; // Return the data directly
+    } catch (error) {
+        console.error("Error fetching chat data:", error);
+        throw error; // Rethrow error for proper handling in the component
+    }
+};
+
+
+export const allMessages = async (chatId: string) => {
+    console.log("sss", chatId);
+
+    try {
+        const result = await Api.get(`/user/chat/allMesssge/${chatId}`);
+        console.log("all message", result);
+        return result;
+    } catch (error) {
+        console.error("Failed to fetch messages", error);
+        throw error; // Rethrow the error so it can be handled where the function is called
+    }
+}
+
+interface SendMessageParams {
+    content: string;
+    chatId: string;
+    senderId: string;
+}
+
+export const sendMessages = async ({ content, chatId, senderId }: SendMessageParams) => {
+    console.log(content, chatId, senderId);
+
+    try {
+        const result = await Api.post('/user/chat/sendMessage', { content, chatId, senderId });
+        console.log("fg",result.data);
+        
+        return result.data;
+    } catch (error) {
+        console.error("Failed to send messages", error);
+        throw error;
+    }
+};
+
+
+

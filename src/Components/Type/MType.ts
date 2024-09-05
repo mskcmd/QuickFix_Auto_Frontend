@@ -35,4 +35,18 @@ export interface User {
     __v: number;               // Version key (used by Mongoose)
   }
   
+  export interface MyChatProps {
+    fetchAgain?: any;
+    setFetchAgain?:any
+  }
+
+  export interface Payment {
+    id: string;
+    name: any;
+    bank: string;
+    upiId: string;
+    status: "pending" | "completed" | "failed";
+    price: number;
+  }
+  
   
