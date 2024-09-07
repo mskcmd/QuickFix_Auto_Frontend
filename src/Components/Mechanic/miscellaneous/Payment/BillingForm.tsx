@@ -152,19 +152,20 @@ const BillingForm: React.FC<BillingFormProps> = ({ onSubmit }) => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // if (
-    //   !formData.userId ||
-    //   !formData.name ||
-    //   !formData.vehicleNumber ||
-    //   formData.services.length === 0
-    // ) {
-    //   toast.error("Please fill out all required fields.");
-    //   return;
-    // }
+    if (
+      !formData.userId ||
+      !formData.name ||
+      !formData.vehicleNumber ||
+      formData.services.length === 0
+    ) {
+      toast.error("Please fill out all required fields.");
+      return;
+    }
     onSubmit(formData);
   };
 
   return (
+   <>
     <form onSubmit={handleSubmit} className="space-y-6">
       <Card className="bg-gradient-to-r from-blue-100 to-purple-100">
         <CardBody className="gap-4">
@@ -203,7 +204,7 @@ const BillingForm: React.FC<BillingFormProps> = ({ onSubmit }) => {
             </div>
 
             {/* Vehicle Number Field */}
-            <div className="space-y-2">
+            <div className="space-y-1">
               <label className="text-sm font-medium text-gray-700">
                 Vehicle Number
               </label>
@@ -222,10 +223,10 @@ const BillingForm: React.FC<BillingFormProps> = ({ onSubmit }) => {
       </Card>
 
       {/* Services Section */}
-      <Card className="bg-gradient-to-r from-green-100 to-teal-100">
+      <Card className="bg-gradient-to-r from-blue-100 to-purple-100">
         <CardHeader className="flex justify-between items-center">
-          <h4 className="text-lg font-semibold text-gray-800">Services</h4>
-          <Autocomplete
+          <h4 className="text-lg font-semibold text-gray-800 p-4">Services</h4>
+          <Autocomplete 
             aria-label="Search for services"
             onInputChange={handleServiceSearch}
             startContent={
@@ -330,6 +331,7 @@ const BillingForm: React.FC<BillingFormProps> = ({ onSubmit }) => {
         Submit Billing
       </Button>
     </form>
+   </>
   );
 };
 

@@ -18,6 +18,8 @@ const mechanicRoute = {
     fetchService: "/mechanic/fetchService",
     searchUsers: "/mechanic/searchUsers",
     searchServices: "/mechanic/searchServices",
+    CreateBill: "/mechanic/CreateBill",
+
 
 
 

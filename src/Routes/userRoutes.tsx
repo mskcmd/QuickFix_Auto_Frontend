@@ -19,6 +19,8 @@ import Payment from "../Components/User/Profile/Payment";
 import Privacy from "../Components/User/Profile/Privacy";
 import ProfileEditContent from "../Components/User/miscellaneous/ProfileEdit";
 import ChatPage from "../Pages/user/ChatPage";
+import CancelPage from "../Components/User/miscellaneous/CancelPage";
+import SuccessPage from "../Components/User/miscellaneous/Success ";
 
 function UserRoutes() {
   return (
@@ -42,6 +44,8 @@ function UserRoutes() {
           <Route path="profile" element={<Profile />} />
           <Route path="bookings" element={<Bookings />} />
           <Route path="payment" element={<Payment />} />
+          <Route path="SuccessPage" element={<SuccessPage />} />
+          <Route path="CancelPage" element={<CancelPage/>} />
           <Route path="privacy" element={<Privacy />} />
           <Route path="editProfile" element={<ProfileEditContent />} />
         </Route>

@@ -14,7 +14,12 @@ const userRoutes={
     fetchBookData:"/user/fetchBookData",
     updateProfle:"/user/updateProfle",
 
-    allchat:"/user/chat/allUsers"
+    allchat:"/user/chat/allUsers",
+
+    fetchPayment:"/user/fetchPayment",
+
+    checkOut:"/user/create-checkout-session"
+
 
 
 

@@ -15,6 +15,7 @@ import BillingForm from "./miscellaneous/Payment/BillingForm";
 import PaymentsTable from "./miscellaneous/Payment/PaymentsTable";
 import { Payment } from "../Type/MType";
 import { FormikValues } from "formik";
+import { createBill } from "../../Api/mechanic";
 
 
 
@@ -72,8 +73,9 @@ const Payments: React.FC = () => {
 
   const variants: ("bordered")[] = ["bordered"];
 
-  const handleSubmit = (values: FormikValues) => {
+  const handleSubmit = async (values: FormikValues) => {
     console.log("haio",values);
+    const result  = await createBill(values)
     onClose();
   };
 

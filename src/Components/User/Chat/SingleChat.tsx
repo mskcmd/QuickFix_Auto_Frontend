@@ -255,7 +255,7 @@ function SingleChat({}: MyChatProps) {
                 typing...
               </Text>
             )}
-            <Box display="flex" alignItems="center">
+            <Box display="flex" alignItems="center" >
               <Popover
                 isOpen={showEmojiPicker}
                 onClose={() => setShowEmojiPicker(false)}

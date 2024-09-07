@@ -4,6 +4,7 @@ import { FromData } from "../Pages/mechanic/SignupPage"
 import mechanicRoute from "../Services/Endpoints/mechanicEndPointes";
 import Api from "../Services/axios";
 import { MechanicDataItem } from "../Components/Mechanic/MechanicCommen/MechanicLoggedin";
+import { FormikValues } from "formik";
 
 
 export const mechanicSingup = async ({ name, email, phone, password }: FromData) => {
@@ -90,51 +91,6 @@ export const resetPassword = async (password: string, userId: string) => {
         console.log(error);
     }
 };
-
-// export const mechanicRegister = async (mechanicData: MechanicFormData, mechanicId: string | undefined): Promise<AxiosResponse<unknown>> => {
-//     try {
-//         const formData = new FormData();
-//         // Append basic fields
-//         if (mechanicId) {
-//             formData.append('ID', mechanicId);
-//         }
-//         formData.append('type', mechanicData.type);
-//         formData.append('licenseNumber', mechanicData.licenseNumber);
-//         formData.append('yearsOfExperience', mechanicData.yearsOfExperience);
-//         formData.append('specialization', mechanicData.specialization);
-//         formData.append('latitude', mechanicData.latitude);
-//         formData.append('longitude', mechanicData.longitude);
-//         formData.append('district', mechanicData.district);
-//         formData.append('locationName', mechanicData.locationName);
-//         formData.append('description', mechanicData.description);
-//         // Append files
-//         if (mechanicData.certificate) {
-//             formData.append('certificate', mechanicData.certificate);
-//         }
-//         if (mechanicData.profileImages && mechanicData.profileImages.length > 0) {
-//             mechanicData.profileImages.forEach((file, index) => {
-//                 formData.append(`profileImage${index}`, file); // Ensure field names match
-//             });
-//         }
-
-//         mechanicData.services.forEach((service, index) => {
-//             formData.append(`services[${index}]`, service);
-//           });
-//         // Send the request
-//         const result = await Api.post(mechanicRoute.Register, formData, {
-//             headers: {
-//                 'Content-Type': 'multipart/form-data',
-//             },
-//         });
-//         console.log("4days",result);
-//         return result
-
-//     } catch (error) {
-//         console.error('Error during registration:', error);
-//         throw error; // Optionally rethrow the error    
-//         }
-// };
-
 
 export const mechanicRegister = async (mechanicData: MechanicFormData, mechanicId: string | undefined): Promise<AxiosResponse<unknown>> => {
     try {
@@ -292,12 +248,23 @@ export const searchServices = async (search: string, id: string) => {
     try {
         console.log(search, id);
         const result = await Api.get(`${mechanicRoute.searchServices}?search=${search}&id=${id}`)
-        console.log("ss",result.data);
+        console.log("ss", result.data);
         return result.data;
     } catch (error) {
         console.error("Error in fetchUsers:", error);
         throw error;
     }
 };
+
+export const createBill = async (value: FormikValues) => {
+    try {
+      const result = await Api.post(mechanicRoute.CreateBill, value);
+      console.log('Bill created successfully:', result.data);
+      return result.data; 
+    } catch (error) {
+      console.error('Error creating bill:', error);
+      throw error; 
+    }
+  };
 
 

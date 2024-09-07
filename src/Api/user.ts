@@ -191,8 +191,8 @@ export const allAccessChat = async (receiverId: string, senderId: string) => {
         console.log(receiverId, senderId);
 
         const result = await Api.post(`/user/chat/create`, { senderId, receiverId });
-        console.log("chat",result.data);
-        
+        console.log("chat", result.data);
+
         return result.data; // Make sure to return the actual data
     } catch (error) {
         console.error("Error fetching chat data:", error);
@@ -206,8 +206,8 @@ export const fetchChats = async (senderId: string) => {
         const result = await Api.get('/user/chat/fetchChats', {
             params: { senderId }
         });
-        console.log("sd",result.data);
-        
+        console.log("sd", result.data);
+
         return result.data; // Return the data directly
     } catch (error) {
         console.error("Error fetching chat data:", error);
@@ -240,14 +240,25 @@ export const sendMessages = async ({ content, chatId, senderId }: SendMessagePar
 
     try {
         const result = await Api.post('/user/chat/sendMessage', { content, chatId, senderId });
-        console.log("fg",result.data);
-        
+        console.log("fg", result.data);
+
         return result.data;
     } catch (error) {
         console.error("Failed to send messages", error);
         throw error;
     }
 };
+
+export const fetchPymnetData = async (id: string) => {
+    try {
+        const result = await Api.get(userRoutes.fetchPayment, { params: { id } })
+        return result.data
+
+    } catch (error) {
+        console.log(error);
+
+    }
+}
 
 
 
