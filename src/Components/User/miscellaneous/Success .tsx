@@ -3,7 +3,7 @@ import { CheckCircleIcon } from '@chakra-ui/icons';
 
 const SuccessPage = () => {
   return (
-    <Box minHeight="100vh" display="flex" alignItems="center" justifyContent="center" bg="gray.50">
+    <Box minHeight="80vh" display="flex" alignItems="center" justifyContent="center" bg="gray.50">
       <VStack spacing={4} textAlign="center">
         <Icon as={CheckCircleIcon} w={16} h={16} color="green.500" />
         <Heading as="h2" size="xl">Success!</Heading>

@@ -20,6 +20,8 @@ import Bookings from "../Components/Mechanic/Bookings.tsx";
 import Service from "../Components/Mechanic/Service.tsx";
 import BlogMech from "../Components/Mechanic/BlogMech.tsx";
 import Payments from "../Components/Mechanic/Payments.tsx";
+import BlogForm from "../Components/Mechanic/miscellaneous/Blog/BlogForm.tsx";
+import BlogEdit from "../Components/Mechanic/miscellaneous/Blog/BlogEdit.tsx";
 
 function mechanicRoutes() {
   return (
@@ -48,6 +50,8 @@ function mechanicRoutes() {
           <Route path="service" element={<Service />} />
           <Route path="blog" element={<BlogMech />} />
           <Route path="payments" element={<Payments />} />
+          <Route path="create-blog" element={<BlogForm />} />
+          <Route path="edit-blog/:id" element={<BlogEdit  />} />
         </Route>
       </Route>
     </Routes>

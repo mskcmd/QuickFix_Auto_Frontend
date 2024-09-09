@@ -19,6 +19,11 @@ const mechanicRoute = {
     searchUsers: "/mechanic/searchUsers",
     searchServices: "/mechanic/searchServices",
     CreateBill: "/mechanic/CreateBill",
+    createBlog:"/mechanic/createBlog",
+    fetchBlog:"/mechanic/fetchBlog",
+    deleteBlog:"/mechanic/deleteBlog",
+    fetchEditBlog:"/mechanic/fetchEditBlog",
+    editBlog:"/mechanic/editBlog",
 
 
 

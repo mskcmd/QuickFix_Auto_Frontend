@@ -32,7 +32,6 @@ const MechanicLoggedin: React.FC = () => {
             mechanicData.mechnicId
           );
           console.log("Fetched mechanic data:", result[0]?.isCompleted);
-
           // if (result.length > 0 && !result[0].isCompleted) {
           //   showCustomToast();
           //   navigate("/mechanic/register");

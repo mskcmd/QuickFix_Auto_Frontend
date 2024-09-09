@@ -258,13 +258,102 @@ export const searchServices = async (search: string, id: string) => {
 
 export const createBill = async (value: FormikValues) => {
     try {
-      const result = await Api.post(mechanicRoute.CreateBill, value);
-      console.log('Bill created successfully:', result.data);
-      return result.data; 
+        const result = await Api.post(mechanicRoute.CreateBill, value);
+        console.log('Bill created successfully:', result.data);
+        return result.data;
     } catch (error) {
-      console.error('Error creating bill:', error);
-      throw error; 
+        console.error('Error creating bill:', error);
+        throw error;
     }
-  };
+};
+
+
+export const createBlog = async (values: any, id: string) => {
+    try {
+        const formData = new FormData();
+
+        formData.append('id', id);
+        formData.append('name', values.name);
+        formData.append('positionName', values.positionName);
+        formData.append('heading', values.heading);
+        formData.append('description', values.description);
+
+        if (values.image) {
+            formData.append('image', values.image);
+        }
+
+        const result = await Api.post(mechanicRoute.createBlog, formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data',
+            },
+        });
+        console.log("Blog created successfully:", result);
+        return result
+
+    } catch (error) {
+        console.error("Error creating blog:", error);
+    }
+};
+
+export const fetchBlog = async (id: string) => {
+    try {
+        const result = await Api.get(mechanicRoute.fetchBlog, { params: { id } });
+        return result.data;
+    } catch (error) {
+        console.error("Error in fetchBlog:", error);
+        throw error;
+    }
+};
+
+export const deleteBlog = async (id: string) => {
+    try {        
+        const result = await Api.delete(mechanicRoute.deleteBlog, { params: { id } });
+        return result.data;
+    } catch (error) {
+        console.error("Error in fetchBlog:", error);
+        throw error;
+    }
+};
+
+export const fetchEditBlog = async (id: string) => {
+    try {        
+        const result = await Api.get(mechanicRoute.fetchEditBlog, { params: { id } });
+        return result.data;
+    } catch (error) {
+        console.error("Error in fetchBlog:", error);
+        throw error;
+    }
+};
+
+export const updateBlog = async (id: any, values: any) => {
+    try {
+
+        console.log("drt",values.image);
+        
+        const formData = new FormData();
+
+        formData.append('id', id);
+        formData.append('name', values.name);
+        formData.append('positionName', values.positionName);
+        formData.append('heading', values.heading);
+        formData.append('description', values.description);
+
+        if (values.image) {
+            formData.append('image', values.image);
+        }
+
+        const result = await Api.post(mechanicRoute.editBlog, formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data',
+            },
+        });
+        console.log("Blog created successfully:", result);
+        return result
+
+    } catch (error) {
+        console.error("Error creating blog:", error);
+    }
+};
+
 
 
