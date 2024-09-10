@@ -8,33 +8,39 @@ import {
   TableCell,
   Button,
 } from "@nextui-org/react";
-import { Eye} from "lucide-react";
-import {StatusBadge } from "../../Payments";
+import { Eye } from "lucide-react";
 import { Payment } from "../../../Type/MType";
 
+interface PaymentTableProps {
+  payments: Payment[];
+  onViewClick: (payment: Payment) => void; // Changed type to 'payment'
+}
 
-
-const PaymentsTable: React.FC<{ payments: Payment[] }> = ({ payments }) => (
+const PaymentsTable: React.FC<PaymentTableProps> = ({ payments, onViewClick }) => {
+  return (
     <Table aria-label="Payments table" className="w-full">
       <TableHeader>
-        <TableColumn>NAME</TableColumn>
-        <TableColumn>BANK</TableColumn>
-        <TableColumn>UPI ID</TableColumn>
-        <TableColumn>STATUS</TableColumn>
-        <TableColumn>PRICE</TableColumn>
-        <TableColumn>ACTIONS</TableColumn>
+      <TableColumn>Service Id</TableColumn>
+        <TableColumn>Name</TableColumn>
+        <TableColumn>Status</TableColumn>
+        <TableColumn>Total</TableColumn>
+        <TableColumn>View</TableColumn>
       </TableHeader>
       <TableBody>
-        {payments.map((payment) => (
-          <TableRow key={payment.id}>
+      {payments.map((payment) => (
+          <TableRow key={payment._id}>
+            <TableCell>{payment.user.name}</TableCell>
             <TableCell>{payment.name}</TableCell>
-            <TableCell>{payment.bank}</TableCell>
-            <TableCell>{payment.upiId}</TableCell>
-            <TableCell><StatusBadge  status={payment.status} /></TableCell>
-            <TableCell>₹{payment.price.toFixed(2)}</TableCell>
+            <TableCell>{payment.status}</TableCell>
+            <TableCell>₹{payment.total}</TableCell>
             <TableCell>
-              <Button isIconOnly size="sm" variant="light" aria-label="View details">
-                <Eye className="h-4 w-4" />
+              <Button
+                isIconOnly
+                size="sm"
+                variant="light"
+                onClick={() => onViewClick(payment)}
+              >
+                <Eye />
               </Button>
             </TableCell>
           </TableRow>
@@ -42,5 +48,6 @@ const PaymentsTable: React.FC<{ payments: Payment[] }> = ({ payments }) => (
       </TableBody>
     </Table>
   );
+};
 
-  export default PaymentsTable;
+export default PaymentsTable;

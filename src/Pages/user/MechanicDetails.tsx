@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, useNavigate } from "react-router-dom";
 import { useAppSelector } from "../../app/store";
 import Header from "../../Components/User/Header";
 import { motion, AnimatePresence } from "framer-motion";
@@ -47,7 +47,7 @@ const MechanicDetails: React.FC = () => {
   const userSearchData = useAppSelector((state) => state.auth.userSerchData) as unknown as MechanicProfile[];
   const mechanic = userSearchData.find((m) => m._id === id);
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
-
+const navigate = useNavigate()
   if (!mechanic) {
     return (
       <motion.div
@@ -83,7 +83,7 @@ const MechanicDetails: React.FC = () => {
   ];
 
   const handleBooking = () => {
-    console.log("Booking initiated for mechanic:", mechanic.name);
+    navigate(`/booking/${mechanic._id}`)
   };
 
   return (

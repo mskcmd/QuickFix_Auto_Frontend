@@ -45,7 +45,7 @@ const Payments: React.FC = () => {
             </Tab>
             <Tab key="Completed" title="Completed">
               <PaymentTable 
-                payments={data.filter((payment: any) => payment.status === "completed")} 
+                payments={data.filter((payment: any) => payment.status === "Completed")} 
                 onViewClick={handleViewClick}
               />
             </Tab>

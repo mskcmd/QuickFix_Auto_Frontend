@@ -355,5 +355,16 @@ export const updateBlog = async (id: any, values: any) => {
     }
 };
 
+export const paymentFetch = async (id: string) => {
+    try {
+        const result = await Api.get(mechanicRoute.paymentFetch, { params: { id } })
+        return result.data
+
+    } catch (error) {
+        console.log(error);
+
+    }
+}
+
 
 

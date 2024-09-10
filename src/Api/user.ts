@@ -260,5 +260,20 @@ export const fetchPymnetData = async (id: string) => {
     }
 }
 
+export const updatePaymnt = async (paymentId: string,status:string) => {
+    console.log("ss",paymentId);
+    
+    try {
+        const result = await Api.post(userRoutes.updatePaymnt, { paymentId,status})
+        return result.data
+
+    } catch (error) {
+        console.log(error);
+
+    }
+}
+
+
+
 
 

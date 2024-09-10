@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Button,
   Badge,
@@ -12,41 +12,14 @@ import {
   Tab,
 } from "@nextui-org/react";
 import BillingForm from "./miscellaneous/Payment/BillingForm";
-import PaymentsTable from "./miscellaneous/Payment/PaymentsTable";
 import { Payment } from "../Type/MType";
 import { FormikValues } from "formik";
-import { createBill } from "../../Api/mechanic";
-
-
+import { createBill, paymentFetch } from "../../Api/mechanic";
+import { useAppSelector } from "../../app/store";
+import PaymentsTable from "./miscellaneous/Payment/PaymentsTable";
+import PaymentModal from "./miscellaneous/Payment/PaymentModal";
 
 // Sample data
-const payments: Payment[] = [
-  {
-    id: "1",
-    name: "John Doe",
-    bank: "HDFC Bank",
-    upiId: "john@upi",
-    status: "completed",
-    price: 1000,
-  },
-  {
-    id: "2",
-    name: "Jane Smith",
-    bank: "ICICI Bank",
-    upiId: "jane@upi",
-    status: "pending",
-    price: 1500,
-  },
-  {
-    id: "3",
-    name: "Bob Johnson",
-    bank: "SBI",
-    upiId: "bob@upi",
-    status: "failed",
-    price: 800,
-  },
-];
-
 const sizes = ["5xl"] as const;
 
 // StatusBadge Component
@@ -63,20 +36,48 @@ export const StatusBadge: React.FC<{ status: Payment["status"] }> = ({
 };
 
 const Payments: React.FC = () => {
-  const { isOpen, onOpen, onClose } = useDisclosure();
+  const { isOpen: isBillModalOpen, onOpen: onBillModalOpen, onClose: onBillModalClose } = useDisclosure();
+  const { isOpen: isPaymentModalOpen, onOpen: onPaymentModalOpen, onClose: onPaymentModalClose } = useDisclosure();
   const [size, setSize] = useState<(typeof sizes)[number]>("5xl");
+  const [data, setData] = useState<any>([]);
+  const [selectedPayment, setSelectedPayment] = useState<any>(null);
 
   const handleOpen = (selectedSize: (typeof sizes)[number]) => {
     setSize(selectedSize);
-    onOpen();
+    onBillModalOpen();
   };
 
   const variants: ("bordered")[] = ["bordered"];
 
   const handleSubmit = async (values: FormikValues) => {
-    console.log("haio",values);
-    const result  = await createBill(values)
-    onClose();
+    console.log("Form values:", values);
+    const result = await createBill(values);
+    onBillModalClose();
+  };
+
+  const mechanicData: any = useAppSelector((state) => state.auth.mechanicData);
+  const id: string = mechanicData?.data?._id || "";
+
+  useEffect(() => {
+    const fetchPaymentData = async () => {
+      try {
+        const result = await paymentFetch(id);
+        console.log("paymet",result);
+        
+        setData(result);
+      } catch (error) {
+        console.error("Error fetching payment data:", error);
+      }
+    };
+
+    if (id) {
+      fetchPaymentData();
+    }
+  }, [id]);
+
+  const handleViewClick = (payment: any) => {
+    setSelectedPayment(payment);
+    onPaymentModalOpen();
   };
 
   return (
@@ -98,27 +99,28 @@ const Payments: React.FC = () => {
         <div className="justify-center items-center">
           {variants.map((variant) => (
             <Tabs key={variant} variant={variant} aria-label="Tabs variants">
-              <Tab key="Payments" title="Payments">
-                <PaymentsTable payments={payments} />
-              </Tab>
-              <Tab key="Bills" title="Bills">
-                <div>Bills...</div>
+              <Tab key="Pending" title="Pending">
+                <PaymentsTable
+                  payments={data.filter((payment: any) => payment.status === "pending")}
+                  onViewClick={handleViewClick}
+                />
               </Tab>
               <Tab key="Completed" title="Completed">
-                <div>Completed...</div>
-              </Tab>
-              <Tab key="Pending" title="Pending">
-                <div>Pending...</div>
+                <PaymentsTable
+                  payments={data.filter((payment: any) => payment.status === "Completed")}
+                  onViewClick={handleViewClick}
+                />
               </Tab>
             </Tabs>
           ))}
         </div>
       </div>
 
+      {/* Billing Modal */}
       <Modal
         size={size}
-        isOpen={isOpen}
-        onClose={onClose}
+        isOpen={isBillModalOpen}
+        onClose={onBillModalClose}
         scrollBehavior="inside"
         classNames={{
           base: "max-h-[90vh]",
@@ -145,9 +147,17 @@ const Payments: React.FC = () => {
           )}
         </ModalContent>
       </Modal>
+
+      {/* Payment Details Modal */}
+      {selectedPayment && (
+        <PaymentModal
+          isOpen={isPaymentModalOpen}
+          onClose={onPaymentModalClose}
+          payment={selectedPayment}
+        />
+      )}
     </div>
   );
 };
 
 export default Payments;
-

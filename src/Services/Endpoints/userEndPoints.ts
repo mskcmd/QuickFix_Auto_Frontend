@@ -17,8 +17,8 @@ const userRoutes={
     allchat:"/user/chat/allUsers",
 
     fetchPayment:"/user/fetchPayment",
-
-    checkOut:"/user/create-checkout-session"
+    checkOut:"/user/create-checkout-session",
+    updatePaymnt:"user/update-payment-status"
 
 
 

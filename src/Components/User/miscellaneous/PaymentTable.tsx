@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   Table,
   TableHeader,
@@ -25,33 +25,6 @@ const PaymentTable: React.FC<PaymentTableProps> = ({
   payments,
   onViewClick,
 }) => {
-  
-  // const handleCheckout = async (payment: any) => {
-  //   const stripe:any = await stripePromise;
-
-  //   const checkoutData = {
-  //     mechanicName: payment.mechanic?.name,
-  //     userName: payment.name,
-  //     totalAmount: payment.total,
-  //     successUrl:"http://localhost:5173/profiler/SuccessPage",
-  //     cancelUrl:"http://localhost:5173/profiler/CancelPage"
-  //   };
-
-  //   console.log("Checkout Data:", checkoutData);
-
-  //   try {
-  //     const response: any = await checkoutService(checkoutData);
-  //     const session: any = await response.json();
-  //     const result = await stripe.redirectToCheckout({ sessionId: session.id });
-  //     if (result.error) {
-  //       console.error("Stripe checkout error:", result.error.message);
-  //     }
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
-
-
   const handleCheckout = async (payment: any) => {
     const stripe = await stripePromise;
 
@@ -59,8 +32,8 @@ const PaymentTable: React.FC<PaymentTableProps> = ({
       mechanicName: payment.mechanic?.name,
       userName: payment.name,
       totalAmount: payment.total,
-      successUrl: "http://localhost:5173/profiler/SuccessPage",
-      cancelUrl: "http://localhost:5173/profiler/CancelPage"
+      successUrl: `http://localhost:5173/profiler/SuccessPage?paymentId=${payment._id}`,
+      cancelUrl: "http://localhost:5173/profiler/CancelPage",
     };
 
     console.log("Checkout Data:", checkoutData);
@@ -70,7 +43,10 @@ const PaymentTable: React.FC<PaymentTableProps> = ({
       console.log("Checkout response:", response);
 
       if (response.data && response.data.sessionId) {
-        const result = await stripe?.redirectToCheckout({ sessionId: response.data.sessionId });
+        const result = await stripe?.redirectToCheckout({
+          sessionId: response.data.sessionId,
+        });
+
         if (result?.error) {
           console.error("Stripe checkout error:", result.error.message);
         }
@@ -82,7 +58,6 @@ const PaymentTable: React.FC<PaymentTableProps> = ({
     }
   };
 
-  
   return (
     <Table aria-label="Payments table">
       <TableHeader>
@@ -101,13 +76,19 @@ const PaymentTable: React.FC<PaymentTableProps> = ({
             <TableCell>{payment.status}</TableCell>
             <TableCell>₹{payment.total}</TableCell>
             <TableCell>
-              <Button
-                size="sm"
-                color="primary"
-                onClick={() => handleCheckout(payment)}
-              >
-                Pay
-              </Button>
+              {payment.status === "pending" ? (
+                <Button
+                  size="sm"
+                  color="primary"
+                  onClick={() => handleCheckout(payment)}
+                >
+                  Pay
+                </Button>
+              ) : (
+                <Button size="sm" color="success">
+                  Completed
+                </Button>
+              )}
             </TableCell>
             <TableCell>
               <Button

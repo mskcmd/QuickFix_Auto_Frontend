@@ -41,6 +41,9 @@ export interface User {
   }
 
   export interface Payment {
+    _id: Key | null | undefined;
+    total: ReactNode;
+    user: any;
     id: string;
     name: any;
     bank: string;

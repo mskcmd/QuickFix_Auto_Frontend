@@ -24,6 +24,7 @@ const mechanicRoute = {
     deleteBlog:"/mechanic/deleteBlog",
     fetchEditBlog:"/mechanic/fetchEditBlog",
     editBlog:"/mechanic/editBlog",
+    paymentFetch:"/mechanic/paymentFetch",
 
 
 

@@ -391,9 +391,6 @@ const MechanicListingPage: React.FC = () => {
     (state: RootState) => state.auth.userSerchData
   ) as unknown as MechanicProfile[];
   const [filter, setFilter] = useState("All");
-console.log("mm",filter,userSearchData);
-console.log("ff",userSearchData);
-
 const filteredData = userSearchData.filter(
   (mechanic) => filter === "All" || mechanic.type === filter.toLowerCase()
 );
