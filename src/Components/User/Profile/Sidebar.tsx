@@ -64,9 +64,9 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
         </button>
         <div className="flex flex-col items-center">
           <div className="bg-gray-100 rounded-full h-24 w-24 flex items-center justify-center mb-4">
-            {userData?.data.imageUrl ? (
+            {userData?.data?.imageUrl ? (
               <img
-                src={userData.data.imageUrl}
+                src={userData?.data?.imageUrl}
                 alt="Profile"
                 className="h-full w-full rounded-full object-cover"
               />

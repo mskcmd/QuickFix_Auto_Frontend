@@ -5,7 +5,7 @@ const UserLogdin = () => {
   const userData = useAppSelector((state) => state.auth.userData);
   console.log("jd", userData);
 
-  if (userData?.data.isUser) {
+  if (userData) {
     return <Outlet />;
   } else {
     return <Navigate to="/login" />;

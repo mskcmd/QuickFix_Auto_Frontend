@@ -13,7 +13,7 @@ const ProfileContent: React.FC = () => {
       </h2>
       <div className="flex flex-col md:flex-row items-center mb-8">
         <div className="bg-gradient-to-r from-purple-400 to-pink-500 rounded-full h-40 w-40 flex items-center justify-center shadow-lg mb-6 md:mb-0">
-          {userData?.data.imageUrl ? (
+          {userData?.data?.imageUrl ? (
             <img
               src={userData.data.imageUrl}
               alt="Profile"
@@ -30,7 +30,7 @@ const ProfileContent: React.FC = () => {
             <div>
               <p className="text-sm text-gray-500">Name</p>
               <h3 className="text-lg font-semibold text-gray-800">
-                {userData?.data.name}
+                {userData?.data?.name}
               </h3>
             </div>
           </div>
@@ -38,14 +38,14 @@ const ProfileContent: React.FC = () => {
             <FaEnvelope className="text-purple-600 text-xl mr-4" />
             <div>
               <p className="text-sm text-gray-500">Email</p>
-              <p className="text-gray-700">{userData?.data.email}</p>
+              <p className="text-gray-700">{userData?.data?.email}</p>
             </div>
           </div>
           <div className="bg-gray-50 p-4 rounded-lg shadow-sm flex items-center">
             <FaPhone className="text-purple-600 text-xl mr-4" />
             <div>
               <p className="text-sm text-gray-500">Phone</p>
-              <p className="text-gray-700">{userData?.data.phone}</p>
+              <p className="text-gray-700">{userData?.data?.phone}</p>
             </div>
           </div>
         </div>

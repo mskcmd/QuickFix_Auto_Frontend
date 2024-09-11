@@ -1,6 +1,7 @@
 
 const userRoutes={
     Login:"/auth/login",
+    googleLogin:"auth/google-login",
     signup:"/auth/signup",
     veryfyOtp: "/auth/veryfy-otp",
     resendOtp:"/auth/resendotp",

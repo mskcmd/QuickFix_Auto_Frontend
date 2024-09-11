@@ -16,7 +16,7 @@ export const SignupValidation = Yup.object({
     .matches(MOBILE_NUM_REGEX, "Phone number is not valid") 
     .required("Phone number is required"),
   password: Yup.string()
-    .matches(PASSWORD_REGEX, "Password must be at least 8 characters long, and include at least one uppercase letter, one lowercase letter, one number, and one special character")
+    .matches(PASSWORD_REGEX, "Password must be 8+ chars with upper, lower, number, and special char")
     .required("Password is required"),
   cpassword: Yup.string()
     .oneOf([Yup.ref("password"), undefined], "Passwords must match") 

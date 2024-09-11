@@ -2,8 +2,10 @@ import { useFormik } from "formik";
 import { SignupValidation } from "../../Components/Common/Validations";
 import { signup } from "../../Api/user";
 import { Link, useNavigate } from "react-router-dom";
-import { toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { Button } from "@nextui-org/react";
+import Gauth from "../../Components/User/UserCommen/Gauth";
 export interface FromData {
   name: string;
   email: string;
@@ -18,7 +20,6 @@ interface initelVal {
   phone: string;
   password: string;
   cpassword: string;
-
 }
 
 const initialValues: initelVal = {
@@ -27,7 +28,6 @@ const initialValues: initelVal = {
   phone: "",
   password: "",
   cpassword: "",
-
 };
 
 const SignupPage: React.FC = () => {
@@ -46,14 +46,14 @@ const SignupPage: React.FC = () => {
       try {
         console.log(formdata);
         const result = await signup(formdata);
-        console.log("vv",result?.data.message);
-        if(result?.data.notSuccess===false){
+        console.log("vv", result?.data.message);
+        if (result?.data.notSuccess === false) {
           toast.error("Email already exists");
         }
 
-        if (result?.data.success===true) {
-          console.log("ss",result.data.success);
-          navigate('/otp-page');
+        if (result?.data.success === true) {
+          console.log("ss", result.data.success);
+          navigate("/otp-page");
         } else {
           console.log("not_found");
         }
@@ -73,7 +73,7 @@ const SignupPage: React.FC = () => {
         />
       </div>
       <div className="flex flex-col justify-center h-[85vh] w-[75vh] bg-white p-8 rounded-r-lg shadow-2xl">
-        <h2 className="text-4xl font-bold mb-8 text-center text-gray-800 mt-5">
+        <h2 className="text-4xl font-bold mb-3   text-center text-gray-800 mt-4">
           Sign Up
         </h2>
         <div className="mb-6">
@@ -85,9 +85,11 @@ const SignupPage: React.FC = () => {
               onBlur={handleBlur}
               onChange={handleChange}
               placeholder="Username"
-              className="w-full  px-4 py-2 mb-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              className="w-full  px-4 py-2  mb-1 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
             />
-            {errors.name && <div className="text-red-600">{errors.name}</div>}
+            {errors.name && (
+              <div className="text-red-600 text-xs mb-1">{errors.name}</div>
+            )}
             <input
               placeholder="Email"
               type="email"
@@ -95,9 +97,11 @@ const SignupPage: React.FC = () => {
               value={values.email}
               onBlur={handleBlur}
               onChange={handleChange}
-              className="w-full px-4 py-2 mb-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              className="w-full px-4 py-2 mb-1 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
             />
-            {errors.email && <div className="text-red-600">{errors.email}</div>}
+            {errors.email && (
+              <div className="text-red-600 text-xs mb-1">{errors.email}</div>
+            )}
             <input
               placeholder="Phone Number"
               type="text"
@@ -105,9 +109,11 @@ const SignupPage: React.FC = () => {
               value={values.phone}
               onBlur={handleBlur}
               onChange={handleChange}
-              className="w-full px-4 py-2 mb-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              className="w-full px-4 py-2 mb-1  border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
             />
-            {errors.phone && <div className="text-red-600">{errors.phone}</div>}
+            {errors.phone && (
+              <div className="text-red-600 text-xs mb-1">{errors.phone}</div>
+            )}
             <input
               type="password"
               name="password"
@@ -115,9 +121,13 @@ const SignupPage: React.FC = () => {
               onBlur={handleBlur}
               onChange={handleChange}
               placeholder="Password"
-              className="w-full px-4 py-2 mb-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              className="w-full px-4 py-2 mb-1  border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
             />
-            {errors.password && <div className="text-red-600">{errors.password}</div>}
+            {errors.password && (
+              <div className="text-red-600  text-xs mb-1">
+                {errors.password}
+              </div>
+            )}
             <input
               placeholder="Confirm Password"
               type="password"
@@ -125,25 +135,36 @@ const SignupPage: React.FC = () => {
               value={values.cpassword}
               onBlur={handleBlur}
               onChange={handleChange}
-              className="w-full px-4 py-2 mb-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              className="w-full px-4 py-2 mb-1  border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
             />
-            {errors.cpassword && <div className="text-red-600">{errors.cpassword}</div>}
-            
-            <button
-              type="submit"
-              className="w-full py-2 px-4 bg-black text-white font-semibold rounded-md hover:bg-blue-950 transition duration-300"
-            >
-              Submit
-            </button>
+            {errors.cpassword && (
+              <div className="text-red-600  text-xs mb-1">
+                {errors.cpassword}
+              </div>
+            )}
           </form>
-          <div className="mt-6">
-            <p className="text-center mt-4 text-gray-600">
+          <div className="mt-2">
+            <p className="text-center mt-1 text-gray-600">
               You have an account?{" "}
-              <Link  to='/login'><a href="#" className="text-indigo-600 hover:text-indigo-800">
-                Login
-              </a></Link>
+              <Link to="/login">
+                <a href="#" className="text-indigo-600 hover:text-indigo-800">
+                  Login
+                </a>
+              </Link>
             </p>
           </div>
+          <Button
+            type="submit"
+            className="w-full py-2 px-4 mt-4 bg-black text-white font-semibold rounded-md hover:text-indigo-800"
+          >
+            Submit
+          </Button>
+          <div className="mt-2 flex items-center justify-center">
+            <div className="border-t border-gray-600 flex-grow"></div>
+            <p className="text-sm text-gray-500 mx-4">or</p>
+            <div className="border-t border-gray-600 flex-grow"></div>
+          </div>
+          <Gauth />
         </div>
       </div>
     </div>

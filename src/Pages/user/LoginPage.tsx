@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useFormik } from "formik";
 import { LoginValidation } from "../../Components/Common/Validations";
 import { Login } from "../../Api/user";
@@ -6,6 +6,8 @@ import { useDispatch } from "react-redux";
 import { setUserCredential } from "../../app/slice/AuthSlice";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { Button } from "@nextui-org/react";
+import Gauth from "../../Components/User/UserCommen/Gauth";
 
 interface IinitialValues {
   email: string;
@@ -26,6 +28,8 @@ const LoginPage: React.FC = () => {
       const handleSubmit = async () => {
         try {
           const data = await Login(values.email, values.password);
+          console.log("all", data);
+
           if (data?.data.isverified == false) {
             return toast.error(data?.data.message);
           }
@@ -33,6 +37,7 @@ const LoginPage: React.FC = () => {
             return toast.error(data?.data.message);
           }
           console.log("odata", data?.data.data);
+          
           dispatch(setUserCredential(data?.data.data));
           navigate("/home");
           toast.success("Login succussfilly");
@@ -44,6 +49,7 @@ const LoginPage: React.FC = () => {
       handleSubmit();
     },
   });
+
   return (
     <div className="flex justify-center items-center h-screen p-4 bg-gradient-to-r bg-white">
       {/* <img
@@ -89,12 +95,6 @@ const LoginPage: React.FC = () => {
               <small className="text-red-500">{errors.password}</small>
             )}
 
-            <button
-              type="submit"
-              className="w-full py-2 px-4 bg-black text-white font-semibold rounded-md hover:bg-blue-950 transition duration-300"
-            >
-              Submit
-            </button>
             <div className="flex justify-between mt-4">
               <p className="text-sm text-gray-600">
                 <Link to="/forgetPassword">
@@ -112,6 +112,18 @@ const LoginPage: React.FC = () => {
                 </Link>
               </p>
             </div>
+            <Button
+              type="submit"
+              className="w-full py-2 px-4 mt-4 bg-black text-white font-semibold rounded-md hover:text-indigo-800"
+            >
+              Submit
+            </Button>
+            <div className="mt-6 flex items-center justify-center">
+              <div className="border-t border-gray-600 flex-grow"></div>
+              <p className="text-sm text-gray-500 mx-4">or</p>
+              <div className="border-t border-gray-600 flex-grow"></div>
+            </div>
+            <Gauth />
           </form>
           <div className="mt-6"></div>
         </div>

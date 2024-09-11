@@ -45,6 +45,17 @@ export const Login = async (email: string, password: string) => {
 
     }
 }
+export const googleLogin = async (name: string | null, email: string | null, googlePhotoUrl: string | null) => {
+    try {
+        if (!name || !email) return;
+        const result = await Api.post(userRoutes.googleLogin, { name, email, googlePhotoUrl })        
+        return result.data
+    } catch (error) {
+        console.log(error as Error);
+        if (error) console.log(error)
+        console.log('error coming from here...');
+    }
+}
 
 export const resendOtp = async () => {
     try {
