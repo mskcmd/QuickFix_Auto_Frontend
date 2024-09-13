@@ -16,3 +16,13 @@ export const checkoutService = async (item: any) => {
   }
 };
 
+export const chekFeedback = async (id: string) => {
+  try {        
+      const result = await Api.get(userRoutes.chekFeedback, { params: { id } });
+      return result.data;
+  } catch (error) {
+      console.error("Error in fetchBlog:", error);
+      throw error;
+  }
+};
+

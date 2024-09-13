@@ -11,6 +11,7 @@ import {
 import { Eye } from "lucide-react";
 import { loadStripe } from "@stripe/stripe-js";
 import { checkoutService } from "../../../Api/payment";
+import { FaDownload } from "react-icons/fa";
 
 const stripePromise = loadStripe(
   "pk_test_51PwFKXBBCrEZsEp78GSAbsmHwIELrCPR7TdBjegsksEafGy5JThFba9DLSVQUFhpmCiHQGhG0c8rJ5yOA4TqdZ2b00AM6XnuOe"
@@ -73,7 +74,29 @@ const PaymentTable: React.FC<PaymentTableProps> = ({
           <TableRow key={payment._id}>
             <TableCell>{payment.mechanic.name}</TableCell>
             <TableCell>{payment.name}</TableCell>
-            <TableCell>{payment.status}</TableCell>
+            <TableCell
+              style={{
+                display: "flex",
+              }}
+            >
+              <span
+                style={{
+                  backgroundColor:
+                    payment.status === "pending"
+                      ? "orange"
+                      : payment.status === "Completed"
+                      ? "green"
+                      : "gray",
+                  color: "white",
+                  padding: "0.2rem 0.5rem",
+                  borderRadius: "20px",
+                  fontSize: "12px",
+                  textTransform: "capitalize", 
+                }}
+              >
+                {payment.status}
+              </span>
+            </TableCell>
             <TableCell>₹{payment.total}</TableCell>
             <TableCell>
               {payment.status === "pending" ? (
@@ -85,8 +108,17 @@ const PaymentTable: React.FC<PaymentTableProps> = ({
                   Pay
                 </Button>
               ) : (
-                <Button size="sm" color="success">
-                  Completed
+                <Button
+                  size="sm"
+                  color="success"
+                  onClick={() => {}}
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "0.5rem",
+                  }}
+                >
+                  <FaDownload />
                 </Button>
               )}
             </TableCell>

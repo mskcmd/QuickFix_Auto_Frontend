@@ -58,6 +58,8 @@ const Payments: React.FC = () => {
         onClose={onClose} 
         payment={selectedPayment} 
       />
+
+      
     </div>
   );
 };

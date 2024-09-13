@@ -19,8 +19,9 @@ const userRoutes={
 
     fetchPayment:"/user/fetchPayment",
     checkOut:"/user/create-checkout-session",
-    updatePaymnt:"user/update-payment-status"
-
+    updatePaymnt:"user/update-payment-status",
+    chekFeedback:"user/feedbackcheck",
+    cretateFeedback:"user/feedback",
 
 
 

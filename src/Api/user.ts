@@ -48,7 +48,7 @@ export const Login = async (email: string, password: string) => {
 export const googleLogin = async (name: string | null, email: string | null, googlePhotoUrl: string | null) => {
     try {
         if (!name || !email) return;
-        const result = await Api.post(userRoutes.googleLogin, { name, email, googlePhotoUrl })        
+        const result = await Api.post(userRoutes.googleLogin, { name, email, googlePhotoUrl })
         return result.data
     } catch (error) {
         console.log(error as Error);
@@ -271,11 +271,11 @@ export const fetchPymnetData = async (id: string) => {
     }
 }
 
-export const updatePaymnt = async (paymentId: string,status:string) => {
-    console.log("ss",paymentId);
-    
+export const updatePaymnt = async (paymentId: string, status: string) => {
+    console.log("ss", paymentId);
+
     try {
-        const result = await Api.post(userRoutes.updatePaymnt, { paymentId,status})
+        const result = await Api.post(userRoutes.updatePaymnt, { paymentId, status })
         return result.data
 
     } catch (error) {
@@ -283,6 +283,25 @@ export const updatePaymnt = async (paymentId: string,status:string) => {
 
     }
 }
+
+export const createFeedback = async (
+    values: { rating: number; feedback: string }, 
+    id: string, 
+    mechId: string, 
+    paymentId: string
+  ): Promise<any> => {
+    try {
+      console.log("dd", values, id, mechId, paymentId);
+  
+      // Make the API call (uncomment when you want to use it)
+      const result = await Api.post(userRoutes.cretateFeedback, { values, id, mechId, paymentId });
+      return result.data;
+      
+    } catch (error) {
+      console.error("Error creating feedback:", error);
+    }
+  };
+  
 
 
 
