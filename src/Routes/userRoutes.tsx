@@ -22,6 +22,7 @@ import ChatPage from "../Pages/user/ChatPage";
 import CancelPage from "../Components/User/miscellaneous/CancelPage";
 import SuccessPage from "../Components/User/miscellaneous/Success ";
 import Service from "../Pages/user/Service";
+import Blog from "../Pages/user/Blog";
 
 function UserRoutes() {
   return (
@@ -53,6 +54,8 @@ function UserRoutes() {
         <Route path="booking/:id" element={<MechBooking />} />
         <Route path="chatInterface" element={<ChatPage />} />
         <Route path="services" element={<Service />} />
+        <Route path="blog" element={<Blog />} />
+
 
       </Route>
 

@@ -8,7 +8,6 @@ import {
   FaTools,
   FaClock,
   FaStar,
-  FaQuoteLeft,
   FaWrench,
   FaTimes,
   FaCalendarAlt,
@@ -44,10 +43,14 @@ interface Review {
 
 const MechanicDetails: React.FC = () => {
   const { id } = useParams<{ id: string }>();
-  const userSearchData = useAppSelector((state) => state.auth.userSerchData) as unknown as MechanicProfile[];
+  console.log("id", id);
+
+  const userSearchData = useAppSelector(
+    (state) => state.auth.userSerchData
+  ) as any as MechanicProfile[];
   const mechanic = userSearchData.find((m) => m._id === id);
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
-const navigate = useNavigate()
+  const navigate = useNavigate();
   if (!mechanic) {
     return (
       <motion.div
@@ -83,7 +86,7 @@ const navigate = useNavigate()
   ];
 
   const handleBooking = () => {
-    navigate(`/booking/${mechanic._id}`)
+    navigate(`/booking/${mechanic._id}`);
   };
 
   return (
@@ -111,7 +114,9 @@ const navigate = useNavigate()
               />
               <div className="absolute inset-0 flex flex-col items-center justify-center text-white">
                 <h1 className="text-4xl font-bold mb-2">{mechanic.name}</h1>
-                <p className="text-2xl font-semibold">{mechanic.specialization}</p>
+                <p className="text-2xl font-semibold">
+                  {mechanic.specialization}
+                </p>
               </div>
               <div className="absolute left-1/2 transform -translate-x-1/2 -bottom-20">
                 <motion.div
@@ -119,7 +124,9 @@ const navigate = useNavigate()
                   className="h-40 w-40 rounded-full overflow-hidden border-4 border-white shadow-lg"
                 >
                   <img
-                    src={mechanic.profileImages[0]?.url || "/default-profile.jpg"}
+                    src={
+                      mechanic.profileImages[0]?.url || "/default-profile.jpg"
+                    }
                     alt={`Profile of ${mechanic.name}`}
                     className="h-full w-full object-cover"
                   />
@@ -130,10 +137,14 @@ const navigate = useNavigate()
             {/* Info Section */}
             <div className="p-8 pt-24 grid grid-cols-1 md:grid-cols-2 gap-8">
               <div>
-                <h3 className="text-2xl font-semibold mb-4 text-gray-800">About Me</h3>
-                <p className="text-gray-600 text-lg leading-relaxed mb-6">
-                  {mechanic.description}
-                </p>
+                <h3 className="text-2xl font-semibold mb-4 text-gray-800">
+                  About Me
+                </h3>
+                <p
+                  className="text-gray-600 text-lg leading-relaxed mb-6"
+                  dangerouslySetInnerHTML={{ __html: mechanic.description }}
+                ></p>
+
                 <div className="space-y-4">
                   <InfoItem
                     icon={<FaMapMarkerAlt className="text-blue-500" />}
@@ -172,7 +183,9 @@ const navigate = useNavigate()
                 </motion.button>
               </div>
               <div>
-                <h3 className="text-2xl font-semibold mb-4 text-gray-800">Services</h3>
+                <h3 className="text-2xl font-semibold mb-4 text-gray-800">
+                  Services
+                </h3>
                 <div className="grid grid-cols-2 gap-4">
                   {mechanic.services.map((service, index) => (
                     <ServiceItem key={index} service={service} />
@@ -183,7 +196,9 @@ const navigate = useNavigate()
 
             {/* Gallery Section */}
             <div className="px-8 py-10 bg-gray-100">
-              <h3 className="text-2xl font-semibold text-gray-800 mb-6">Gallery</h3>
+              <h3 className="text-2xl font-semibold text-gray-800 mb-6">
+                Gallery
+              </h3>
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                 {mechanic.profileImages.map((image, index) => (
                   <GalleryImage
@@ -197,7 +212,9 @@ const navigate = useNavigate()
 
             {/* Reviews Section */}
             <div className="px-8 py-10">
-              <h3 className="text-2xl font-semibold text-gray-800 mb-6">Customer Reviews</h3>
+              <h3 className="text-2xl font-semibold text-gray-800 mb-6">
+                Customer Reviews
+              </h3>
               <div className="space-y-6">
                 {dummyReviews.map((review) => (
                   <ReviewItem key={review.id} review={review} />
@@ -258,9 +275,7 @@ const WorkingHours: React.FC<WorkingHoursProps> = ({ workingHours }) => {
   const parseDays = (days: string) => {
     try {
       const parsedDays = JSON.parse(days);
-      return Array.isArray(parsedDays)
-        ? parsedDays.join(", ")
-        : days;
+      return Array.isArray(parsedDays) ? parsedDays.join(", ") : days;
     } catch {
       return days;
     }
@@ -268,7 +283,9 @@ const WorkingHours: React.FC<WorkingHoursProps> = ({ workingHours }) => {
 
   return (
     <div className="mt-8">
-      <h4 className="text-xl font-semibold text-gray-800 mb-2">Working Hours</h4>
+      <h4 className="text-xl font-semibold text-gray-800 mb-2">
+        Working Hours
+      </h4>
       <ul className="list-disc list-inside">
         {workingHours.map((item, index) => (
           <li key={index} className="text-gray-700">

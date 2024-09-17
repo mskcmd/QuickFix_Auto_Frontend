@@ -22,6 +22,8 @@ const userRoutes={
     updatePaymnt:"user/update-payment-status",
     chekFeedback:"user/feedbackcheck",
     cretateFeedback:"user/feedback",
+    fetchBlogs:"user/fetchblogs",
+    fetchAllBlogs:"user/fetchallblogs",
 
 
 

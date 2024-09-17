@@ -285,23 +285,43 @@ export const updatePaymnt = async (paymentId: string, status: string) => {
 }
 
 export const createFeedback = async (
-    values: { rating: number; feedback: string }, 
-    id: string, 
-    mechId: string, 
+    values: { rating: number; feedback: string },
+    id: string,
+    mechId: string,
     paymentId: string
-  ): Promise<any> => {
+): Promise<any> => {
     try {
-      console.log("dd", values, id, mechId, paymentId);
-  
-      // Make the API call (uncomment when you want to use it)
-      const result = await Api.post(userRoutes.cretateFeedback, { values, id, mechId, paymentId });
-      return result.data;
-      
+        console.log("dd", values, id, mechId, paymentId);
+
+        // Make the API call (uncomment when you want to use it)
+        const result = await Api.post(userRoutes.cretateFeedback, { values, id, mechId, paymentId });
+        return result.data;
+
     } catch (error) {
-      console.error("Error creating feedback:", error);
+        console.error("Error creating feedback:", error);
     }
-  };
-  
+};
+
+export const fetchBlogs = async () => {
+    try {
+        const result = await Api.get(userRoutes.fetchBlogs)
+        return result.data
+    } catch (error) {
+        console.log(error);
+
+    }
+}
+
+export const fetchAllBlogs = async () => {
+    try {
+        const result = await Api.get(userRoutes.fetchAllBlogs)
+        return result.data
+    } catch (error) {
+        console.log(error);
+
+    }
+}
+
 
 
 

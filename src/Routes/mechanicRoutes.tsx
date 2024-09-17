@@ -4,7 +4,6 @@ import LoginPage from "../Pages/mechanic/LoginPage";
 import SignupPage from "../Pages/mechanic/SignupPage";
 import MOtppage from "../Pages/mechanic/Otppage.tsx";
 import MechanicLoggedin from "../Components/Mechanic/MechanicCommen/MechanicLoggedin.tsx";
-import RegisterOne from "../Pages/mechanic/RegisterOne.tsx";
 import MechanicHome from "../Pages/mechanic/MechanicHome.tsx";
 import ForgotPassword from "../Pages/mechanic/ForgotPassword.tsx";
 import OTPComponent1 from "../Pages/mechanic/OtpPassReset.tsx";
@@ -37,7 +36,6 @@ function mechanicRoutes() {
       <Route path="*" element={<Erorr404 />}></Route>
 
       <Route element={<MechanicLoggedin />}>
-        <Route path="register" element={<RegisterOne />} />
         <Route path="profile" element={<MechanicProfile />} />
         <Route path="profile/detailedProfile" element={<DetailedProfile />} />
         <Route path="home/messages" element={<ChatPage />} />
