@@ -16,10 +16,10 @@ import { ArrowBackIcon } from "@chakra-ui/icons";
 import { FaSmile, FaPaperclip, FaPaperPlane } from "react-icons/fa";
 import EmojiPicker, { EmojiClickData } from "emoji-picker-react";
 import ScrollableChat from "./ScrollableChat";
-import { allMessages, sendMessages } from "../../../Api/user";
-import { ChatState } from "../../../Context/ChatProvider";
-import { useAppSelector } from "../../../app/store";
+import { allMessages, sendMessages } from "../../../../Api/chat";
+import { useAppSelector } from "../../../../app/store";
 import io, { Socket } from "socket.io-client";
+import { ChatState } from "../../../../Context/MechChatProvidr";
 
 interface Message {
   _id: string;
@@ -47,12 +47,12 @@ function SingleChat({ fetchAgain, setFetchAgain }: { fetchAgain: boolean; setFet
 
   const toast = useToast();
   const { selectedChat, setSelectedChat, notification, setNotification } = ChatState();
-  const userData = useAppSelector((state) => state?.auth.userData);
-  const senderId = userData?.userId || "";
+  const mechanicData = useAppSelector((state) => state.auth.mechanicData);
+  const senderId: string = mechanicData?.mechnicId || "";
 
   useEffect(() => {
     socket = io(ENDPOINT);
-    socket.emit("setup", userData);
+    socket.emit("setup", mechanicData);
     socket.on("connected", () => setSocketConnected(true));
     socket.on("typing", () => setIsTyping(true));
     socket.on("stop typing", () => setIsTyping(false));
@@ -62,7 +62,7 @@ function SingleChat({ fetchAgain, setFetchAgain }: { fetchAgain: boolean; setFet
       socket.off("typing");
       socket.off("stop typing");
     };
-  }, [userData]);
+  }, [mechanicData]);
 
   useEffect(() => {
     socket.on("message received", (newMessageReceived: Message) => {
@@ -125,7 +125,7 @@ function SingleChat({ fetchAgain, setFetchAgain }: { fetchAgain: boolean; setFet
       try {
         const data = await sendMessages({
           content: newMessage,
-          chatId: selectedChat._id,
+          chatId: selectedChat,
           senderId: senderId,
         });
         socket.emit("new message", data);
@@ -220,7 +220,7 @@ function SingleChat({ fetchAgain, setFetchAgain }: { fetchAgain: boolean; setFet
           onClick={() => setSelectedChat(null)}
           aria-label="Go back"
         />
-        <Text>{selectedChat?.userDetails?.name}</Text>
+        <Text>{selectedChat?.mechanicDetails?.name}</Text>
       </Box>
 
       <Box flex="1" overflowY="auto" p={4} bg="#F9F9F9" borderRadius="lg">

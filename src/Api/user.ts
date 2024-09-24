@@ -187,7 +187,7 @@ export const updateProfile = async (
 
 export const searchChatData = async (search: string) => {
     try {
-        console.log(search);
+        console.log("wwsd",search);
         const result = await Api.get(`/user/chat/allUsers?search=${search}`);
         console.log("users", result.data);
         return result.data;
@@ -232,8 +232,9 @@ export const allMessages = async (chatId: string) => {
 
     try {
         const result = await Api.get(`/user/chat/allMesssge/${chatId}`);
-        console.log("all message", result);
-        return result;
+        console.log("all message", result.data);
+
+        return result.data;
     } catch (error) {
         console.error("Failed to fetch messages", error);
         throw error; // Rethrow the error so it can be handled where the function is called

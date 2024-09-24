@@ -1,76 +1,66 @@
-import { Avatar, Tooltip } from "@chakra-ui/react";
-import InfiniteScroll from "react-infinite-scroll-component";
-import {
-  isLastMessage,
-  isSameSender,
-  isSameSenderMargin,
-  isSameUser,
-} from "../Config/ChatLogics";
+import React from "react";
+import { Box, Avatar, Text, Tooltip } from "@chakra-ui/react";
 
-export interface ScrollableChatProps {
-  messages: any[];
-  user: {
+interface Message {
+  _id: string;
+  sender: {
     _id: string;
+    name: string;
   };
-  fetchMoreMessages: () => void;
-  hasMore: boolean;
+  content: string;
+  createdAt: string;
 }
 
-function ScrollableChat({
-  messages,
-  user,
-  fetchMoreMessages,
-  hasMore,
-}: ScrollableChatProps) {
+interface ScrollableChatProps {
+  messages: any[];
+  user: { _id: string };
+  hasMore: boolean;
+  fetchMoreMessages?: () => void; // Add this if it's optional
+}
+
+const ScrollableChat: React.FC<ScrollableChatProps> = ({ messages, user }) => {
+  console.log();
+
   return (
     <>
-      <InfiniteScroll
-        dataLength={messages.length}
-        next={fetchMoreMessages}
-        hasMore={hasMore}
-        inverse={true} // This loads the messages in reverse (for chat scroll up)
-        loader={<h4>Loading...</h4>}
-        scrollableTarget="scrollableDiv"
-      >
-        {messages.map((m, i) => (
-          <div key={m._id} style={{ display: "flex" }}>
-            {m?.sender &&
-              (isSameSender(messages, m, i, user._id) ||
-                isLastMessage(messages, i, user._id)) && (
-                <Tooltip
-                  label={m.sender.name}
-                  placement="bottom-start"
-                  hasArrow
-                >
-                  <Avatar
-                    mt="7px"
-                    mr={1}
-                    size="sm"
-                    cursor="pointer"
-                    name={m?.sender?.name}
-                    src={m?.sender?.imgUrl}
-                  />
-                </Tooltip>
-              )}
-            <span
-              style={{
-                backgroundColor: `${
-                  m?.sender?._id === user?._id ? "#BEE3F8" : "#B9F5D0"
-                }`,
-                borderRadius: "20px",
-                padding: "5px 15px",
-                maxWidth: "75%",
-                marginLeft: isSameSenderMargin(messages, m, i, user._id),
-                marginTop: isSameUser(messages, m, i) ? 3 : 10,
-              }}
+      {" "}
+      <Box display="flex" flexDirection="column" w="100%">
+        {messages.map((m) => (
+          <Box
+            key={m._id}
+            display="flex"
+            justifyContent={
+              m.sender._id === user._id ? "flex-end" : "flex-start"
+            }
+            mb={2}
+          >
+            {m.sender._id !== user._id && (
+              <Tooltip label={m.sender.name} placement="bottom-start" hasArrow>
+                <></>
+              </Tooltip>
+            )}
+            <Box
+              background={m.sender._id === user._id ? "#B9F5D0" : "#BEE3F8"}
+              borderRadius="20px"
+              padding="5px 15px"
+              maxWidth="75%"
+              marginLeft={m.sender._id === user._id ? "0" : "10px"}
+              marginTop="10px"
             >
-              {m.content}
-            </span>
-          </div>
+              <Text>{m.content}</Text>
+              <Text fontSize="xs" color="gray.500" textAlign="right">
+                {new Date(m.createdAt).toLocaleTimeString([], {
+                  hour: "2-digit",
+                  minute: "2-digit",
+                  hour12: true,
+                })}
+              </Text>
+            </Box>
+          </Box>
         ))}
-      </InfiniteScroll>
+      </Box>
     </>
   );
-}
+};
 
 export default ScrollableChat;

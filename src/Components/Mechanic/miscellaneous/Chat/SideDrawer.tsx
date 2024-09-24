@@ -16,11 +16,16 @@ import {
 } from "@chakra-ui/react";
 import { useState } from "react";
 import { IoMdSearch } from "react-icons/io";
-import { allAccessChat, searchChatData } from "../../../Api/user"; // Adjust import path as needed
-import { ChatState } from "../../../Context/ChatProvider";
+import { useAppSelector } from "../../../../app/store";
+import { ChatState } from "../../../../Context/MechChatProvidr";
+import { allAccessChat, searchChatData } from "../../../../Api/chat";
 import ChatLoading from "./ChatLoading";
 import UserListItem from "./UserListItem";
-import { useAppSelector } from "../../../app/store";
+//   import { allAccessChat, searchChatData } from "../../../Api/user"; // Adjust import path as needed
+//   import { ChatState } from "../../../Context/ChatProvider";
+//   import ChatLoading from "./ChatLoading";
+//   import UserListItem from "./UserListItem";
+//   import { useAppSelector } from "../../../app/store";
 
 interface User {
   _id: string;
@@ -37,7 +42,12 @@ function SideDrawer() {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const toast = useToast();
 
-  const { setSelectedChat, userr, chats, setChats, notification, setNotification } = ChatState();
+  // const { setSelectedChat, userr, chats, setChats, notification, setNotification } = ChatState();
+
+  const { setSelectedChat,chats,setChats } = ChatState();
+
+  const mechanicData = useAppSelector((state) => state.auth.mechanicData);
+  const senderId: string = mechanicData?.mechnicId || "";
 
   const handleSearch = async () => {
     if (!search.trim()) {
@@ -54,7 +64,6 @@ function SideDrawer() {
       setLoading(true);
       const data = await searchChatData(search);
       console.log("search result", data);
-
       setSearchResult(data);
     } catch (error: any) {
       toast({
@@ -71,14 +80,15 @@ function SideDrawer() {
     }
   };
 
-  const userData:any = useAppSelector((state) => state.auth.userData);
-  const senderId: string = userData?.userId || "";
-
   const accessChat = async (senderId: string, receiverId: string) => {
+    console.log("idees", senderId, receiverId);
+
     try {
       setLoadingChat(true);
-      const data = await allAccessChat(senderId, receiverId);      
+      const data = await allAccessChat(senderId, receiverId);
+      console.log("ww",data);
       if (!chats.find((c) => c._id === data._id)) setChats([data, ...chats]);
+      console.log("ww2",chats);
       onClose();
       setSelectedChat(data);
     } catch (error: any) {
@@ -146,7 +156,7 @@ function SideDrawer() {
                   <UserListItem
                     key={item._id}
                     item={item}
-                    handleFunction={() => accessChat(senderId, item._id)}
+                      handleFunction={() => accessChat(senderId, item._id)}
                   />
                 ))
               )}

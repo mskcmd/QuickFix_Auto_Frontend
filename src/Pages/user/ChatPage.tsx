@@ -6,10 +6,12 @@ import ChatProvider from "../../Context/ChatProvider";
 const ChatPage: FC = () => {
   return (
     <>
-      <ChatProvider>
+      <div className="overflow-clip">
+        <ChatProvider>
           <Header />
           <ChatInterface />
-      </ChatProvider>
+        </ChatProvider>
+      </div>
     </>
   );
 };
