@@ -11,6 +11,7 @@ const userRoutes={
     userLogout:"/auth/userLogout",
     searchMech:"/auth/serchMech",
 
+    getProfile:"user/getProfile",
     booking:"/user/booking",
     fetchBookData:"/user/fetchBookData",
     updateProfle:"/user/updateProfle",
@@ -24,7 +25,9 @@ const userRoutes={
     cretateFeedback:"user/feedback",
     fetchBlogs:"user/fetchblogs",
     fetchAllBlogs:"user/fetchallblogs",
-
+    fetchAllService:"user/fetchAllService",
+    fetchAllshop:"user/fetchAllshop",
+    fetchFreelancersData:"user/fetchFreelancer",
 
 
 }

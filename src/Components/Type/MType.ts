@@ -1,3 +1,5 @@
+import { Key, ReactNode } from "react";
+
 export interface User {
     _id: string;
     user: any;
@@ -52,4 +54,28 @@ export interface User {
     price: number;
   }
   
+  // types.ts
+
+export interface Service1 {
+  id: string;
+  title: string;
+  description: string;
+  icon: React.ElementType;
+}
+
+export interface Shop {
+  id: string;
+  name: string;
+  location: string;
+  rating: number;
+  services: string[]; // Array of service IDs that the shop offers
+}
+
+export interface Freelancer {
+  id: string;
+  name: string;
+  specialty: string;
+  rating: number;
+}
+
   

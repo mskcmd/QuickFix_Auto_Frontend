@@ -45,6 +45,7 @@ export const Login = async (email: string, password: string) => {
 
     }
 }
+
 export const googleLogin = async (name: string | null, email: string | null, googlePhotoUrl: string | null) => {
     try {
         if (!name || !email) return;
@@ -111,6 +112,15 @@ export const logout = async () => {
     } catch (error) {
         console.log(error);
 
+    }
+}
+
+export const getProfile = async () => {
+    try {
+        const result = await Api.get(userRoutes.getProfile)
+        return result
+    } catch (error) {
+        console.log(error)
     }
 }
 
@@ -187,7 +197,7 @@ export const updateProfile = async (
 
 export const searchChatData = async (search: string) => {
     try {
-        console.log("wwsd",search);
+        console.log("wwsd", search);
         const result = await Api.get(`/user/chat/allUsers?search=${search}`);
         console.log("users", result.data);
         return result.data;
@@ -322,6 +332,35 @@ export const fetchAllBlogs = async () => {
 
     }
 }
+
+export const fetchServiceData = async () => {
+    try {
+        const result = await Api.get(userRoutes.fetchAllService)
+        return result.data
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+export const fetchShopData = async (data: string) => {
+    try {
+        const result = await Api.get(`${userRoutes.fetchAllshop}?query=${data}`);
+        return result.data;
+    } catch (error) {
+        console.error("Error fetching shop data:", error);
+        throw error;  
+    }
+}
+
+export const fetchFreelancersData = async () => {
+    try {
+        const result = await Api.get(userRoutes.fetchFreelancersData)
+        return result.data
+    } catch (error) {
+        console.log(error);
+    }
+}
+
 
 
 

@@ -25,7 +25,7 @@ export const getUseRData = async () => {
 export const getMechData = async () => {
     try {
         const result = await Api.get(adminRoute.GetMechData)
-        console.log("mech)data",result);
+        console.log("mech)data", result);
         return result
     } catch (error) {
         console.log(error);
@@ -39,5 +39,15 @@ export const logout = async () => {
     } catch (error) {
         console.log(error);
 
+    }
+}
+
+export const blockUser = async (userId: string) => {
+    try {
+        console.log("user id:", userId);
+        const result = await Api.put(`${adminRoute.userBlock}?userId=${userId}`);
+        return result.data;
+    } catch (error) {
+        console.log(error);
     }
 }

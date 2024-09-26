@@ -5,6 +5,8 @@ const adminRoutes = {
     GetUserData:"/admin/getUserData",
     GetMechData:"/admin/getMechData",
 
+    userBlock:"/admin/userBlock",
+
 
 
 }

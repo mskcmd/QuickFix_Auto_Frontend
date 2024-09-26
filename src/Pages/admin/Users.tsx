@@ -10,17 +10,18 @@ import {
   Chip,
   Tooltip,
   Button,
+  Spinner,
 } from "@nextui-org/react";
-import { getUseRData } from "../../Api/admin";
-import { Edit } from "lucide-react";
+import { blockUser, getUseRData } from "../../Api/admin";
 
 interface UserData {
   name: string;
   email: string;
   phone: string;
-  imageUrl:string,
+  imageUrl: string;
   isVerified: boolean;
   isBlocked: boolean;
+  _id: string;
 }
 
 const statusColorMap: Record<string, "success" | "danger"> = {
@@ -39,6 +40,10 @@ const columns = [
 
 const Users: React.FC = () => {
   const [users, setUsers] = useState<UserData[]>([]);
+  const [block, setBlock] = useState<boolean>(false);
+  const [loadingUsers, setLoadingUsers] = useState<{ [key: string]: boolean }>(
+    {}
+  );
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -55,74 +60,93 @@ const Users: React.FC = () => {
     };
 
     fetchUsers();
-  }, []);
+  }, [block]);
 
-  const handleBlockUser = useCallback((userId: string) => {
-    // Implement the logic to block/unblock the user here
-    setUsers((prevUsers) =>
-      prevUsers.map((user) =>
-        user.email === userId ? { ...user, isBlocked: !user.isBlocked } : user
-      )
-    );
-  }, []);
-
-  const renderCell = useCallback((user: UserData, columnKey: React.Key) => {
-    const cellValue = user[columnKey as keyof UserData];
-
-    switch (columnKey) {
-      case "name":
-        return (
-          <User
-            avatarProps={{
-              radius: "lg",
-              src: `${user.imageUrl}${user.email}`,
-            }}
-            description={user.email}
-            name={cellValue}
-          >
-            {user.email}
-          </User>
-        );
-      case "status":
-        return (
-          <Chip
-            className="capitalize"
-            color={statusColorMap[user.isVerified ? "active" : "inactive"]}
-            size="sm"
-            variant="flat"
-          >
-            {user.isVerified ? "Active" : "Inactive"}
-          </Chip>
-        );
-      case "subscribed":
-        return (
-          <Chip
-            className="capitalize"
-            color={user.isVerified ? "success" : "danger"}
-            size="sm"
-            variant="flat"
-          >
-            {user.isVerified ? "Subscribed" : "Not Subscribed"}
-          </Chip>
-        );
-      case "actions":
-        return (
-          <div>
-            <Tooltip content={user.isBlocked ? "Unblock user" : "Block user"}>
-              <Button
-                color={user.isBlocked ? "success" : "danger"}
-                size="sm"
-                onClick={() => handleBlockUser(user.email)}
-              >
-                {user.isBlocked ? "Unblock" : "Block"}
-              </Button>
-            </Tooltip>
-          </div>
-        );
-      default:
-        return cellValue;
+  const handleBlockUser = useCallback(async (userId: string) => {
+    setLoadingUsers((prev) => ({ ...prev, [userId]: true }));
+    try {
+      const result = await blockUser(userId);
+      console.log(result);
+      setBlock(result.isBlocked);
+      setUsers((prevUsers) =>
+        prevUsers.map((user) =>
+          user._id === userId ? { ...user, isBlocked: result.isBlocked } : user
+        )
+      );
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoadingUsers((prev) => ({ ...prev, [userId]: false }));
     }
   }, []);
+
+  const renderCell = useCallback(
+    (user: UserData, columnKey: React.Key) => {
+      const cellValue = user[columnKey as keyof UserData];
+
+      switch (columnKey) {
+        case "name":
+          return (
+            <User
+              avatarProps={{
+                radius: "lg",
+                src: `${user.imageUrl}`,
+              }}
+              description={user.email}
+              name={cellValue}
+            >
+              {user.email}
+            </User>
+          );
+        case "status":
+          return (
+            <Chip
+              className="capitalize"
+              color={statusColorMap[user.isBlocked ? "inactive" : "active"]}
+              size="sm"
+              variant="flat"
+            >
+              {user.isBlocked ? "Inactive" : "Active"}
+            </Chip>
+          );
+        case "subscribed":
+          return (
+            <Chip
+              className="capitalize"
+              color={user.isVerified ? "success" : "danger"}
+              size="sm"
+              variant="flat"
+            >
+              {user.isVerified ? "Subscribed" : "Not Subscribed"}
+            </Chip>
+          );
+        case "actions":
+          return (
+            <div>
+              <Tooltip content={user.isBlocked ? "Unblock user" : "Block user"}>
+                <Button
+                  color={user.isBlocked ? "success" : "danger"}
+                  size="sm"
+                  onClick={() => handleBlockUser(user._id)}
+                  disabled={loadingUsers[user._id]}
+                >
+                  {loadingUsers[user._id] ? (
+                    <Spinner size="sm" color="white" />
+                  ) : user.isBlocked ? (
+                    "Unblock"
+                  ) : (
+                    "Block"
+                  )}
+                </Button>
+              </Tooltip>
+            </div>
+          );
+        default:
+          return cellValue;
+      }
+    },
+    [loadingUsers, handleBlockUser]
+  );
 
   return (
     <div className="container mx-auto px-3">

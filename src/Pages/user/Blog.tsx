@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import Header from "../../Components/User/Header";
 import {
   Card,
@@ -13,7 +13,7 @@ import {
   ModalFooter,
   useDisclosure,
 } from "@nextui-org/react";
-import { fetchAllBlogs, fetchBlogs } from "../../Api/user";
+import { fetchAllBlogs } from "../../Api/user";
 import { motion } from "framer-motion";
 
 interface BlogPost {
