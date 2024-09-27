@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useLayoutEffect, useState } from "react";
 import Sidebar from "./Sidebar";
 import ShowShops from "./ShowShops";
 import TopFreelancers from "./TopFreelancers";
@@ -19,8 +19,8 @@ const CarServices: React.FC = () => {
     new: [],
   });
 
+  console.log("filteredShops", filteredShops);
 
- 
   const fetchFreelancers = async () => {
     try {
       const response = await fetchFreelancersData();
@@ -56,6 +56,7 @@ const CarServices: React.FC = () => {
           icon: getIconForService(service.serviceName),
           imageUrl: service.imageUrl,
           price: service.price,
+          mechanicName: service.mechanicName,
         });
       });
 
@@ -67,6 +68,7 @@ const CarServices: React.FC = () => {
           icon: getIconForService(service.serviceName),
           imageUrl: service.imageUrl,
           price: service.price,
+          mechanicName: service.mechanicName,
         });
       });
 
@@ -80,6 +82,7 @@ const CarServices: React.FC = () => {
     try {
       const response = await fetchShopData(serviceId);
       const transformedShops = response.map((shop: any) => ({
+        id: shop.mechanicData._id,
         mechanicID: shop.mechanicData.mechanicID,
         name: shop.mechanicDetails.name,
         locationName: shop.mechanicData.locationName,
@@ -95,7 +98,7 @@ const CarServices: React.FC = () => {
     setSelectedService(serviceId);
   };
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     fetchService();
     fetchFreelancers();
   }, []);
@@ -118,7 +121,7 @@ const CarServices: React.FC = () => {
         <div className="lg:w-2/3">
           <ShowShops shops={filteredShops} />
           <TopFreelancers freelancers={freelancers} />
-          </div>
+        </div>
       </div>
     </div>
   );

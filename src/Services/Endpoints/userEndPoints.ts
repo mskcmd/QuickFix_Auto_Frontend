@@ -28,6 +28,7 @@ const userRoutes={
     fetchAllService:"user/fetchAllService",
     fetchAllshop:"user/fetchAllshop",
     fetchFreelancersData:"user/fetchFreelancer",
+    bookingdata:"user/bookingdata",
 
 
 }

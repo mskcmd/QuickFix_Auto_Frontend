@@ -348,13 +348,22 @@ export const fetchShopData = async (data: string) => {
         return result.data;
     } catch (error) {
         console.error("Error fetching shop data:", error);
-        throw error;  
+        throw error;
     }
 }
 
 export const fetchFreelancersData = async () => {
     try {
         const result = await Api.get(userRoutes.fetchFreelancersData)
+        return result.data
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+export const bookingdata = async (id: string) => {
+    try {
+        const result = await Api.get(userRoutes.bookingdata, { params: { id } })
         return result.data
     } catch (error) {
         console.log(error);

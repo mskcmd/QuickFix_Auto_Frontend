@@ -1,6 +1,7 @@
 import React from 'react';
 import { Card, CardBody, Avatar, Chip, Button } from "@nextui-org/react";
 import { Star, Clock, Eye, Calendar } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 interface Freelancer {
   _id: string;
@@ -16,7 +17,7 @@ interface TopFreelancersProps {
   freelancers: any[];
 }
 
-const FreelancerCard: React.FC<Freelancer> = ({ name, specialization, yearsOfExperience, profileImages, workingHours }) => (
+const FreelancerCard: React.FC<Freelancer> = ({ _id,name, specialization, yearsOfExperience, profileImages, workingHours }) => (
   <Card className="w-full">
     <CardBody className="flex flex-col p-4">
       <div className="flex items-center mb-4">
@@ -26,8 +27,8 @@ const FreelancerCard: React.FC<Freelancer> = ({ name, specialization, yearsOfExp
           className="mr-4"
         />
         <div className="flex-grow">
-          <h3 className="text-lg font-semibold">{name}</h3>
-          <p className="text-sm text-gray-600">{specialization}</p>
+          <h3 className="text-lg font-semibold">{specialization}</h3>
+          {/* <p className="text-sm text-gray-600">{specialization}</p> */}
         </div>
       </div>
       <div className="flex items-center mb-4">
@@ -48,6 +49,7 @@ const FreelancerCard: React.FC<Freelancer> = ({ name, specialization, yearsOfExp
         >
           View Profile
         </Button>
+        <Link to={`/booking/${_id}`}>
         <Button 
           size="sm" 
           color="success"
@@ -55,6 +57,7 @@ const FreelancerCard: React.FC<Freelancer> = ({ name, specialization, yearsOfExp
         >
           Book Now
         </Button>
+        </Link>
       </div>
     </CardBody>
   </Card>

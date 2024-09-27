@@ -1,8 +1,10 @@
 import React from "react";
 import { Card, CardBody, CardFooter, Button, Chip } from "@nextui-org/react";
-import { Star, MapPin, Clock, User } from "lucide-react";
+import { Star, MapPin, Clock, User, Eye, Calendar } from "lucide-react";
+import { Link } from "react-router-dom";
 
 interface Shop {
+  id: string;
   mechanicID: string;
   name: string;
   locationName: string;
@@ -18,6 +20,7 @@ interface ShowShopsProps {
 }
 
 const ShopCard: React.FC<Shop> = ({
+  id,
   name,
   locationName,
   rating,
@@ -66,9 +69,25 @@ const ShopCard: React.FC<Shop> = ({
             </Chip>
           )}
         </div>
-        <div className="p-2 flex gap-x-2">
-          <Button color="primary">Book Now</Button>
-          <Button color="secondary">View Profile</Button>
+
+        <div className="flex justify-between mt-2">
+          <Button
+            size="sm"
+            variant="flat"
+            color="primary"
+            startContent={<Eye size={16} />}
+          >
+            View Profile
+          </Button>
+          <Link to={`/booking/${id}`}>
+            <Button
+              size="sm"
+              color="success"
+              startContent={<Calendar size={16} />}
+            >
+              Book Now
+            </Button>
+          </Link>
         </div>
       </div>
     </CardBody>
