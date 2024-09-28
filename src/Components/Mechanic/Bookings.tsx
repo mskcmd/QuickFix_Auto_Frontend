@@ -18,7 +18,7 @@ const Customers: React.FC = () => {
       if (mechanicData?.mechnicId) {
         try {
           const result = await fetchUsers(mechanicData.mechnicId);
-          setUsers(result.data);
+          setUsers(result);
         } catch (error) {
           console.error("Failed to fetch mechanic data:", error);
         }
@@ -38,7 +38,6 @@ const Customers: React.FC = () => {
   const handleStatusChange = async (userId: string, newStatus: string) => {
     try {
       const result: any = await statusUpdate(userId, newStatus);
-      console.log(result);
       setStatus(result);
     } catch (error) {
       console.log(error);
@@ -47,8 +46,8 @@ const Customers: React.FC = () => {
 
   const filteredUsers = users.filter(
     (user) =>
-      user.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      user.phone.includes(searchTerm)
+      user?.name?.toLowerCase()?.includes(searchTerm?.toLowerCase()) ||
+      user?.phone?.includes(searchTerm)
   );
 
   function handleViewDetails(_user: User): void {

@@ -180,7 +180,8 @@ export const fetchUsers = async (mechanicId: string) => {
     try {
         console.log("Fetching dasta for mechanic ID:", mechanicId);
         const result = await Api.get(mechanicRoute.fetchUsers, { params: { Id: mechanicId } });
-        return result;
+        console.log("bookings", result.data);
+        return result.data;
     } catch (error) {
         console.error("Error fetching users data:", error);
         throw error;
@@ -306,7 +307,7 @@ export const fetchBlog = async (id: string) => {
 };
 
 export const deleteBlog = async (id: string) => {
-    try {        
+    try {
         const result = await Api.delete(mechanicRoute.deleteBlog, { params: { id } });
         return result.data;
     } catch (error) {
@@ -316,7 +317,7 @@ export const deleteBlog = async (id: string) => {
 };
 
 export const fetchEditBlog = async (id: string) => {
-    try {        
+    try {
         const result = await Api.get(mechanicRoute.fetchEditBlog, { params: { id } });
         return result.data;
     } catch (error) {
@@ -328,8 +329,8 @@ export const fetchEditBlog = async (id: string) => {
 export const updateBlog = async (id: any, values: any) => {
     try {
 
-        console.log("drt",values.image);
-        
+        console.log("drt", values.image);
+
         const formData = new FormData();
 
         formData.append('id', id);
@@ -365,6 +366,28 @@ export const paymentFetch = async (id: string) => {
 
     }
 }
+
+export const fetchRevenue = async (id: string) => {
+    try {
+        const result = await Api.get(mechanicRoute.fetchmonthlyRevenue, { params: { id } })
+        return result.data
+    } catch (error) {
+        console.log(error);
+
+    }
+}
+
+export const userGrowths = async (id: string) => {
+    try {
+        console.log("ss");
+        const result = await Api.get(mechanicRoute.userGrowths, { params: { id } })
+        return result.data
+    } catch (error) {
+        console.log(error);
+
+    }
+}
+
 
 
 

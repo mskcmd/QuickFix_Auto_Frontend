@@ -1,81 +1,375 @@
+// import React from "react";
+// import { Bar, Doughnut, Line, Radar, Scatter } from "react-chartjs-2";
+// import { Chart as ChartJS, registerables } from "chart.js";
+// import {
+//   Table,
+//   TableHeader,
+//   TableColumn,
+//   TableBody,
+//   TableRow,
+//   TableCell,
+//   User,
+//   Chip,
+//   Tooltip,
+// } from "@nextui-org/react";
+// import {
+//   EyeIcon,
+//   TrendingUpIcon,
+//   UsersIcon,
+//   CreditCardIcon,
+//   ActivityIcon,
+//   DollarSignIcon,
+// } from "lucide-react";
+
+// ChartJS.register(...registerables);
+
+// type Status = "active" | "paused" | "vacation";
+
+// interface UserData {
+//   id: number;
+//   name: string;
+//   role: string;
+//   team: string;
+//   status: Status;
+//   age: string;
+//   avatar: string;
+//   email: string;
+// }
+
+// const statusColorMap: Record<Status, "success" | "danger" | "warning"> = {
+//   active: "success",
+//   paused: "danger",
+//   vacation: "warning",
+// };
+
+// const columns = [
+//   { name: "NAME", uid: "name" },
+//   { name: "ROLE", uid: "role" },
+//   { name: "STATUS", uid: "status" },
+//   { name: "ACTIONS", uid: "actions" },
+// ];
+
+// const users: UserData[] = [
+//   {
+//     id: 1,
+//     name: "Tony Reichert",
+//     role: "CEO",
+//     team: "Management",
+//     status: "active",
+//     age: "29",
+//     avatar: "https://i.pravatar.cc/150?u=a042581f4e29026024d",
+//     email: "tony.reichert@example.com",
+//   },
+//   {
+//     id: 2,
+//     name: "Zoey Lang",
+//     role: "Tech Lead",
+//     team: "Development",
+//     status: "paused",
+//     age: "25",
+//     avatar: "https://i.pravatar.cc/150?u=a042581f4e29026704d",
+//     email: "zoey.lang@example.com",
+//   },
+//   {
+//     id: 3,
+//     name: "Jane Fisher",
+//     role: "Sr. Dev",
+//     team: "Development",
+//     status: "active",
+//     age: "22",
+//     avatar: "https://i.pravatar.cc/150?u=a04258114e29026702d",
+//     email: "jane.fisher@example.com",
+//   },
+//   {
+//     id: 4,
+//     name: "William Howard",
+//     role: "Community Manager",
+//     team: "Marketing",
+//     status: "vacation",
+//     age: "28",
+//     avatar: "https://i.pravatar.cc/150?u=a048581f4e29026701d",
+//     email: "william.howard@example.com",
+//   },
+//   {
+//     id: 5,
+//     name: "Kristen Copper",
+//     role: "Sales Manager",
+//     team: "Sales",
+//     status: "active",
+//     age: "24",
+//     avatar: "https://i.pravatar.cc/150?u=a092581d4ef9026700d",
+//     email: "kristen.cooper@example.com",
+//   },
+// ];
+
+// const monthlyRevenue = {
+//   labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun"],
+//   datasets: [
+//     {
+//       label: "Monthly Revenue",
+//       data: [12000, 19000, 3000, 5000, 2000, 3000],
+//       backgroundColor: "rgba(99, 102, 241, 0.6)",
+//       borderColor: "rgb(99, 102, 241)",
+//       borderWidth: 2,
+//     },
+//   ],
+// };
+
+// const userGrowth = {
+//   labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun"],
+//   datasets: [
+//     {
+//       label: "User Growth",
+//       data: [100, 120, 150, 170, 180, 170],
+//       borderColor: "rgb(16, 185, 129)",
+//       backgroundColor: "rgba(16, 185, 129, 0.5)",
+//       tension: 0.4,
+//     },
+//   ],
+// };
+
+// const paymentMethods = {
+//   labels: ["Credit Card", "PayPal", "Bank Transfer", "Cash"],
+//   datasets: [
+//     {
+//       data: [300, 50, 100, 20],
+//       backgroundColor: [
+//         "rgba(239, 68, 68, 0.6)",
+//         "rgba(59, 130, 246, 0.6)",
+//         "rgba(245, 158, 11, 0.6)",
+//         "rgba(16, 185, 129, 0.6)",
+//       ],
+//     },
+//   ],
+// };
+
+// const userEngagement = {
+//   labels: ["Likes", "Comments", "Shares", "Views", "Clicks"],
+//   datasets: [
+//     {
+//       label: "User Engagement",
+//       data: [65, 59, 90, 81, 56],
+//       backgroundColor: "rgba(99, 102, 241, 0.2)",
+//       borderColor: "rgb(99, 102, 241)",
+//       pointBackgroundColor: "rgb(99, 102, 241)",
+//       pointBorderColor: "#fff",
+//       pointHoverBackgroundColor: "#fff",
+//       pointHoverBorderColor: "rgb(99, 102, 241)",
+//     },
+//   ],
+// };
+
+// const customerLifetime = {
+//   datasets: [
+//     {
+//       label: "Customer Lifetime Value",
+//       data: [
+//         { x: 1, y: 1000 },
+//         { x: 2, y: 2000 },
+//         { x: 3, y: 3000 },
+//         { x: 4, y: 4000 },
+//         { x: 5, y: 5000 },
+//       ],
+//       backgroundColor: "rgba(16, 185, 129, 0.6)",
+//       borderColor: "rgb(16, 185, 129)",
+//     },
+//   ],
+// };
+
+// const chartOptions = {
+//   responsive: true,
+//   maintainAspectRatio: false,
+//   plugins: {
+//     legend: {
+//       position: "bottom" as const,
+//     },
+//   },
+// };
+
+// function Dashboard() {
+//   const renderCell = React.useCallback(
+//     (user: UserData, columnKey: React.Key) => {
+//       const cellValue = user[columnKey as keyof UserData];
+
+//       switch (columnKey) {
+//         case "name":
+//           return (
+//             <User
+//               avatarProps={{ radius: "lg", src: user.avatar }}
+//               description={user.email}
+//               name={cellValue}
+//             >
+//               {user.email}
+//             </User>
+//           );
+//         case "role":
+//           return (
+//             <div className="flex flex-col">
+//               <p className="text-bold text-sm capitalize">{cellValue}</p>
+//               <p className="text-bold text-sm capitalize text-default-400">
+//                 {user.team}
+//               </p>
+//             </div>
+//           );
+//         case "status":
+//           return (
+//             <Chip
+//               className="capitalize"
+//               color={statusColorMap[user.status]}
+//               size="sm"
+//               variant="flat"
+//             >
+//               {cellValue}
+//             </Chip>
+//           );
+//         case "actions":
+//           return (
+//             <div className="">
+//               <Tooltip content="Details">
+//                 <span className="">
+//                   <EyeIcon size={20} />
+//                 </span>
+//               </Tooltip>
+//             </div>
+//           );
+//         default:
+//           return cellValue;
+//       }
+//     },
+//     []
+//   );
+
+//   return (
+//     <div className="p-4 sm:p-6 bg-gradient-to-br from-gray-50 to-white min-h-screen">
+//       <h1 className="text-3xl sm:text-4xl font-bold mb-6 sm:mb-8 text-center text-gray-800">
+//         Analytics Dashboard
+//       </h1>
+
+//       <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6 mb-6 sm:mb-8">
+//         <div className="lg:col-span-2 bg-white rounded-xl shadow-md p-4 sm:p-6 transition-all duration-300 hover:shadow-lg">
+//           <div className="flex items-center justify-between mb-4">
+//             <h2 className="text-xl sm:text-2xl font-semibold text-gray-700">
+//               Monthly Revenue
+//             </h2>
+//             <TrendingUpIcon
+//               className="text-indigo-500"
+//               size={24}
+//               sm:size={28}
+//             />
+//           </div>
+//           <div className="h-64 sm:h-96">
+//             <Bar data={monthlyRevenue} options={chartOptions} />
+//           </div>
+//         </div>
+
+//         <div className="bg-white rounded-xl shadow-md p-4 sm:p-6 transition-all duration-300 hover:shadow-lg">
+//           <div className="flex items-center justify-between mb-4">
+//             <h2 className="text-xl sm:text-2xl font-semibold text-gray-700">
+//               User Growth
+//             </h2>
+//             <UsersIcon className="text-green-500" size={24} sm:size={28} />
+//           </div>
+//           <div className="h-64 sm:h-96">
+//             <Line data={userGrowth} options={chartOptions} />
+//           </div>
+//         </div>
+
+//         <div className="bg-white rounded-xl shadow-md p-4 sm:p-6 transition-all duration-300 hover:shadow-lg">
+//           <div className="flex items-center justify-between mb-4">
+//             <h2 className="text-xl sm:text-2xl font-semibold text-gray-700">
+//               Payment Methods
+//             </h2>
+//             <CreditCardIcon className="text-blue-500" size={24} sm:size={28} />
+//           </div>
+//           <div className="h-64">
+//             <Doughnut data={paymentMethods} options={chartOptions} />
+//           </div>
+//         </div>
+
+//         <div className="bg-white rounded-xl shadow-md p-4 sm:p-6 transition-all duration-300 hover:shadow-lg">
+//           <div className="flex items-center justify-between mb-4">
+//             <h2 className="text-xl sm:text-2xl font-semibold text-gray-700">
+//               User Engagement
+//             </h2>
+//             <ActivityIcon className="text-purple-500" size={24} sm:size={28} />
+//           </div>
+//           <div className="h-64">
+//             <Radar data={userEngagement} options={chartOptions} />
+//           </div>
+//         </div>
+
+//         <div className="bg-white rounded-xl shadow-md p-4 sm:p-6 transition-all duration-300 hover:shadow-lg">
+//           <div className="flex items-center justify-between mb-4">
+//             <h2 className="text-xl sm:text-2xl font-semibold text-gray-700">
+//               Customer Lifetime Value
+//             </h2>
+//             <DollarSignIcon
+//               className="text-yellow-500"
+//               size={24}
+//               sm:size={28}
+//             />
+//           </div>
+//           <div className="h-64">
+//             <Scatter data={customerLifetime} options={chartOptions} />
+//           </div>
+//         </div>
+//       </div>
+
+//       <div className="bg-white rounded-xl shadow-md overflow-hidden mb-6 sm:mb-8 transition-all duration-300 hover:shadow-lg">
+//         <h2 className="text-xl sm:text-2xl font-semibold p-4 sm:p-6 bg-gray-50 border-b text-gray-700">
+//           Recent Users
+//         </h2>
+//         <Table aria-label="Example table with custom cells">
+//           <TableHeader columns={columns}>
+//             {(column) => (
+//               <TableColumn
+//                 key={column.uid}
+//                 align={column.uid === "actions" ? "center" : "start"}
+//               >
+//                 {column.name}
+//               </TableColumn>
+//             )}
+//           </TableHeader>
+//           <TableBody items={users}>
+//             {(item) => (
+//               <TableRow key={item.id}>
+//                 {(columnKey) => (
+//                   <TableCell>{renderCell(item, columnKey)}</TableCell>
+//                 )}
+//               </TableRow>
+//             )}
+//           </TableBody>
+//         </Table>
+//       </div>
+//     </div>
+//   );
+// }
+
+// export default Dashboard;
+
+import { MonthlyRevenueChart } from "./miscellaneous/DashBord/MonthlyRevenueChart";
+import { UserGrowthChart } from "./miscellaneous/DashBord/UserGrowthChart";
+import { PaymentMethodsChart } from "./miscellaneous/DashBord/paymentMethods ";
+import { CustomerLifetimeValueChart } from "./miscellaneous/DashBord/customerLifetime";
+import UserTable from "./miscellaneous/DashBord/UserTable";
+
 function Dashboard() {
-    return (
-      <div className="p-6 bg-gray-100 min-h-screen">
-        <h1 className="text-3xl font-bold text-gray-800 mb-6">Dashboard</h1>
-        
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-          {/* Bar Graph */}
-          <div className="bg-white rounded-lg shadow-md p-4">
-            <h2 className="text-xl font-semibold mb-4 text-gray-700">Monthly Revenue</h2>
-            <div className="h-64 flex items-end justify-around">
-              {[60, 45, 80, 50, 70, 30].map((height, index) => (
-                <div key={index} className="w-12 bg-gradient-to-t from-blue-500 to-blue-300 rounded-t-lg" style={{height: `${height}%`}}>
-                  <div className="text-xs text-center mt-2">{`$${height * 100}`}</div>
-                </div>
-              ))}
-            </div>
-            <div className="flex justify-around mt-2 text-sm text-gray-600">
-              {['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'].map((month) => (
-                <div key={month}>{month}</div>
-              ))}
-            </div>
-          </div>
-  
-          {/* Pie Chart */}
-          <div className="bg-white rounded-lg shadow-md p-4">
-            <h2 className="text-xl font-semibold mb-4 text-gray-700">Customer Segments</h2>
-            <div className="relative h-64 w-64 mx-auto">
-              <svg viewBox="0 0 36 36" className="w-full h-full">
-                <path d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="#4CAF50" strokeWidth="2" strokeDasharray="60, 100"/>
-                <path d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="#FFC107" strokeWidth="2" strokeDasharray="25, 100" strokeDashoffset="-60"/>
-                <path d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="#E91E63" strokeWidth="2" strokeDasharray="15, 100" strokeDashoffset="-85"/>
-              </svg>
-              <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center">
-                <div className="text-3xl font-bold text-gray-800">100%</div>
-                <div className="text-sm text-gray-600">Total</div>
-              </div>
-            </div>
-            <div className="flex justify-center space-x-4 mt-4">
-              <div className="flex items-center"><div className="w-3 h-3 bg-green-500 rounded-full mr-2"></div> Premium (60%)</div>
-              <div className="flex items-center"><div className="w-3 h-3 bg-yellow-500 rounded-full mr-2"></div> Standard (25%)</div>
-              <div className="flex items-center"><div className="w-3 h-3 bg-pink-500 rounded-full mr-2"></div> Basic (15%)</div>
-            </div>
-          </div>
-        </div>
-  
-        {/* User Table */}
-        <div className="bg-white rounded-lg shadow-md overflow-hidden">
-          <h2 className="text-xl font-semibold p-4 bg-gray-50 border-b text-gray-700">Recent Users</h2>
-          <table className="w-full">
-            <thead className="bg-gray-50">
-              <tr>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Name</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Email</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-gray-200">
-              {[
-                { name: 'John Doe', email: 'john@example.com', status: 'Active' },
-                { name: 'Jane Smith', email: 'jane@example.com', status: 'Inactive' },
-                { name: 'Bob Johnson', email: 'bob@example.com', status: 'Active' },
-              ].map((user, index) => (
-                <tr key={index} className={index % 2 === 0 ? 'bg-white' : 'bg-gray-50'}>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{user.name}</td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{user.email}</td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm">
-                    <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${user.status === 'Active' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}>
-                      {user.status}
-                    </span>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+  return (
+    <div className="p-4 sm:p-6 bg-gradient-to-br from-gray-50 to-white min-h-screen">
+      <h1 className="text-3xl sm:text-4xl font-bold mb-6 sm:mb-8 text-center text-gray-800">
+        Analytics Dashboard
+      </h1>
+
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6 mb-6 sm:mb-8">
+        <MonthlyRevenueChart />
+        <CustomerLifetimeValueChart />
+        <PaymentMethodsChart />
+        <UserGrowthChart />
       </div>
 
-    );
-  }
-  
-  export default Dashboard;
+      <UserTable />
+    </div>
+  );
+}
+
+export default Dashboard;

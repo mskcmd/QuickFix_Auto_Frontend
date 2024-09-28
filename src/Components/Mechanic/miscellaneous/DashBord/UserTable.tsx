@@ -7,12 +7,12 @@ import {
   TableRow,
   TableCell,
   User,
-  Chip,
   Tooltip,
 } from "@nextui-org/react";
-import { useAppSelector } from "../../app/store";
-import { fetchUsers } from "../../Api/mechanic";
+
 import { EyeIcon } from "lucide-react";
+import { useAppSelector } from "../../../../app/store";
+import { fetchUsers } from "../../../../Api/mechanic";
 
 interface BookingUser {
   _id: string;
@@ -25,26 +25,17 @@ interface BookingUser {
 interface Booking {
   _id: string;
   name: string;
-  status: string;
-  bookingTime: string;
   user: BookingUser;
 }
-
-const statusColorMap = {
-  Upcoming: "warning",
-  Pending: "primary",
-  Completed: "success",
-  Cancelled: "danger",
-} as const; // Added 'as const' for literal types
 
 const columns = [
   { name: "NAME", uid: "name" },
   { name: "EMAIL", uid: "email" },
   { name: "PHONE", uid: "phone" },
-  { name: "STATUS", uid: "status" },
+  { name: "ACTIONS", uid: "actions" },
 ];
 
-const Customers: React.FC = () => {
+const UserTable: React.FC = () => {
   const [bookings, setBookings] = useState<Booking[]>([]);
   const mechanicData = useAppSelector((state) => state.auth.mechanicData);
 
@@ -53,9 +44,7 @@ const Customers: React.FC = () => {
       if (mechanicData?.mechnicId) {
         try {
           const result = await fetchUsers(mechanicData.mechnicId);
-          console.log("result", result);
-
-          setBookings(result);
+          setBookings(result.slice(0, 3)); // Limit to first 3 bookings
         } catch (error) {
           console.error("Failed to fetch bookings data:", error);
         }
@@ -72,7 +61,6 @@ const Customers: React.FC = () => {
           return (
             <User
               avatarProps={{ radius: "lg", src: booking.user.imageUrl }}
-              // description={booking.user.email}
               name={booking.name}
             >
               {booking.user.email}
@@ -82,20 +70,16 @@ const Customers: React.FC = () => {
           return booking.user.email;
         case "phone":
           return booking.user.phone;
-        case "status":
+        case "actions":
           return (
-            <Chip
-              className="capitalize"
-              color={
-                statusColorMap[booking.status as keyof typeof statusColorMap]
-              }
-              size="sm"
-              variant="flat"
-            >
-              {booking.status}
-            </Chip>
+            <div className="relative flex items-end gap-2 justify-center">
+              <Tooltip content="Details">
+                <span className="text-lg text-default-400 cursor-pointer active:opacity-50">
+                  <EyeIcon />
+                </span>
+              </Tooltip>
+            </div>
           );
-
         default:
           return null;
       }
@@ -134,4 +118,4 @@ const Customers: React.FC = () => {
   );
 };
 
-export default Customers;
+export default UserTable;

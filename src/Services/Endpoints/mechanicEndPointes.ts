@@ -25,6 +25,8 @@ const mechanicRoute = {
     fetchEditBlog:"/mechanic/fetchEditBlog",
     editBlog:"/mechanic/editBlog",
     paymentFetch:"/mechanic/paymentFetch",
+    fetchmonthlyRevenue:"mechanic/fetchRevenue",
+    userGrowths:"mechanic/fetchuserGrowths",
 
 
 
