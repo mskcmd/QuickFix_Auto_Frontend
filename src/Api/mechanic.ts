@@ -379,7 +379,6 @@ export const fetchRevenue = async (id: string) => {
 
 export const userGrowths = async (id: string) => {
     try {
-        console.log("ss");
         const result = await Api.get(mechanicRoute.userGrowths, { params: { id } })
         return result.data
     } catch (error) {

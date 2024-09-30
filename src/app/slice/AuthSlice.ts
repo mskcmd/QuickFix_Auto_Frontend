@@ -2,17 +2,6 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { ReactNode } from "react";
 import { MechanicProfile } from "../../Components/Common/Interface";
 
-// export interface UserData {
-//     _id: string;
-//     name: string;
-//     email: string;
-//     phone: string;
-//     password: string;
-//     token: string;
-//     refreshToken: string;
-//     userId: string;
-// }
-
 export interface MechanicResponse {
   email: string;
   isCompleted: boolean;
@@ -23,10 +12,10 @@ export interface MechanicResponse {
   phone: string;
   __v: number;
   _id: string;
-  mechnicId: string; // Consider correcting the spelling if applicable
+  mechnicId: string; 
   message: string;
   refreshToken: string;
-  succuss: boolean; // Consider correcting the spelling if applicable
+  succuss: boolean; 
   token: string;
 }
 
@@ -40,7 +29,7 @@ export interface UserData {
     isVerified: boolean;
     name: string;
     phone: string;
-    imageUrl?:string
+    imageUrl?: string
   };
   userId: string;
   token: string;

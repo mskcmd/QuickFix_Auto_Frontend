@@ -1,26 +1,97 @@
-// Dashboard.js
-const Dashboard = () => {
+import React, { useEffect, useState } from "react";
+import { Users, Wrench, FileText, Contact } from "lucide-react";
+import { StatCard } from "../../Components/Admin/DashBord/StatCard";
+import { MonthlyOverview } from "../../Components/Admin/DashBord/MonthlyOverview";
+import { DailyActiveUsers } from "../../Components/Admin/DashBord/DailyActiveUsers";
+import { RecentReports } from "../../Components/Admin/DashBord/RecentReports";
+import { MechanicServices } from "../../Components/Admin/DashBord/MechanicServices";
+import { monthlyDatas } from "../../Api/admin";
+
+// const monthlyData = [
+//   { name: "Jan", users: 400, mechanics: 240, reports: 50 },
+//   { name: "Feb", users: 300, mechanics: 139, reports: 45 },
+//   { name: "Mar", users: 200, mechanics: 980, reports: 60 },
+//   { name: "Apr", users: 278, mechanics: 390, reports: 55 },
+//   { name: "May", users: 189, mechanics: 480, reports: 70 },
+//   { name: "Jun", users: 239, mechanics: 380, reports: 65 },
+// ];
+
+const dailyData = [
+  { name: "Mon", active: 4000 },
+  { name: "Tue", active: 3000 },
+  { name: "Wed", active: 2000 },
+  { name: "Thu", active: 2780 },
+  { name: "Fri", active: 1890 },
+  { name: "Sat", active: 2390 },
+  { name: "Sun", active: 3490 },
+];
+
+const mechanicsData = [
+  { name: "Repairs", value: 400 },
+  { name: "Maintenance", value: 300 },
+  { name: "Inspections", value: 200 },
+  { name: "Consultations", value: 100 },
+];
+
+const Dashboard: React.FC = () => {
+  const [monthlyData, setMonthlyData] = useState<any>([]);
+  const monthlyData1 = async () => {
+    try {
+      console.log("dd");
+      const result = await monthlyDatas();
+      console.log("ss", result);
+      setMonthlyData(result);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    monthlyData1();
+  }, []);
+
+  const total: any = monthlyData.reduce(
+    (
+      acc: { users: any; mechanics: any },
+      curr: { users: any; mechanics: any }
+    ) => {
+      acc.users += curr.users;
+      acc.mechanics += curr.mechanics;
+      return acc;
+    },
+    { users: 0, mechanics: 0 }
+  );
+
   return (
-    <main className="flex-1 overflow-x-hidden overflow-y-auto bg-gray-200 p-6">
-      <h1 className="text-3xl font-semibold text-gray-800 mb-6">
-        Dashboard Overview
-      </h1>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {/* Add your dashboard widgets here */}
-        <div className="bg-white rounded-lg shadow-md p-6">
-          <h2 className="text-xl font-semibold mb-4">Total Users</h2>
-          <p className="text-4xl font-bold">1,234</p>
-        </div>
-        <div className="bg-white rounded-lg shadow-md p-6">
-          <h2 className="text-xl font-semibold mb-4">Active Mechanics</h2>
-          <p className="text-4xl font-bold">56</p>
-        </div>
-        <div className="bg-white rounded-lg shadow-md p-6">
-          <h2 className="text-xl font-semibold mb-4">Total Subscriptions</h2>
-          <p className="text-4xl font-bold">789</p>
-        </div>
+    <div>
+      <h1 className="text-4xl font-bold text-gray-800 mb-8">Admin Dashboard</h1>
+
+      <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
+        <StatCard
+          title="Total Users"
+          value={total.users}
+          icon={Users}
+          trend={2.5}
+        />
+        <StatCard
+          title="Active Mechanics"
+          value={total.users}
+          icon={Wrench}
+          trend={1.8}
+        />
+        <StatCard title="Reports" value="23" icon={FileText} trend={5.1} />
       </div>
-    </main>
+
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+        <MonthlyOverview data={monthlyData} />
+        <DailyActiveUsers data={dailyData} />
+      </div>
+
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <RecentReports />
+        <MechanicServices data={mechanicsData} />
+      </div>
+    </div>
   );
 };
 

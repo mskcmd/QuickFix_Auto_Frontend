@@ -1,12 +1,14 @@
 import React, { useState } from "react";
-import { FaUser, FaCog, FaComments, FaBars } from "react-icons/fa";
+import { User, Settings, MessageSquare, Menu, X } from "lucide-react";
 import SettingsModal from "./SettingsModal";
 
 interface HeaderProps {
   toggleSidebar: () => void;
+  isSidebarOpen: boolean;
+  isSmallScreen: boolean;
 }
 
-const Header: React.FC<HeaderProps> = ({ toggleSidebar }) => {
+const Header: React.FC<HeaderProps> = ({ toggleSidebar, isSidebarOpen, isSmallScreen }) => {
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
 
   const toggleSettings = () => setIsSettingsOpen(!isSettingsOpen);
@@ -14,30 +16,36 @@ const Header: React.FC<HeaderProps> = ({ toggleSidebar }) => {
   return (
     <header className="bg-white shadow-md p-4 flex justify-between items-center">
       <div className="flex items-center">
-        <button onClick={toggleSidebar} className="mr-4 md:hidden">
-          <FaBars size={20} />
-        </button>
+        {isSmallScreen && (
+          <button 
+            onClick={toggleSidebar} 
+            className="mr-4 text-gray-600 hover:text-gray-800 focus:outline-none"
+          >
+            {isSidebarOpen ? <X size={24} /> : <Menu size={24} />}
+          </button>
+        )}
         <div className="text-2xl font-bold text-gray-800">Admin Dashboard</div>
       </div>
       <div className="flex items-center space-x-4">
-        <button className="text-gray-600 hover:text-gray-800">
-          <FaComments size={20} />
+        <button className="text-gray-600 hover:text-gray-800 focus:outline-none">
+          <MessageSquare size={20} />
         </button>
         <button
           onClick={toggleSettings}
-          className="text-gray-600 hover:text-gray-800"
+          className="text-gray-600 hover:text-gray-800 focus:outline-none"
         >
-          <FaCog size={20} />
+          <Settings size={20} />
         </button>
-        <button className="text-gray-600 hover:text-gray-800">
-          <FaUser size={20} />
+        <button className="text-gray-600 hover:text-gray-800 focus:outline-none">
+          <User size={20} />
         </button>
       </div>
       {isSettingsOpen && (
         <SettingsModal
-          toggleSettings={toggleSettings} mechanicData={{
+          toggleSettings={toggleSettings}
+          mechanicData={{
             name: undefined
-          }}          // mechanicData={mechanicData?.data}
+          }}
         />
       )}
 
@@ -47,7 +55,6 @@ const Header: React.FC<HeaderProps> = ({ toggleSidebar }) => {
           onClick={toggleSettings}
         ></div>
       )}
-
     </header>
   );
 };

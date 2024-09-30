@@ -51,3 +51,24 @@ export const blockUser = async (userId: string) => {
         console.log(error);
     }
 }
+
+export const monthlyDatas = async () => {
+    try {
+        const result = await Api.get(adminRoute.monthlyData)
+        return result.data
+    } catch (error) {
+        console.log();
+
+    }
+}
+
+export const handlemechBlock = async (userId:string)=>{
+    try {
+        console.log("eeeeeee", userId);
+        const result = await Api.put(`${adminRoute.mechBlock}?userId=${userId}`);
+        return result.data
+    } catch (error) {
+       console.log(error);
+        
+    }
+}
