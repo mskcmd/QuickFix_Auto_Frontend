@@ -3,7 +3,6 @@ import { AxiosResponse } from "axios";
 import { FromData } from "../Pages/user/SignupPage"
 import userRoutes from "../Services/Endpoints/userEndPoints";
 import Api from "../Services/axios";
-import { FormDatas } from "../Components/User/BookingForm";
 import { BookingFormData } from "../Pages/user/MechBooking";
 
 export const signup = async ({ name, email, phone, password }: FromData) => {
@@ -124,10 +123,10 @@ export const getProfile = async () => {
     }
 }
 
-export const searchMechShop = async (formData: FormDatas): Promise<FormDatas | null> => {
+export const searchMechShop = async (formData: any): Promise<any | null> => {
     try {
         console.log("Form data is validf", formData);
-        const response: AxiosResponse<FormDatas> = await Api.get(userRoutes.searchMech, {
+        const response: AxiosResponse<any> = await Api.get(userRoutes.searchMech, {
             params: formData
         });
         console.log(response);
@@ -370,6 +369,23 @@ export const bookingdata = async (id: string) => {
     }
 }
 
+export const updateFeedback = async (id: string, values: string) => {
+    try {
+        const result = await Api.post(userRoutes.updateFeedback, { id,values });
+        return result.data;
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+export const fetchreview = async (id: string) => {
+    try {
+        const result = await Api.get(userRoutes.reviewData, { params: { id } })
+        return result.data
+    } catch (error) {
+        console.log(error);
+    }
+}
 
 
 

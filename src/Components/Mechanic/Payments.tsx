@@ -81,14 +81,13 @@ const Payments: React.FC = () => {
   };
 
   return (
-    <div className="container mx-auto p-6 bg-gradient-to-r from-blue-50 to-indigo-100 min-h-screen">
-      <div className="flex flex-wrap gap-3 justify-center mb-6">
+    <div className="">
+      <div className="flex flex-wrap gap-3 justify-end mb-6">
         {sizes.map((size) => (
           <Button
             key={size}
             onPress={() => handleOpen(size)}
             color="primary"
-            variant="shadow"
           >
             Generate New Bill
           </Button>

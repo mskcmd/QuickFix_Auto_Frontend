@@ -1,6 +1,6 @@
 import React from "react";
-import { Card, CardBody, CardFooter, Button, Chip } from "@nextui-org/react";
-import { Star, MapPin, Clock, User, Eye, Calendar } from "lucide-react";
+import { Card, CardBody, Button, Chip } from "@nextui-org/react";
+import {  MapPin, Clock, User, Eye, Calendar } from "lucide-react";
 import { Link } from "react-router-dom";
 
 interface Shop {
@@ -23,7 +23,6 @@ const ShopCard: React.FC<Shop> = ({
   id,
   name,
   locationName,
-  rating,
   services,
   workingHours,
   specialization,
@@ -33,9 +32,7 @@ const ShopCard: React.FC<Shop> = ({
     <CardBody>
       <div className="flex justify-between items-start mb-3">
         <h4 className="text-large font-bold">{name}</h4>
-        <Chip color="warning" variant="flat" startContent={<Star size={16} />}>
-          {rating.toFixed(1)}
-        </Chip>
+      
       </div>
       <div className="space-y-2 text-small text-default-500">
         <p className="flex items-center">

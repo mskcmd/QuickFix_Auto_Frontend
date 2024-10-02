@@ -1,13 +1,13 @@
-import React, { useState } from "react";
+import React from "react";
 import { useFormik } from "formik";
 import { LoginValidation } from "../../Components/Common/Validations";
 import { Login } from "../../Api/user";
 import { useDispatch } from "react-redux";
 import { setUserCredential } from "../../app/slice/AuthSlice";
 import { Link, useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
 import { Button } from "@nextui-org/react";
 import Gauth from "../../Components/User/UserCommen/Gauth";
+import toast from "react-hot-toast";
 
 interface IinitialValues {
   email: string;
@@ -28,8 +28,6 @@ const LoginPage: React.FC = () => {
       const handleSubmit = async () => {
         try {
           const data = await Login(values.email, values.password);
-          console.log("all", data);
-
           if (data?.data.isverified == false) {
             return toast.error(data?.data.message);
           }

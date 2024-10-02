@@ -10,25 +10,42 @@ import {
 import { Star } from "lucide-react";
 import { Formik, Form, Field, ErrorMessage, FormikErrors } from "formik";
 import { FeedbackSchema } from "../../Common/Validations";
+import { updateFeedback } from "../../../Api/user";
+import toast from "react-hot-toast";
 // import { updateFeedback } from "../../../Api/feedback"; // Assuming this API function exists
 
-const UpdateFeedbackModal = ({ isOpen, onClose, existingFeedback }:any) => {
-console.log("existingFeedback",existingFeedback);
-
+const UpdateFeedbackModal = ({
+  isOpen,
+  onClose,
+  existingFeedback,
+  fetchFeedback,
+}: any) => {
   const initialValues = {
     rating: existingFeedback?.rating || 0,
     feedback: existingFeedback?.feedback || "",
   };
 
-  const handleStarClick = (setFieldValue: { (field: string, value: any, shouldValidate?: boolean): Promise<void | FormikErrors<{ rating: any; feedback: any; }>>; (arg0: string, arg1: any): void; }, selectedRating: number) => {
+  const handleStarClick = (
+    setFieldValue: {
+      (
+        field: string,
+        value: any,
+        shouldValidate?: boolean
+      ): Promise<void | FormikErrors<{ rating: any; feedback: any }>>;
+      (arg0: string, arg1: any): void;
+    },
+    selectedRating: number
+  ) => {
     setFieldValue("rating", selectedRating);
   };
 
   const handleSubmit = async (values: any) => {
-    console.log("dd",values,existingFeedback._id);
-    
     try {
-    //   await updateFeedback(existingFeedback._id, values);
+      const result = await updateFeedback(existingFeedback._id, values);
+      if (result) {
+        toast.success("Feedback Updated successfully!");
+        fetchFeedback()
+      }
       onClose();
     } catch (error) {
       console.error("Error updating feedback:", error);

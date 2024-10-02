@@ -23,12 +23,14 @@ const userRoutes={
     updatePaymnt:"user/update-payment-status",
     chekFeedback:"user/feedbackcheck",
     cretateFeedback:"user/feedback",
+    updateFeedback:"user/updateFeedback",
     fetchBlogs:"user/fetchblogs",
     fetchAllBlogs:"user/fetchallblogs",
     fetchAllService:"user/fetchAllService",
     fetchAllshop:"user/fetchAllshop",
     fetchFreelancersData:"user/fetchFreelancer",
     bookingdata:"user/bookingdata",
+    reviewData:"user/reviewData",
 
 
 }

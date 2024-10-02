@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react";
 import { Button } from "@nextui-org/react";
 import Swal from "sweetalert2";
-import { Service, Services } from "../Type/MType";
+import { Services } from "../Type/MType";
 import EditServiceModal from "./miscellaneous/Service/EditServiceModal";
 import AddServiceModal from "./miscellaneous/Service/AddServiceModal";
 import ServiceCard from "./miscellaneous/Service/ServiceCard";
@@ -51,7 +51,8 @@ const ServicePage: React.FC = () => {
 
   return (
     <>
-      <Button
+     <div className="min-h-screen">
+     <Button
         onClick={() => setIsAddModalOpen(true)}
         color="primary"
         className="my-4"
@@ -80,6 +81,7 @@ const ServicePage: React.FC = () => {
         onClose={() => setIsEditModalOpen(false)}
         service={editingService}
       />
+     </div>
     </>
   );
 };

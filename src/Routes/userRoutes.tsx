@@ -71,6 +71,10 @@ import { Route, Routes } from "react-router-dom";
 import UserLoggedOut from "../Components/User/UserCommen/UserLoggedOut";
 import UserLogdin from "../Components/User/UserCommen/UserLogdin";
 import Erorr404 from "../Components/Common/ErorrPage/Erorr404";
+import SkeletonLogin from "../Components/Loder/Admin/SkeletonLogin";
+import SkeletonSingup from "../Components/Loder/Admin/SkeletonSingup";
+import SkeletonService from "../Components/Loder/User/SkeletonService";
+import HeroSkeleton from "../Components/Loder/User/SkeletonHome";
 
 // Import Skeleton component
 
@@ -102,15 +106,15 @@ const MechBookingSkeleton = React.lazy(() => import("../Components/User/Skeleton
 function UserRoutes() {
   return (
     <Routes>
-      <Route path="/home" element={<Suspense fallback={<div>Loading...</div>}><Home /></Suspense>} />
+      <Route path="/home" element={<Suspense fallback={<HeroSkeleton/>}><Home /></Suspense>} />
       <Route path="mechanicData" element={<Suspense fallback={<div>Loading...</div>}><MechnichData /></Suspense>} />
       <Route path="mechanicData/:id" element={<Suspense fallback={<div>Loading...</div>}><MechanicDetails /></Suspense>} />
       
       <Route element={<UserLoggedOut />}>
-        <Route path="login" element={<Suspense fallback={<div>Loading...</div>}><LoginPage /></Suspense>} />
+        <Route path="login" element={<Suspense fallback={<SkeletonLogin />}><LoginPage /></Suspense>} />
         <Route path="otp-page" element={<Suspense fallback={<div>Loading...</div>}><Otppage /></Suspense>} />
         <Route path="forget/otp-page/:userId" element={<Suspense fallback={<div>Loading...</div>}><OTPComponent /></Suspense>} />
-        <Route path="signup" element={<Suspense fallback={<div>Loading...</div>}><SignupPage /></Suspense>} />
+        <Route path="signup" element={<Suspense fallback={<SkeletonSingup/>}><SignupPage /></Suspense>} />
         <Route path="forgetPassword" element={<Suspense fallback={<div>Loading...</div>}><ForgertPasswort /></Suspense>} />
         <Route path="/reset/:userid" element={<Suspense fallback={<div>Loading...</div>}><RestOtp /></Suspense>} />
       </Route>
@@ -135,7 +139,7 @@ function UserRoutes() {
           } 
         />
         <Route path="chatInterface" element={<Suspense fallback={<div>Loading...</div>}><ChatPage /></Suspense>} />
-        <Route path="services" element={<Suspense fallback={<div>Loading...</div>}><Service /></Suspense>} />
+        <Route path="services" element={<Suspense fallback={<SkeletonService/>}><Service /></Suspense>} />
         <Route path="blog" element={<Suspense fallback={<div>Loading...</div>}><Blog /></Suspense>} />
       </Route>
 

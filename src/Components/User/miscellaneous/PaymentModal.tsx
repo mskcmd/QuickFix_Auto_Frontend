@@ -218,6 +218,8 @@ const PaymentModal: React.FC<PaymentModalProps> = ({
         isOpen={isUpdateFeedbackModalOpen}
         onClose={() => setIsUpdateFeedbackModalOpen(false)}
         existingFeedback={existingFeedback}
+        fetchFeedback={fetchFeedback}
+
       />
     </>
   );
