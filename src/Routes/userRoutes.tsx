@@ -75,6 +75,7 @@ import SkeletonLogin from "../Components/Loder/Admin/SkeletonLogin";
 import SkeletonSingup from "../Components/Loder/Admin/SkeletonSingup";
 import SkeletonService from "../Components/Loder/User/SkeletonService";
 import HeroSkeleton from "../Components/Loder/User/SkeletonHome";
+import BlogSkeleton from "../Components/Loder/User/SkeletonBlog";
 
 // Import Skeleton component
 
@@ -140,7 +141,7 @@ function UserRoutes() {
         />
         <Route path="chatInterface" element={<Suspense fallback={<div>Loading...</div>}><ChatPage /></Suspense>} />
         <Route path="services" element={<Suspense fallback={<SkeletonService/>}><Service /></Suspense>} />
-        <Route path="blog" element={<Suspense fallback={<div>Loading...</div>}><Blog /></Suspense>} />
+        <Route path="blog" element={<Suspense fallback={<BlogSkeleton/>}><Blog /></Suspense>} />
       </Route>
 
       <Route path="*" element={<Erorr404 />} />

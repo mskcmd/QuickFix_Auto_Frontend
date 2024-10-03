@@ -40,9 +40,7 @@ const Home: React.FC = () => {
           </button>
         </div>
       </div>
-      <BookingForm 
-      // ref={bookingFormRef} 
-      />
+      <BookingForm ref={bookingFormRef} />
 
       {/* Features Section */}
       <div className="container mx-auto px-4 pb-3">

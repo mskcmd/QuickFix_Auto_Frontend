@@ -90,7 +90,7 @@ const Footer = () => {
         </div>
         <hr className="my-6 border-gray-600" />
         <div className="text-center text-gray-400">
-          <p>&copy; 2023 Your Company. All rights reserved.</p>
+          <p>&copy; 2024 Your Company. All rights reserved.</p>
         </div>
       </div>
     </footer>

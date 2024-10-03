@@ -1,5 +1,13 @@
-import React, { useState } from "react";
-import { Modal, ModalContent, Button, useDisclosure, Input, Select, SelectItem } from "@nextui-org/react";
+import React, { forwardRef, useState } from "react";
+import {
+  Modal,
+  ModalContent,
+  Button,
+  useDisclosure,
+  Input,
+  Select,
+  SelectItem,
+} from "@nextui-org/react";
 import * as Yup from "yup";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -15,8 +23,8 @@ interface FormData {
   type: string;
 }
 
-const BookingForm: React.FC = () => {
-  const {isOpen, onOpen, onClose} = useDisclosure();
+const BookingForm = forwardRef<HTMLDivElement>((_props, ref) => {
+  const { isOpen, onOpen, onClose } = useDisclosure();
   const [formData, setFormData] = useState<FormData>({
     locationName: "",
     latitude: "",
@@ -45,7 +53,7 @@ const BookingForm: React.FC = () => {
       const result = await searchMechShop(formData);
       console.log("Result:", result);
       dispatch(setUserSerchCredential(result));
-      navigate('/mechanicData');
+      navigate("/mechanicData");
     } catch (err) {
       if (err instanceof Yup.ValidationError) {
         const validationErrors: { [key: string]: string } = {};
@@ -68,9 +76,11 @@ const BookingForm: React.FC = () => {
   };
 
   return (
-    <div className="container mx-auto px-4 pt-10">
+    <div ref={ref} className="container mx-auto px-4 pt-10">
       <div className="bg-white rounded-3xl shadow-2xl p-8 md:p-12 max-w-4xl mx-auto transform -translate-y-24">
-        <h2 className="text-3xl font-bold mb-6 text-center text-black">Book Your Service</h2>
+        <h2 className="text-3xl font-bold mb-6 text-center text-black">
+          Book Your Service
+        </h2>
         <form onSubmit={handleSubmit}>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
@@ -86,46 +96,57 @@ const BookingForm: React.FC = () => {
                   </Button>
                 }
               />
-              {errors.locationName && <p className="text-red-600 text-sm mt-1">{errors.locationName}</p>}
+              {errors.locationName && (
+                <p className="text-red-600 text-sm mt-1">
+                  {errors.locationName}
+                </p>
+              )}
             </div>
             <div>
               <Select
                 label="Service Type"
                 placeholder="Select service type"
                 value={formData.type}
-                onChange={(e) => setFormData({ ...formData, type: e.target.value })}
+                onChange={(e) =>
+                  setFormData({ ...formData, type: e.target.value })
+                }
               >
-                <SelectItem key="all" value="all">All</SelectItem>
-                <SelectItem key="shop" value="shop">Shop</SelectItem>
-                <SelectItem key="freelancer" value="freelancer">Freelancer</SelectItem>
-                <SelectItem key="company" value="company">Company</SelectItem>
+                <SelectItem key="all" value="all">
+                  All
+                </SelectItem>
+                <SelectItem key="shop" value="shop">
+                  Shop
+                </SelectItem>
+                <SelectItem key="freelancer" value="freelancer">
+                  Freelancer
+                </SelectItem>
+                <SelectItem key="company" value="company">
+                  Company
+                </SelectItem>
               </Select>
-              {errors.type && <p className="text-red-600 text-sm mt-1">{errors.type}</p>}
+              {errors.type && (
+                <p className="text-red-600 text-sm mt-1">{errors.type}</p>
+              )}
             </div>
           </div>
-          <Button
-            type="submit"
-            color="primary"
-            className="mt-6 w-full"
-          >
+          <Button type="submit" color="primary" className="mt-6 w-full">
             Book Now
           </Button>
         </form>
       </div>
 
-      <Modal 
-        size="3xl" 
-        isOpen={isOpen} 
-        onClose={onClose} 
-      >
+      <Modal size="3xl" isOpen={isOpen} onClose={onClose}>
         <ModalContent>
           {(onClose) => (
-            <MapModal onLocationSelect={handleLocationSelect} onClose={onClose} />
+            <MapModal
+              onLocationSelect={handleLocationSelect}
+              onClose={onClose}
+            />
           )}
         </ModalContent>
       </Modal>
     </div>
   );
-};
+});
 
 export default BookingForm;
