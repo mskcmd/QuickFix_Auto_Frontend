@@ -1,13 +1,15 @@
 import React, { useState, useCallback, useEffect } from "react";
 import { MapContainer, TileLayer, useMap, Marker } from "react-leaflet";
-import { ModalHeader, ModalBody, ModalFooter, Button, Input } from "@nextui-org/react";
+import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, Input } from "@nextui-org/react";
+import "leaflet/dist/leaflet.css";
 
 interface MapModalProps {
+  isOpen: boolean;
   onLocationSelect: (locationData: { locationName: string; latitude: string; longitude: string; district: string }) => void;
   onClose: () => void;
 }
 
-const MapModal: React.FC<MapModalProps> = ({ onLocationSelect, onClose }) => {
+const MapModal: React.FC<MapModalProps> = ({ isOpen, onLocationSelect, onClose }) => {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedLocation, setSelectedLocation] = useState<[number, number] | null>(null);
   const [mapCenter, setMapCenter] = useState<[number, number]>([20.5937, 78.9629]); // Center of India
@@ -69,7 +71,7 @@ const MapModal: React.FC<MapModalProps> = ({ onLocationSelect, onClose }) => {
           const { latitude, longitude } = position.coords;
           setSelectedLocation([latitude, longitude]);
           setMapCenter([latitude, longitude]);
-          setZoom(13); // Zoom in to the current location
+          setZoom(16); // Zoom in to the current location
           await handleLocationSelect(latitude, longitude);
         },
         (error) => {
@@ -104,39 +106,52 @@ const MapModal: React.FC<MapModalProps> = ({ onLocationSelect, onClose }) => {
   };
 
   return (
-    <>
-      <ModalHeader className="flex flex-col gap-1">Choose Location</ModalHeader>
-      <ModalBody>
-        <div className="mb-4 space-y-2">
-          <div className="flex items-center space-x-2">
-            <Input
-              type="text"
-              placeholder="Search for a location"
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-            />
-            <Button color="primary" onPress={searchLocation}>
-              Search
-            </Button>
-          </div>
-          <Button color="success" onPress={getCurrentLocation} className="w-full">
-            Use Current Location
-          </Button>
-        </div>
-        <MapContainer center={mapCenter} zoom={zoom} style={{ height: "300px", width: "100%" }}>
-          <TileLayer
-            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-          />
-          <MapComponent />
-        </MapContainer>
-      </ModalBody>
-      <ModalFooter>
-        <Button color="danger" variant="light" onPress={onClose}>
-          Close
-        </Button>
-      </ModalFooter>
-    </>
+    <Modal 
+      isOpen={isOpen} 
+      onClose={onClose}
+      size="3xl"
+      scrollBehavior="inside"
+    >
+      <ModalContent>
+        {(onClose) => (
+          <>
+            <ModalHeader className="flex flex-col gap-1">Choose Location</ModalHeader>
+            <ModalBody>
+              <div className="mb-4 space-y-2">
+                <div className="flex items-center space-x-2">
+                  <Input
+                    type="text"
+                    placeholder="Search for a location"
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                  />
+                  <Button color="primary" onPress={searchLocation}>
+                    Search
+                  </Button>
+                </div>
+                <Button color="success" onPress={getCurrentLocation} className="w-full">
+                  Use Current Location
+                </Button>
+              </div>
+              <div style={{ height: "400px", width: "100%", position: "relative" }}>
+                <MapContainer center={mapCenter} zoom={zoom} style={{ height: "100%", width: "100%" }}>
+                  <TileLayer
+                    attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                    url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                  />
+                  <MapComponent />
+                </MapContainer>
+              </div>
+            </ModalBody>
+            <ModalFooter>
+              <Button color="danger" variant="light" onPress={onClose}>
+                Close
+              </Button>
+            </ModalFooter>
+          </>
+        )}
+      </ModalContent>
+    </Modal>
   );
 };
 

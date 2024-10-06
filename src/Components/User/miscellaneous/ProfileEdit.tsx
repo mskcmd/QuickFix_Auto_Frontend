@@ -20,12 +20,9 @@ const ProfileEditContent: React.FC = () => {
     validationSchema: updateProfileValidation,
     onSubmit: async (values) => {
       setLoading(true);
-      console.log("Profile update submitted", values);
       try {
         await updateProfile(id, values.name, values.phone, values.image);
-        console.log("Profile updated successfully");
         toast("Profile updated successfully")
-
       } catch (error) {
         console.error("Failed to update profile", error);
       } finally {

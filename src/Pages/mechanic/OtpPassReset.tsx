@@ -17,7 +17,7 @@ const OTPComponent1: React.FC<OTPComponentProps> = () => {
   const params = useParams<{ userId: string }>(); // Updated type for params
   const userId = params.userId || ''; // Ensure userId is not undefined
   
-  const mechanicData: UserData | null = useAppSelector(
+  const mechanicData: UserData | any = useAppSelector(
     (state) => state.auth.mechanicData
   );
 
@@ -54,10 +54,7 @@ const OTPComponent1: React.FC<OTPComponentProps> = () => {
     setIsLoading(true); 
 
     try {
-      console.log("otpuserid",otp,userId);
       const result = await verifyOtpReset(otp,userId);
-      console.log("Resultq:", result);
-      console.log("ID:", result?.data.result._id);
        const userid =  result?.data.result._id
 
       if(result?.status){ 

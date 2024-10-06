@@ -33,7 +33,6 @@ const MechanicLoggedin: React.FC = () => {
           const result: MechanicDataItem[] = await getmechData(mechanicData.mechnicId);
           if (result.length > 0) {
             setIsCompleted(result[0].isCompleted);
-            // If the profile is incomplete, show a toast
             if (!result[0].isCompleted) {
               toast.warning("Please complete your profile before proceeding.");
             }

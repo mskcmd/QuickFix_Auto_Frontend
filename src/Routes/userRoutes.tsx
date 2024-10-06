@@ -1,71 +1,3 @@
-// import { Route, Routes } from "react-router-dom";
-// import UserLoggedOut from "../Components/User/UserCommen/UserLoggedOut";
-// import UserLogdin from "../Components/User/UserCommen/UserLogdin";
-// import LoginPage from "../Pages/user/LoginPage";
-// import SignupPage from "../Pages/user/SignupPage";
-// import Otppage from "../Pages/user/Otppage";
-// import Home from "../Pages/user/Home";
-// import ForgertPasswort from "../Pages/user/ForgertPasswort";
-// import RestOtp from "../Pages/user/RestOtp";
-// import OTPComponent from "../Pages/user/OtpPassReset";
-// import Erorr404 from "../Components/Common/ErorrPage/Erorr404";
-// import MechnichData from "../Pages/user/MechnichData";
-// import MechanicDetails from "../Pages/user/MechanicDetails";
-// import UserProfile from "../Pages/user/UserProfile";
-// import MechBooking from "../Pages/user/MechBooking";
-// import Profile from "../Components/User/Profile/Profile";
-// import Bookings from "../Components/User/Profile/Bookings";
-// import Payment from "../Components/User/Profile/Payment";
-// import Privacy from "../Components/User/Profile/Privacy";
-// import ProfileEditContent from "../Components/User/miscellaneous/ProfileEdit";
-// import ChatPage from "../Pages/user/ChatPage";
-// import CancelPage from "../Components/User/miscellaneous/CancelPage";
-// import SuccessPage from "../Components/User/miscellaneous/Success ";
-// import Service from "../Pages/user/Service";
-// import Blog from "../Pages/user/Blog";
-
-// function UserRoutes() {
-//   return (
-//     <Routes>
-//       <Route path="/home" element={<Home />} />
-//       <Route path="mechanicData" element={<MechnichData />} />
-//       <Route path="mechanicData/:id" element={<MechanicDetails />} />
-      
-//       <Route element={<UserLoggedOut />}>
-//         <Route path="login" element={<LoginPage />} />
-//         <Route path="otp-page" element={<Otppage />} />
-//         <Route path="forget/otp-page/:userId" element={<OTPComponent />} />
-//         <Route path="signup" element={<SignupPage />} />
-//         <Route path="forgetPassword" element={<ForgertPasswort />} />
-//         <Route path="/reset/:userid" element={<RestOtp />} />
-//       </Route>
-
-//       <Route element={<UserLogdin />}>
-//         <Route path="profiler" element={<UserProfile />}>
-//           <Route index element={<Profile />} />
-//           <Route path="profile" element={<Profile />} />
-//           <Route path="bookings" element={<Bookings />} />
-//           <Route path="payment" element={<Payment />} />
-//           <Route path="SuccessPage" element={<SuccessPage />} />
-//           <Route path="CancelPage" element={<CancelPage/>} />
-//           <Route path="privacy" element={<Privacy />} />
-//           <Route path="editProfile" element={<ProfileEditContent />} />
-//         </Route>
-//         <Route path="booking/:id" element={<MechBooking />} />
-//         <Route path="chatInterface" element={<ChatPage />} />
-//         <Route path="services" element={<Service />} />
-//         <Route path="blog" element={<Blog />} />
-
-
-//       </Route>
-
-//       <Route path="*" element={<Erorr404 />} />
-//     </Routes>
-//   );
-// }
-
-// export default UserRoutes;
-
 import React, { Suspense } from "react";
 import { Route, Routes } from "react-router-dom";
 import UserLoggedOut from "../Components/User/UserCommen/UserLoggedOut";
@@ -76,6 +8,7 @@ import SkeletonSingup from "../Components/Loder/Admin/SkeletonSingup";
 import SkeletonService from "../Components/Loder/User/SkeletonService";
 import HeroSkeleton from "../Components/Loder/User/SkeletonHome";
 import BlogSkeleton from "../Components/Loder/User/SkeletonBlog";
+import SkeletonChatPage from "../Components/Loder/User/SkeletonChatPage";
 
 // Import Skeleton component
 
@@ -139,7 +72,7 @@ function UserRoutes() {
             </Suspense>
           } 
         />
-        <Route path="chatInterface" element={<Suspense fallback={<div>Loading...</div>}><ChatPage /></Suspense>} />
+        <Route path="chatInterface" element={<Suspense fallback={<SkeletonChatPage/>}><ChatPage /></Suspense>} />
         <Route path="services" element={<Suspense fallback={<SkeletonService/>}><Service /></Suspense>} />
         <Route path="blog" element={<Suspense fallback={<BlogSkeleton/>}><Blog /></Suspense>} />
       </Route>

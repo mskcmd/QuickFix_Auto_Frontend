@@ -1,6 +1,5 @@
 import { Avatar } from "@chakra-ui/avatar";
 import { Box, Text } from "@chakra-ui/layout";
-import { FaUser } from "react-icons/fa";
 
 interface User {
   _id: string;

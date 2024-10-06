@@ -54,9 +54,6 @@ const OTPComponent: React.FC<OTPComponentProps> = () => {
     try {
       console.log(otp);
       const result = await verifyOtp(otp);
-      console.log("Resultq:", result);
-      console.log("pppp:", result?.data.Isexpired);
-      console.log("sdfds", result?.data.message);
       if (result?.data.message === "OTP is wrong") {
         toast.error(result?.data.message);
       }

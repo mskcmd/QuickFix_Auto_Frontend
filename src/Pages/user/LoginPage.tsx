@@ -33,9 +33,7 @@ const LoginPage: React.FC = () => {
           }
           if (data?.data.IsData == false) {
             return toast.error(data?.data.message);
-          }
-          console.log("odata", data?.data.data);
-          
+          }          
           dispatch(setUserCredential(data?.data.data));
           navigate("/home");
           toast.success("Login succussfilly");

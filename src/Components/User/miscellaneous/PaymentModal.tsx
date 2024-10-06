@@ -34,7 +34,6 @@ const PaymentModal: React.FC<PaymentModalProps> = ({
     try {
       if (payment?._id) {
         const result = await chekFeedback(payment?._id);
-        console.log("Feedback result:", result);
         if (result.status) {
           setExistingFeedback(result.feedback[0]);
         }

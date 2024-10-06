@@ -3,14 +3,6 @@ import { Tabs, Tab, Input } from "@nextui-org/react";
 import { Search, Star, Zap } from "lucide-react";
 import ServiceItem from './ServiceItem';
 
-interface Service1 {
-  id: string;
-  title: string;
-  description: string;
-  icon: React.ElementType;
-  imageUrl: string;
-  price: number;
-}
 
 interface SidebarProps {
   services: Record<string, any[]>;

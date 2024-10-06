@@ -21,11 +21,6 @@ import { ChatState } from "../../../../Context/MechChatProvidr";
 import { allAccessChat, searchChatData } from "../../../../Api/chat";
 import ChatLoading from "./ChatLoading";
 import UserListItem from "./UserListItem";
-//   import { allAccessChat, searchChatData } from "../../../Api/user"; // Adjust import path as needed
-//   import { ChatState } from "../../../Context/ChatProvider";
-//   import ChatLoading from "./ChatLoading";
-//   import UserListItem from "./UserListItem";
-//   import { useAppSelector } from "../../../app/store";
 
 interface User {
   _id: string;
@@ -41,8 +36,6 @@ function SideDrawer() {
 
   const { isOpen, onOpen, onClose } = useDisclosure();
   const toast = useToast();
-
-  // const { setSelectedChat, userr, chats, setChats, notification, setNotification } = ChatState();
 
   const { setSelectedChat,chats,setChats } = ChatState();
 
@@ -63,7 +56,6 @@ function SideDrawer() {
     try {
       setLoading(true);
       const data = await searchChatData(search);
-      console.log("search result", data);
       setSearchResult(data);
     } catch (error: any) {
       toast({
@@ -81,14 +73,10 @@ function SideDrawer() {
   };
 
   const accessChat = async (senderId: string, receiverId: string) => {
-    console.log("idees", senderId, receiverId);
-
     try {
       setLoadingChat(true);
       const data = await allAccessChat(senderId, receiverId);
-      console.log("ww",data);
       if (!chats.find((c) => c._id === data._id)) setChats([data, ...chats]);
-      console.log("ww2",chats);
       onClose();
       setSelectedChat(data);
     } catch (error: any) {

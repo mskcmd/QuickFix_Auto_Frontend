@@ -1,15 +1,6 @@
 import React from "react";
 import { Box, Avatar, Text, Tooltip } from "@chakra-ui/react";
 
-interface Message {
-  _id: string;
-  sender: {
-    _id: string;
-    name: string;
-  };
-  content: string;
-  createdAt: string;
-}
 
 interface ScrollableChatProps {
   messages: any[];
@@ -19,8 +10,6 @@ interface ScrollableChatProps {
 }
 
 const ScrollableChat: React.FC<ScrollableChatProps> = ({ messages, user }) => {
-  console.log();
-
   return (
     <>
       {" "}

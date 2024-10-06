@@ -4,9 +4,7 @@ import { useAppSelector } from "../../../app/store";
 
 const MechanicLoggedOut = () => {
 
-    const { mechanicData } = useAppSelector((state) => state.auth);
-    console.log("gg",mechanicData);
-    
+    const { mechanicData } = useAppSelector((state) => state.auth);    
     if (mechanicData) {
 
         return <Navigate to="/mechanic/home/dashbord"/>

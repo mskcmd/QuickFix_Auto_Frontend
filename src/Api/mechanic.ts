@@ -1,21 +1,20 @@
-import { AxiosResponse } from "axios";
 import { MechanicFormData } from "../Pages/mechanic/RegisterOne";
 import { FromData } from "../Pages/mechanic/SignupPage"
 import mechanicRoute from "../Services/Endpoints/mechanicEndPointes";
 import Api from "../Services/axios";
 import { MechanicDataItem } from "../Components/Mechanic/MechanicCommen/MechanicLoggedin";
 import { FormikValues } from "formik";
+import errorHandler from "./errorHandler";
 
 
 export const mechanicSingup = async ({ name, email, phone, password }: FromData) => {
     try {
-        console.log(name, email, phone, password);
         const mechData = await Api.post(mechanicRoute.signup, { name, email, phone, password })
         return mechData
 
     } catch (error) {
-        console.log(error);
-
+        console.log(error as Error);
+        errorHandler(error as Error);
     }
 
 
@@ -24,15 +23,14 @@ export const mechanicSingup = async ({ name, email, phone, password }: FromData)
 export const verifyOtp = async (otpnum: string) => {
     try {
         const otp = parseInt(otpnum);
-        console.log("yu", otp);
 
         const result = await Api.post(mechanicRoute.veryfyOtp, { otp })
-        console.log("otp", result);
         if (result.data.succuss) {
             return result
         }
     } catch (error) {
-        console.log(error)
+        console.log(error as Error);
+        errorHandler(error as Error);
     }
 }
 
@@ -41,58 +39,54 @@ export const resendOtp = async () => {
         await Api.get(mechanicRoute.resendOtp);
     } catch (error) {
         console.log(error as Error);
+        errorHandler(error as Error);
     }
 }
 
 export const Login = async (email: string, password: string) => {
     try {
         const result = await Api.post(mechanicRoute.Login, { email, password })
-        console.log("dsf", result);
         return result
     } catch (error) {
-        console.log(error);
-
+        console.log(error as Error);
+        errorHandler(error as Error);
     }
 }
 
 export const forgetPassword = async (email: string) => {
     try {
-        console.log("email", email);
         const result = await Api.get(mechanicRoute.forgetPassword, { params: { email } });
-        console.log(result);
         return result
     } catch (error) {
-        console.log(error);
+        console.log(error as Error);
+        errorHandler(error as Error);
     }
 };
 
 export const verifyOtpReset = async (otpnum: string, userId: string) => {
     try {
-        console.log("k", otpnum, userId);
-
         const otp = parseInt(otpnum);
         const result = await Api.get(mechanicRoute.veryfyOtpreset, { params: { otp, userId } });
-        console.log("otp", result);
         if (result) {
             return result;
         }
     } catch (error) {
-        console.log(error);
+        console.log(error as Error);
+        errorHandler(error as Error);
     }
 }
 
 export const resetPassword = async (password: string, userId: string) => {
     try {
-        console.log("rgtre", password, userId);
         const result = await Api.post(mechanicRoute.resetPassword, { password, userId })
-        console.log("", result);
         return result
     } catch (error) {
-        console.log(error);
+        console.log(error as Error);
+        errorHandler(error as Error);
     }
 };
 
-export const mechanicRegister = async (mechanicData: MechanicFormData, mechanicId: string | undefined): Promise<AxiosResponse<unknown>> => {
+export const mechanicRegister = async (mechanicData: MechanicFormData, mechanicId: string | undefined): Promise<any> => {
     try {
         const formData = new FormData();
 
@@ -138,32 +132,31 @@ export const mechanicRegister = async (mechanicData: MechanicFormData, mechanicI
                 'Content-Type': 'multipart/form-data',
             },
         });
-        console.log("Registration result:", result);
         return result;
 
     } catch (error) {
-        console.error('Error during registration:', error);
-        throw error;
+        console.log(error as Error);
+        errorHandler(error as Error);
     }
 };
-export const getmechData = async (mechanicId: string): Promise<MechanicDataItem[]> => {
+
+export const getmechData = async (mechanicId: string): Promise<any> => {
     try {
         const result = await Api.get<MechanicDataItem[]>(mechanicRoute.getData, { params: { Id: mechanicId } });
         return result.data;
     } catch (error) {
-        console.error("Error fetching mechanic data:", error);
-        throw error;
+        console.log(error as Error);
+        errorHandler(error as Error);
     }
 };
 
 export const getDetailesData = async (mechanicId: string) => {
     try {
-        console.log("Fetching dasta for mechanic ID:", mechanicId);
         const result = await Api.get(mechanicRoute.getMcechData, { params: { Id: mechanicId } });
         return result.data;
     } catch (error) {
-        console.error("Error fetching mechanic data:", error);
-        throw error;
+        console.log(error as Error);
+        errorHandler(error as Error);
     }
 };
 
@@ -171,31 +164,28 @@ export const logout = async () => {
     try {
         return await Api.get(mechanicRoute.mechLogout)
     } catch (error) {
-        console.log(error);
-
+        console.log(error as Error);
+        errorHandler(error as Error);
     }
 }
 
 export const fetchUsers = async (mechanicId: string) => {
     try {
-        console.log("Fetching dasta for mechanic ID:", mechanicId);
         const result = await Api.get(mechanicRoute.fetchUsers, { params: { Id: mechanicId } });
-        console.log("bookings", result.data);
         return result.data;
     } catch (error) {
-        console.error("Error fetching users data:", error);
-        throw error;
+        console.log(error as Error);
+        errorHandler(error as Error);
     }
 };
 
 export const statusUpdate = async (bookingId: string, newStatus: string) => {
     try {
-        console.log(`Changing status for user 2ff  ${bookingId} to ${newStatus}`);
         const result = await Api.put(mechanicRoute.statusChange, { params: { Id: bookingId, Status: newStatus } });
         return result;
     } catch (error) {
-        console.error("Error fetching users data:", error);
-        throw error;
+        console.log(error as Error);
+        errorHandler(error as Error);
     }
 };
 
@@ -216,10 +206,10 @@ export const addService = async (name: string, details: string, price: string, i
             },
         });
 
-        console.log('Service added successfully', uploadResponse.data);
         return uploadResponse.data
     } catch (error) {
-        console.error('Error adding service:', error);
+        console.log(error as Error);
+        errorHandler(error as Error);
     }
 };
 
@@ -228,46 +218,41 @@ export const fetchService = async (id: string) => {
         const result = await Api.get(mechanicRoute.fetchService, { params: { id } });
         return result.data;
     } catch (error) {
-        console.error("Error in fetchService:", error);
-        throw error; // Re-throw the error if you want the calling function to handle it
+        console.log(error as Error);
+        errorHandler(error as Error);
     }
 };
 
 export const searchUsers = async (search: string, id: string) => {
     try {
-        console.log(search, id);
         const result = await Api.get(`${mechanicRoute.searchUsers}?search=${search}&id=${id}`)
         return result.data;
     } catch (error) {
-        console.error("Error in fetchUsers:", error);
-        throw error;
+        console.log(error as Error);
+        errorHandler(error as Error);
     }
 };
 
 
 export const searchServices = async (search: string, id: string) => {
     try {
-        console.log(search, id);
         const result = await Api.get(`${mechanicRoute.searchServices}?search=${search}&id=${id}`)
-        console.log("ss", result.data);
         return result.data;
     } catch (error) {
-        console.error("Error in fetchUsers:", error);
-        throw error;
+        console.log(error as Error);
+        errorHandler(error as Error);
     }
 };
 
 export const createBill = async (value: FormikValues) => {
     try {
         const result = await Api.post(mechanicRoute.CreateBill, value);
-        console.log('Bill created successfully:', result.data);
         return result.data;
     } catch (error) {
-        console.error('Error creating bill:', error);
-        throw error;
+        console.log(error as Error);
+        errorHandler(error as Error);
     }
 };
-
 
 export const createBlog = async (values: any, id: string) => {
     try {
@@ -288,11 +273,11 @@ export const createBlog = async (values: any, id: string) => {
                 'Content-Type': 'multipart/form-data',
             },
         });
-        console.log("Blog created successfully:", result);
         return result
 
     } catch (error) {
-        console.error("Error creating blog:", error);
+        console.log(error as Error);
+        errorHandler(error as Error);
     }
 };
 
@@ -301,8 +286,8 @@ export const fetchBlog = async (id: string) => {
         const result = await Api.get(mechanicRoute.fetchBlog, { params: { id } });
         return result.data;
     } catch (error) {
-        console.error("Error in fetchBlog:", error);
-        throw error;
+        console.log(error as Error);
+        errorHandler(error as Error);
     }
 };
 
@@ -311,8 +296,8 @@ export const deleteBlog = async (id: string) => {
         const result = await Api.delete(mechanicRoute.deleteBlog, { params: { id } });
         return result.data;
     } catch (error) {
-        console.error("Error in fetchBlog:", error);
-        throw error;
+        console.log(error as Error);
+        errorHandler(error as Error);
     }
 };
 
@@ -321,15 +306,14 @@ export const fetchEditBlog = async (id: string) => {
         const result = await Api.get(mechanicRoute.fetchEditBlog, { params: { id } });
         return result.data;
     } catch (error) {
-        console.error("Error in fetchBlog:", error);
-        throw error;
+        console.log(error as Error);
+        errorHandler(error as Error);
     }
 };
 
 export const updateBlog = async (id: any, values: any) => {
     try {
 
-        console.log("drt", values.image);
 
         const formData = new FormData();
 
@@ -348,11 +332,11 @@ export const updateBlog = async (id: any, values: any) => {
                 'Content-Type': 'multipart/form-data',
             },
         });
-        console.log("Blog created successfully:", result);
         return result
 
     } catch (error) {
-        console.error("Error creating blog:", error);
+        console.log(error as Error);
+        errorHandler(error as Error);
     }
 };
 
@@ -362,8 +346,8 @@ export const paymentFetch = async (id: string) => {
         return result.data
 
     } catch (error) {
-        console.log(error);
-
+        console.log(error as Error);
+        errorHandler(error as Error);
     }
 }
 
@@ -372,8 +356,8 @@ export const fetchRevenue = async (id: string) => {
         const result = await Api.get(mechanicRoute.fetchmonthlyRevenue, { params: { id } })
         return result.data
     } catch (error) {
-        console.log(error);
-
+        console.log(error as Error);
+        errorHandler(error as Error);
     }
 }
 
@@ -382,8 +366,8 @@ export const userGrowths = async (id: string) => {
         const result = await Api.get(mechanicRoute.userGrowths, { params: { id } })
         return result.data
     } catch (error) {
-        console.log(error);
-
+        console.log(error as Error);
+        errorHandler(error as Error);
     }
 }
 

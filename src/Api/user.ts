@@ -4,20 +4,17 @@ import { FromData } from "../Pages/user/SignupPage"
 import userRoutes from "../Services/Endpoints/userEndPoints";
 import Api from "../Services/axios";
 import { BookingFormData } from "../Pages/user/MechBooking";
+import errorHandler from "./errorHandler";
 
 export const signup = async ({ name, email, phone, password }: FromData) => {
     try {
-        console.log("haoi", name, email, phone, password);
-
         const result = await Api.post(userRoutes.signup, { name, email, phone, password })
-        console.log("result", result);
-
         if (result.status == 200) {
             return result
         }
     } catch (error) {
-        console.log(error);
-
+        console.log(error as Error);
+        errorHandler(error as Error);
     }
 }
 
@@ -25,23 +22,22 @@ export const verifyOtp = async (otpnum: string) => {
     try {
         const otp = parseInt(otpnum);
         const result = await Api.post(userRoutes.veryfyOtp, { otp })
-        console.log("otp", result);
         if (result.status) {
             return result
         }
     } catch (error) {
-        console.log(error)
+        console.log(error as Error);
+        errorHandler(error as Error);
     }
 }
 
 export const Login = async (email: string, password: string) => {
     try {
         const result = await Api.post(userRoutes.Login, { email, password })
-        console.log("eeee", result);
         return result
     } catch (error) {
-        console.log(error);
-
+        console.log(error as Error);
+        errorHandler(error as Error);
     }
 }
 
@@ -52,56 +48,51 @@ export const googleLogin = async (name: string | null, email: string | null, goo
         return result.data
     } catch (error) {
         console.log(error as Error);
-        if (error) console.log(error)
-        console.log('error coming from here...');
+        errorHandler(error as Error);
     }
 }
 
 export const resendOtp = async () => {
     try {
         const result = await Api.get(userRoutes.resendOtp);
-        console.log("resendOtp", result);
         return result
     } catch (error) {
         console.log(error as Error);
+        errorHandler(error as Error);
     }
 }
 
 export const forgetPassword = async (email: string) => {
     try {
-        console.log("email", email);
         const result = await Api.get(userRoutes.forgetPassword, { params: { email } });
         console.log(result);
         return result
     } catch (error) {
-        console.log(error);
+        console.log(error as Error);
+        errorHandler(error as Error);
     }
 };
 
 export const resetPassword = async (password: string, userId: string) => {
     try {
-        console.log("rgtre", password, userId);
-
         const result = await Api.post(userRoutes.resetPassword, { password, userId })
-        console.log("", result);
         return result
     } catch (error) {
-        console.log(error);
+        console.log(error as Error);
+        errorHandler(error as Error);
     }
 };
 
 export const verifyOtpReset = async (otpnum: string, userId: string) => {
     try {
-        console.log("k", otpnum, userId);
-
         const otp = parseInt(otpnum);
         const result = await Api.get(userRoutes.veryfyOtpreset, { params: { otp, userId } });
-        console.log("otp", result);
         if (result) {
             return result;
         }
     } catch (error) {
-        console.log(error);
+        console.log(error as Error);
+        errorHandler(error as Error);
     }
 }
 
@@ -109,8 +100,8 @@ export const logout = async () => {
     try {
         return await Api.get(userRoutes.userLogout)
     } catch (error) {
-        console.log(error);
-
+        console.log(error as Error);
+        errorHandler(error as Error);
     }
 }
 
@@ -119,46 +110,43 @@ export const getProfile = async () => {
         const result = await Api.get(userRoutes.getProfile)
         return result
     } catch (error) {
-        console.log(error)
+        console.log(error as Error);
+        errorHandler(error as Error);
     }
 }
 
 export const searchMechShop = async (formData: any): Promise<any | null> => {
     try {
-        console.log("Form data is validf", formData);
         const response: AxiosResponse<any> = await Api.get(userRoutes.searchMech, {
             params: formData
         });
-        console.log(response);
 
         return response.data;
     } catch (error) {
-        console.error('Error searching for mechanic shops:', error);
-        return null;
+        console.log(error as Error);
+        errorHandler(error as Error);
     }
 };
 
 export const booking = async (formData: BookingFormData) => {
-    try {
-        console.log("Submitting booking data:", formData);
+    try {        
         const result = await Api.post(userRoutes.booking, formData);
         return result;
     } catch (error) {
-        console.error("Error during booking API call:", error);
-        throw error;
+        console.log(error as Error);
+        errorHandler(error as Error);
     }
 };
 
 export const fetchBookData = async (id: string, type: string) => {
     try {
-        console.log("fetchBookData data:", id, type);
         const result = await Api.get(userRoutes.fetchBookData, {
             params: { id, type }
         });
         return result.data;
     } catch (error) {
-        console.error("Error during fetchBookData API call:", error);
-        throw error;
+        console.log(error as Error);
+        errorHandler(error as Error);
     }
 };
 
@@ -169,7 +157,6 @@ export const updateProfile = async (
     image: File | null
 ) => {
     try {
-        console.log("updateProfile data:", { id, name, phone, image });
 
         const formData = new FormData();
         formData.append("id", id);
@@ -184,9 +171,8 @@ export const updateProfile = async (
                 'Content-Type': 'multipart/form-data',
             },
         });
+        return result
 
-
-        console.log("Successfully updated:", result);
     } catch (error) {
         console.error("Error during updateProfile API call:", error);
         throw error;
@@ -196,27 +182,21 @@ export const updateProfile = async (
 
 export const searchChatData = async (search: string) => {
     try {
-        console.log("wwsd", search);
         const result = await Api.get(`/user/chat/allUsers?search=${search}`);
-        console.log("users", result.data);
         return result.data;
     } catch (error) {
-        console.error("Error fetching chat data:", error);
-        throw error;
+        console.log(error as Error);
+        errorHandler(error as Error);
     }
 };
 
 export const allAccessChat = async (receiverId: string, senderId: string) => {
     try {
-        console.log(receiverId, senderId);
-
         const result = await Api.post(`/user/chat/create`, { senderId, receiverId });
-        console.log("chat", result.data);
-
-        return result.data; // Make sure to return the actual data
+        return result.data;
     } catch (error) {
-        console.error("Error fetching chat data:", error);
-        throw error; // Ensure errors are thrown to be caught in the component
+        console.log(error as Error);
+        errorHandler(error as Error);
     }
 };
 
@@ -226,27 +206,21 @@ export const fetchChats = async (senderId: string) => {
         const result = await Api.get('/user/chat/fetchChats', {
             params: { senderId }
         });
-        console.log("sd", result.data);
-
         return result.data; // Return the data directly
     } catch (error) {
-        console.error("Error fetching chat data:", error);
-        throw error; // Rethrow error for proper handling in the component
+        console.log(error as Error);
+        errorHandler(error as Error);
     }
 };
 
 
 export const allMessages = async (chatId: string) => {
-    console.log("sss", chatId);
-
     try {
         const result = await Api.get(`/user/chat/allMesssge/${chatId}`);
-        console.log("all message", result.data);
-
         return result.data;
     } catch (error) {
-        console.error("Failed to fetch messages", error);
-        throw error; // Rethrow the error so it can be handled where the function is called
+        console.log(error as Error);
+        errorHandler(error as Error);
     }
 }
 
@@ -257,16 +231,12 @@ interface SendMessageParams {
 }
 
 export const sendMessages = async ({ content, chatId, senderId }: SendMessageParams) => {
-    console.log(content, chatId, senderId);
-
     try {
         const result = await Api.post('/user/chat/sendMessage', { content, chatId, senderId });
-        console.log("fg", result.data);
-
         return result.data;
     } catch (error) {
-        console.error("Failed to send messages", error);
-        throw error;
+        console.log(error as Error);
+        errorHandler(error as Error);
     }
 };
 
@@ -276,21 +246,19 @@ export const fetchPymnetData = async (id: string) => {
         return result.data
 
     } catch (error) {
-        console.log(error);
-
+        console.log(error as Error);
+        errorHandler(error as Error);
     }
 }
 
 export const updatePaymnt = async (paymentId: string, status: string) => {
-    console.log("ss", paymentId);
-
     try {
         const result = await Api.post(userRoutes.updatePaymnt, { paymentId, status })
         return result.data
 
     } catch (error) {
-        console.log(error);
-
+        console.log(error as Error);
+        errorHandler(error as Error);
     }
 }
 
@@ -301,14 +269,12 @@ export const createFeedback = async (
     paymentId: string
 ): Promise<any> => {
     try {
-        console.log("dd", values, id, mechId, paymentId);
-
-        // Make the API call (uncomment when you want to use it)
         const result = await Api.post(userRoutes.cretateFeedback, { values, id, mechId, paymentId });
         return result.data;
 
     } catch (error) {
-        console.error("Error creating feedback:", error);
+        console.log(error as Error);
+        errorHandler(error as Error);
     }
 };
 
@@ -317,8 +283,8 @@ export const fetchBlogs = async () => {
         const result = await Api.get(userRoutes.fetchBlogs)
         return result.data
     } catch (error) {
-        console.log(error);
-
+        console.log(error as Error);
+        errorHandler(error as Error);
     }
 }
 
@@ -327,8 +293,8 @@ export const fetchAllBlogs = async () => {
         const result = await Api.get(userRoutes.fetchAllBlogs)
         return result.data
     } catch (error) {
-        console.log(error);
-
+        console.log(error as Error);
+        errorHandler(error as Error);
     }
 }
 
@@ -337,7 +303,8 @@ export const fetchServiceData = async () => {
         const result = await Api.get(userRoutes.fetchAllService)
         return result.data
     } catch (error) {
-        console.log(error);
+        console.log(error as Error);
+        errorHandler(error as Error);
     }
 }
 
@@ -346,8 +313,8 @@ export const fetchShopData = async (data: string) => {
         const result = await Api.get(`${userRoutes.fetchAllshop}?query=${data}`);
         return result.data;
     } catch (error) {
-        console.error("Error fetching shop data:", error);
-        throw error;
+        console.log(error as Error);
+        errorHandler(error as Error);
     }
 }
 
@@ -356,7 +323,8 @@ export const fetchFreelancersData = async () => {
         const result = await Api.get(userRoutes.fetchFreelancersData)
         return result.data
     } catch (error) {
-        console.log(error);
+        console.log(error as Error);
+        errorHandler(error as Error);
     }
 }
 
@@ -364,17 +332,20 @@ export const bookingdata = async (id: string) => {
     try {
         const result = await Api.get(userRoutes.bookingdata, { params: { id } })
         return result.data
+        
     } catch (error) {
-        console.log(error);
+        console.log(error as Error);
+        errorHandler(error as Error);
     }
 }
 
 export const updateFeedback = async (id: string, values: string) => {
     try {
-        const result = await Api.post(userRoutes.updateFeedback, { id,values });
+        const result = await Api.post(userRoutes.updateFeedback, { id, values });
         return result.data;
     } catch (error) {
-        console.log(error);
+        console.log(error as Error);
+        errorHandler(error as Error);
     }
 }
 
@@ -383,7 +354,8 @@ export const fetchreview = async (id: string) => {
         const result = await Api.get(userRoutes.reviewData, { params: { id } })
         return result.data
     } catch (error) {
-        console.log(error);
+        console.log(error as Error);
+        errorHandler(error as Error);
     }
 }
 

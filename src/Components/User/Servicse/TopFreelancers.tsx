@@ -1,6 +1,6 @@
 import React from 'react';
 import { Card, CardBody, Avatar, Chip, Button } from "@nextui-org/react";
-import { Star, Clock, Eye, Calendar } from 'lucide-react';
+import { Clock, Eye, Calendar } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 interface Freelancer {
@@ -17,7 +17,7 @@ interface TopFreelancersProps {
   freelancers: any[];
 }
 
-const FreelancerCard: React.FC<Freelancer> = ({ _id,name, specialization, yearsOfExperience, profileImages, workingHours }) => (
+const FreelancerCard: React.FC<Freelancer> = ({ _id,specialization, yearsOfExperience, profileImages, workingHours }) => (
   <Card className="w-full">
     <CardBody className="flex flex-col p-4">
       <div className="flex items-center mb-4">

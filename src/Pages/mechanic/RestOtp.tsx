@@ -14,7 +14,6 @@ const ResetPassword: React.FC = () => {
 
   const params = useParams<{ userid: string }>(); // Updated type for params
   const userId = params.userid || ''; // Ensure userId is not undefined
-console.log("jk",userId);
 
   const initialValues: FormValues = {
     newPassword: '',
@@ -22,11 +21,7 @@ console.log("jk",userId);
   };
 
   const handleSubmit = async (values: FormValues) => {
-    // Perform reset password logic here using values.newPassword and values.confirmPassword
-    console.log('New Password:', values.newPassword);
-    console.log('Confirm Password:', values.confirmPassword);
     const result = await resetPassword(values.newPassword, userId); // Pass userId to the resetPassword function
-    console.log("kjsd",result);
     if(result?.status==200){
       navigate("/mechanic/login");
     }else{

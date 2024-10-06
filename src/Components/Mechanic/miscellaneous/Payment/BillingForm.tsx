@@ -67,7 +67,6 @@ const BillingForm: React.FC<BillingFormProps> = ({ onSubmit }) => {
   const [userSuggestions, setUserSuggestions] = useState<User[]>([]);
   const [serviceSuggestions, setServiceSuggestions] = useState<Service[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  console.log("dsa",userSuggestions);
 
   const calculateTotal = (services: Service[]) => {
     const subtotal = services.reduce((sum, service) => sum + service.price, 0);
@@ -106,7 +105,6 @@ const BillingForm: React.FC<BillingFormProps> = ({ onSubmit }) => {
       if (value.length > 2) {
         setIsLoading(true);
         try {
-          console.log("ahay");
           const services = await searchServices(value, id);
           setServiceSuggestions(services);
         } catch (error) {

@@ -46,13 +46,11 @@ const SignupPage: React.FC = () => {
       try {
         console.log(formdata);
         const result = await signup(formdata);
-        console.log("vv", result?.data.message);
         if (result?.data.notSuccess === false) {
           toast.error("Email already exists");
         }
 
         if (result?.data.success === true) {
-          console.log("ss", result.data.success);
           navigate("/otp-page");
         } else {
           console.log("not_found");

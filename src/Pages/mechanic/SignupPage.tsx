@@ -48,19 +48,15 @@ const SignupPage: React.FC = () => {
       };
       try {
       const mechData = await mechanicSingup(formdata);
-      console.log(mechData?.data.notsuccuss);
       if(mechData?.data.notsuccuss===false){
         toast.error("Email already exists");
       }
-     console.log("cc",mechData?.data.succuss);
-
       if (mechData?.data.succuss===true) {
         console.log(mechData);
         navigate('/mechanic/otp-page');
       } else {
-        console.log("not_found");
+        toast.error("not_found");
       }
-      
       } catch (error) {
         console.log(error);
       }

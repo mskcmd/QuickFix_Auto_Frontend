@@ -21,10 +21,8 @@ const ForgotPassword = () => {
         initialValues: initialValues,
         validationSchema: EmailValidation,
         onSubmit: async (values) => {
-          console.log('Email:', values.email);
           try {
            const result =  await forgetPassword(values.email);
-           console.log("hhk",result?.data.result.result._id);
            const userId =result?.data.result.result._id
            if(result){
             navigate(`/mechanic/forget/otp-page/${userId}`); 

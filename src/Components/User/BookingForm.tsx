@@ -1,7 +1,5 @@
 import React, { forwardRef, useState } from "react";
 import {
-  Modal,
-  ModalContent,
   Button,
   useDisclosure,
   Input,
@@ -49,9 +47,7 @@ const BookingForm = forwardRef<HTMLDivElement>((_props, ref) => {
     try {
       await validationSchema.validate(formData, { abortEarly: false });
       setErrors({});
-      console.log("Form data is valid", formData);
       const result = await searchMechShop(formData);
-      console.log("Result:", result);
       dispatch(setUserSerchCredential(result));
       navigate("/mechanicData");
     } catch (err) {
@@ -106,10 +102,8 @@ const BookingForm = forwardRef<HTMLDivElement>((_props, ref) => {
               <Select
                 label="Service Type"
                 placeholder="Select service type"
-                value={formData.type}
-                onChange={(e) =>
-                  setFormData({ ...formData, type: e.target.value })
-                }
+                selectedKeys={formData.type ? [formData.type] : []}
+                onSelectionChange={(keys) => setFormData({ ...formData, type: Array.from(keys)[0] as string })}
               >
                 <SelectItem key="all" value="all">
                   All
@@ -135,16 +129,11 @@ const BookingForm = forwardRef<HTMLDivElement>((_props, ref) => {
         </form>
       </div>
 
-      <Modal size="3xl" isOpen={isOpen} onClose={onClose}>
-        <ModalContent>
-          {(onClose) => (
-            <MapModal
-              onLocationSelect={handleLocationSelect}
-              onClose={onClose}
-            />
-          )}
-        </ModalContent>
-      </Modal>
+      <MapModal
+        isOpen={isOpen}
+        onLocationSelect={handleLocationSelect}
+        onClose={onClose}
+      />
     </div>
   );
 });

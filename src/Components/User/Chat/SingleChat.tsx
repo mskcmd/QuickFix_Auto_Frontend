@@ -30,7 +30,8 @@ interface Message {
   updatedAt: string;
 }
 
-const ENDPOINT = "http://localhost:5000";
+const ENDPOINT = import.meta.env.VITE_REACT_APP_B_URI;
+
 let socket: Socket;
 
 function SingleChat({ fetchAgain, setFetchAgain }: { fetchAgain: boolean; setFetchAgain: (value: boolean) => void }) {

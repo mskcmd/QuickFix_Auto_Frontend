@@ -21,7 +21,6 @@ const ServicePage: React.FC = () => {
     const fetchData = async () => {
       try {
         const response: any = await fetchService(id);
-        console.log("foo",response);
         setServices(response);
       } catch (error) {
         console.error("Error fetching service:", error);

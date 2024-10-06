@@ -4,12 +4,11 @@ import { FaSearch } from "react-icons/fa";
 import * as Yup from "yup";
 
 import {
-  Modal,
-  ModalContent,
   Button,
   Input,
   Select,
   SelectItem,
+  useDisclosure,
   Card,
 } from "@nextui-org/react";
 import { searchMechShop } from "../../../Api/user";
@@ -26,7 +25,6 @@ interface FormData {
 }
 
 const BookingForm: React.FC = () => {
-  const [isMapModalOpen, setIsMapModalOpen] = useState(false);
   const [formData, setFormData] = useState<FormData>({
     locationName: "",
     latitude: "",
@@ -36,6 +34,7 @@ const BookingForm: React.FC = () => {
   });
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
   const dispatch = useDispatch<AppDispatch>();
+  const { isOpen, onOpen, onClose } = useDisclosure();
 
   const validationSchema = Yup.object().shape({
     locationName: Yup.string().required("Location is required"),
@@ -50,10 +49,8 @@ const BookingForm: React.FC = () => {
     try {
       await validationSchema.validate(formData, { abortEarly: false });
       setErrors({});
-      console.log("Form data is valid", formData);
       const result: any = await searchMechShop(formData);
       dispatch(setUserSerchCredential(result));
-      console.log(result);
     } catch (err) {
       if (err instanceof Yup.ValidationError) {
         const validationErrors: { [key: string]: string } = {};
@@ -77,7 +74,7 @@ const BookingForm: React.FC = () => {
       ...prevData,
       ...locationData,
     }));
-    setIsMapModalOpen(false);
+    onClose();
   };
 
   return (
@@ -94,7 +91,7 @@ const BookingForm: React.FC = () => {
             value={formData.locationName}
             readOnly
             endContent={
-              <Button color="primary" onPress={() => setIsMapModalOpen(true)}>
+              <Button color="primary"  onPress={onOpen}>
                 Map
               </Button>
             }
@@ -137,20 +134,11 @@ const BookingForm: React.FC = () => {
         </Button>
       </form>
 
-      <Modal 
-        isOpen={isMapModalOpen} 
-        onOpenChange={(open) => setIsMapModalOpen(open)}
-        size="2xl"
-      >
-        <ModalContent>
-          {(onClose) => (
-            <MapModal
-              onLocationSelect={handleLocationSelect}
-              onClose={onClose}
-            />
-          )}
-        </ModalContent>
-      </Modal>
+      <MapModal
+        isOpen={isOpen}
+        onLocationSelect={handleLocationSelect}
+        onClose={onClose}
+      />
     </Card>
   );
 };

@@ -23,14 +23,7 @@ const BookingsContent: React.FC = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        console.log(
-          "Fetching bookings for user ID:",
-          id,
-          "with status:",
-          selectedStatus
-        );
         const result = await fetchBookData(id, selectedStatus);
-        console.log("Fetched data:", result);
         setBookings(result);
       } catch (error) {
         console.error("Error fetching bookings:", error);

@@ -12,7 +12,6 @@ import { Formik, Form, Field, ErrorMessage, FormikErrors } from "formik";
 import { FeedbackSchema } from "../../Common/Validations";
 import { updateFeedback } from "../../../Api/user";
 import toast from "react-hot-toast";
-// import { updateFeedback } from "../../../Api/feedback"; // Assuming this API function exists
 
 const UpdateFeedbackModal = ({
   isOpen,

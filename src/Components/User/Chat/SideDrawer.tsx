@@ -37,7 +37,7 @@ function SideDrawer() {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const toast = useToast();
 
-  const { setSelectedChat, userr, chats, setChats, notification, setNotification } = ChatState();
+  const { setSelectedChat, chats, setChats } = ChatState();
 
   const handleSearch = async () => {
     if (!search.trim()) {
@@ -53,8 +53,6 @@ function SideDrawer() {
     try {
       setLoading(true);
       const data = await searchChatData(search);
-      console.log("search result", data);
-
       setSearchResult(data);
     } catch (error: any) {
       toast({

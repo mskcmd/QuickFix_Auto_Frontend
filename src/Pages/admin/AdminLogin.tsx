@@ -27,7 +27,6 @@ const AdminLogin: React.FC = () => {
         try {
           const data = await Login(values.email, values.password);
           const userData = data?.data.data
-          console.log("cccc",userData);
           dispatch(setAdminCredential(userData));
           navigate("/admin/dashboard/dashboard"); 
           toast.success("admin is logined!"); 

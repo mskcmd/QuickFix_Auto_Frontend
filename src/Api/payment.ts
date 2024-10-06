@@ -1,28 +1,26 @@
 import Api from "../Services/axios";
 import userRoutes from "../Services/Endpoints/userEndPoints";
+import errorHandler from "./errorHandler";
 
 
 
 export const checkoutService = async (item: any) => {
   try {
-    console.log("item", item);
     const response = await Api.post(userRoutes.checkOut, item);
-    console.log("response",response);
-    
     return response;
   } catch (error) {
-    console.log('Checkout error:', error);
-    throw error;
+    console.log(error as Error);
+    errorHandler(error as Error);
   }
 };
 
 export const chekFeedback = async (id: string) => {
-  try {        
-      const result = await Api.get(userRoutes.chekFeedback, { params: { id } });
-      return result.data;
+  try {
+    const result = await Api.get(userRoutes.chekFeedback, { params: { id } });
+    return result.data;
   } catch (error) {
-      console.error("Error in fetchBlog:", error);
-      throw error;
+    console.log(error as Error);
+    errorHandler(error as Error);
   }
 };
 

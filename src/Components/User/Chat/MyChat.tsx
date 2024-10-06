@@ -12,14 +12,10 @@ function MyChat({ fetchAgain }: any) {
   const { selectedChat, setSelectedChat, chats, setChats } = ChatState();
   const userData = useAppSelector((state) => state?.auth.userData);
   const senderId = userData?.userId || "";
-  console.log("chat", chats);
-
   const toast = useToast();
-
   const fetchAndSetChats = async () => {
     try {
       const data: any = await fetchChats(senderId);
-      console.log("suhailll", data);
       setChats(data);
     } catch (error) {
       toast({

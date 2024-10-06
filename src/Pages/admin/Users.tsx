@@ -66,7 +66,6 @@ const Users: React.FC = () => {
     setLoadingUsers((prev) => ({ ...prev, [userId]: true }));
     try {
       const result = await blockUser(userId);
-      console.log(result);
       setBlock(result.isBlocked);
       setUsers((prevUsers) =>
         prevUsers.map((user) =>

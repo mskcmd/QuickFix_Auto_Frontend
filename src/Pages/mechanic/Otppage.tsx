@@ -14,7 +14,7 @@ const OTPComponent: React.FC<OTPComponentProps> = () => {
   const [seconds, setSeconds] = useState<number>(30);
   const [isOtpExpired, setIsOtpExpired] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false); // New state variable
-  const mechanicData: UserData | null = useAppSelector(
+  const mechanicData: UserData | any = useAppSelector(
     (state) => state.auth.mechanicData
   );
 
@@ -53,7 +53,6 @@ const OTPComponent: React.FC<OTPComponentProps> = () => {
     try {
       console.log(otp);
       const result = await verifyOtp(otp);
-      console.log("Resultd:", result);
 
       if (result?.data.isMechanic === true) {
         toast.success("Registration Successful");

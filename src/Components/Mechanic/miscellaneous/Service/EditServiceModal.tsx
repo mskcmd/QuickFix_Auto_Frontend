@@ -47,8 +47,6 @@ const EditServiceModal: React.FC<EditServiceModalProps> = ({
 
   const handleSubmit = () => {
     if (service) {
-      // Implement your update logic here
-      // e.g., send updated data to the backend
       console.log({
         name,
         details,

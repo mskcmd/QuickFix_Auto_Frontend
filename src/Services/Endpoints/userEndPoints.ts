@@ -10,14 +10,11 @@ const userRoutes={
     resetPassword:"/auth/resetPassword",
     userLogout:"/auth/userLogout",
     searchMech:"/auth/serchMech",
-
     getProfile:"user/getProfile",
     booking:"/user/booking",
     fetchBookData:"/user/fetchBookData",
     updateProfle:"/user/updateProfle",
-
     allchat:"/user/chat/allUsers",
-
     fetchPayment:"/user/fetchPayment",
     checkOut:"/user/create-checkout-session",
     updatePaymnt:"user/update-payment-status",

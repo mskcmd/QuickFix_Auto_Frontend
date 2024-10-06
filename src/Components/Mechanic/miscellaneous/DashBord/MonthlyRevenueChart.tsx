@@ -39,7 +39,6 @@ export function MonthlyRevenueChart() {
     try {
       const result = await fetchRevenue(id);
       setRevenueData(result);
-      console.log(result);
     } catch (error) {
       console.error("Error fetching revenue data:", error);
     }

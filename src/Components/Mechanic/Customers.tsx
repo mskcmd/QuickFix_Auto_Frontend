@@ -53,8 +53,6 @@ const Customers: React.FC = () => {
       if (mechanicData?.mechnicId) {
         try {
           const result = await fetchUsers(mechanicData.mechnicId);
-          console.log("result", result);
-
           setBookings(result);
         } catch (error) {
           console.error("Failed to fetch bookings data:", error);

@@ -19,7 +19,6 @@ const CarServices: React.FC = () => {
     new: [],
   });
 
-  console.log("filteredShops", filteredShops);
 
   const fetchFreelancers = async () => {
     try {
@@ -42,7 +41,6 @@ const CarServices: React.FC = () => {
   const fetchService = async () => {
     try {
       const response = await fetchServiceData();
-      console.log("fetchAllService", response);
       const transformedServices: Record<string, any[]> = {
         popular: [],
         new: [],

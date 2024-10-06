@@ -6,8 +6,7 @@ import { booking, bookingdata } from "../../Api/user";
 import toast from "react-hot-toast";
 import MechanicHeader from "../../Components/User/MechBook/MechanicHeader";
 import BookingForm from "../../Components/User/MechBook/BookingForm";
-import LocationModal from "../../Components/User/MechBook/LocationModal";
-
+import MapModal from "../../Components/User/UserCommen/MapModal";
 
 export interface BookingFormData {
   userId: string;
@@ -18,19 +17,21 @@ export interface BookingFormData {
   services: string[];
   dateTime: string;
   problem: string;
-  latitude?: number;
-  longitude?: number;
+  latitude?: string;
+  longitude?: string;
+  district?: string;
 }
 
 function MechBooking() {
-  const { id }: any = useParams<{ id: string }>();
-  const userSearchData = useAppSelector((state) => state.auth.userSerchData) as unknown as any[];
-  const mechanic1 = userSearchData.find((m) => m._id === id);
+  const { id }:any = useParams<{ id: string }>();
   const userId = useAppSelector((state) => state.auth.userData?.userId);
+  const [mechanic, setMechanic] = useState<any>(null);
+  const [isMapModalOpen, setIsMapModalOpen] = useState(false);
+  const navigate = useNavigate();
 
   const [formData, setFormData] = useState<BookingFormData>({
     userId: userId || "",
-    mechId: mechanic1?.mechanicID || "",
+    mechId: "",
     firstName: "",
     phoneNumber: "",
     location: "",
@@ -38,21 +39,21 @@ function MechBooking() {
     dateTime: "",
     problem: "",
   });
-  const [mechanic, setMechanic] = useState<any>(null);
-  const [isMapModalOpen, setIsMapModalOpen] = useState(false);
-  const navigate = useNavigate();
 
   const fetchData = async () => {
     try {
       const result = await bookingdata(id);
       if (result && result.length >= 4) {
-        setMechanic({
-          name: result[0],
-          experience: result[1],
-          specialization: result[2],
-          profileImage: result[3],
-          services: result[4]
-        });
+        const mechanicData = {
+          id: result[0],
+          name: result[1],
+          experience: result[2],
+          specialization: result[3],
+          profileImage: result[4],
+          services: result[5]
+        };
+        setMechanic(mechanicData);
+        setFormData(prevData => ({ ...prevData, mechId: mechanicData.id }));
       }
     } catch (error) {
       console.error("Error fetching mechanic data:", error);
@@ -61,7 +62,7 @@ function MechBooking() {
 
   useEffect(() => {
     fetchData();
-  }, []);
+  }, [id]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -76,13 +77,15 @@ function MechBooking() {
     }
   };
 
-  const handleLocationSelect = (lat: number, lng: number, locationName: string) => {
+  const handleLocationSelect = (locationData: { locationName: string; latitude: string; longitude: string; district: string }) => {
     setFormData(prevData => ({
       ...prevData,
-      location: locationName,
-      latitude: lat,
-      longitude: lng,
+      location: locationData.locationName,
+      latitude: locationData.latitude,
+      longitude: locationData.longitude,
+      district: locationData.district,
     }));
+    setIsMapModalOpen(false);
   };
 
   return (
@@ -105,10 +108,10 @@ function MechBooking() {
           </div>
         </div>
       </div>
-      <LocationModal
+      <MapModal
         isOpen={isMapModalOpen}
-        onClose={() => setIsMapModalOpen(false)}
         onLocationSelect={handleLocationSelect}
+        onClose={() => setIsMapModalOpen(false)}
       />
     </>
   );

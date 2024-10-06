@@ -42,7 +42,6 @@ export function UserGrowthChart() {
     try {
       const result = await userGrowths(id);
       setUserGrowthData(result);
-      console.log("User growth data:", result);
     } catch (error) {
       console.error("Error fetching user growth data:", error);
     }

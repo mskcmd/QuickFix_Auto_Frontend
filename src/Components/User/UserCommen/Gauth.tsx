@@ -15,17 +15,11 @@ function Gauth() {
   const handleGooglrAuth = async () => {
     provider.setCustomParameters({ prompt: "select_account" });
     const resultsFromGoogle = await signInWithPopup(auth, provider);
-    console.log(
-      resultsFromGoogle.user.displayName,
-      resultsFromGoogle.user.email,
-      resultsFromGoogle.user.photoURL
-    );
     const data = await googleLogin(
       resultsFromGoogle.user.displayName,
       resultsFromGoogle.user.email,
       resultsFromGoogle.user.photoURL
     );
-    console.log("google Aouth",data);
 
     if (data?.data.isverified == false) {
       return toast.error(data?.data.message);
@@ -34,7 +28,6 @@ function Gauth() {
     if (data?.data.IsData == false) {
       return toast.error(data?.data.message);
     }
-    console.log("odata", data?.data.data);
     dispatch(setUserCredential(data?.data.data));
     navigate("/home");
     toast.success("Login succussfilly");

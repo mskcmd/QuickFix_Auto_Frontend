@@ -26,7 +26,6 @@ const LoginPage = forwardRef<HTMLFormElement>((_props, ref) => {
     onSubmit: async (values) => {
       try {
         const data = await Login(values.email, values.password);
-        console.log("data", data);
         
         if (data?.data.isverified === false) {
           return toast.error(data?.data.message);

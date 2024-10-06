@@ -10,13 +10,9 @@ const SuccessPage = () => {
   const location = useLocation();
 
   useEffect(() => {
-    // Extract paymentId from the query params
     const queryParams = new URLSearchParams(location.search);
-    const paymentId = queryParams.get('paymentId');
-    console.log("ss",paymentId);
-    
+    const paymentId = queryParams.get('paymentId');    
     if (paymentId) {
-      // Call your function to update the status
       confirmPayment(paymentId);
     }
   }, [location]);
@@ -24,8 +20,6 @@ const SuccessPage = () => {
   const confirmPayment = async (paymentId: string) => {
     try {
       const result = await updatePaymnt( paymentId,'Completed')
-
-      console.log('Payment status updated:', result.data);
     } catch (error) {
       console.error('Error updating payment status:', error);
     }

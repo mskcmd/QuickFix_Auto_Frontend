@@ -9,7 +9,6 @@ import {
   ModalFooter,
   Button,
   useDisclosure,
-  ButtonGroup,
 } from "@nextui-org/react";
 import { Link, useNavigate } from "react-router-dom";
 
@@ -29,14 +28,13 @@ interface BlogPost {
 const BlogPreview: React.FC = () => {
   const [blogs, setBlogs] = useState<BlogPost[]>([]);
   const [selectedBlog, setSelectedBlog] = useState<BlogPost | null>(null);
-  const [showAllBlogs, setShowAllBlogs] = useState(false);
+  const [showAllBlogs] = useState(false);
   const { isOpen, onOpen, onClose } = useDisclosure();
   const navigate = useNavigate();
   const fetchBlogData = async () => {
     try {
       const result: BlogPost[] = await fetchBlogs();
       setBlogs(result);
-      console.log("dd", result);
     } catch (error) {
       console.error("Error fetching blogs:", error);
     }

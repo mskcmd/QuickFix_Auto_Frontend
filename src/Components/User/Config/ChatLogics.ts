@@ -24,7 +24,6 @@ export const isSameSender = (messages: any[], m: any, i: number, userId: string)
       messages[i + 1]?.sender?._id !== m?.sender?._id &&
       messages[i]?.sender?._id !== userId
     );
-    console.log(`isSameSender result for message index ${i}:`, result);
     return result;
   } catch (error) {
     console.log("Error in isSameSender:", error);
@@ -57,19 +56,6 @@ export const isSameUser = (messages: any[], m: any, i: number, _id?: string) => 
   }
 };
 
-// export const getSender = (loggedUser: any, users: any[]) => {
-//   console.log("logic",loggedUser, users);
-
-//   try {
-//       console.log(loggedUser);console.log('this is the result',users)
-//       return users[0]?._id == loggedUser?._id ? users[1]?.name : users[0]?.name;
-//   } catch (error) {
-//       console.log(error)
-//   }
-// };
-
-
-
 export const getSenderFull = (loggedUser: any, users: any[]) => {
   try {
     return users[0]?._id === loggedUser?._id ? users[1] : users[0];
@@ -78,12 +64,7 @@ export const getSenderFull = (loggedUser: any, users: any[]) => {
   }
 };
 
-//new 
 export const getSender = (loggedUser: any, chat: any) => {
-  // console.log("e", loggedUser);
-  // console.log("k", chat);
-  // console.log("unqq", chat?.userDetails.name);
-
   try {
     if (chat?.mechanicDetails?._id === loggedUser?.userId) {
       return chat?.userDetails.name;

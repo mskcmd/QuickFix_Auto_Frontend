@@ -18,7 +18,6 @@ function MyChat({ fetchAgain }: any) {
   const fetchAndSetChats = async () => {
     try {
       const data: any = await fetchChats(senderId);
-      console.log("suhailll", data);
       setChats(data);
     } catch (error) {
       toast({

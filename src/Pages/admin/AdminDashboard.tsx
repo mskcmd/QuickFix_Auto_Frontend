@@ -7,14 +7,7 @@ import { RecentReports } from "../../Components/Admin/DashBord/RecentReports";
 import { MechanicServices } from "../../Components/Admin/DashBord/MechanicServices";
 import { monthlyDatas } from "../../Api/admin";
 
-// const monthlyData = [
-//   { name: "Jan", users: 400, mechanics: 240, reports: 50 },
-//   { name: "Feb", users: 300, mechanics: 139, reports: 45 },
-//   { name: "Mar", users: 200, mechanics: 980, reports: 60 },
-//   { name: "Apr", users: 278, mechanics: 390, reports: 55 },
-//   { name: "May", users: 189, mechanics: 480, reports: 70 },
-//   { name: "Jun", users: 239, mechanics: 380, reports: 65 },
-// ];
+
 
 const dailyData = [
   { name: "Mon", active: 4000 },
@@ -37,9 +30,7 @@ const Dashboard: React.FC = () => {
   const [monthlyData, setMonthlyData] = useState<any>([]);
   const monthlyData1 = async () => {
     try {
-      console.log("dd");
       const result = await monthlyDatas();
-      console.log("ss", result);
       setMonthlyData(result);
     } catch (error) {
       console.log(error);

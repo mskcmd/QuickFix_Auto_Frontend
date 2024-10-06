@@ -50,7 +50,6 @@ const Payments: React.FC = () => {
   const variants: ("bordered")[] = ["bordered"];
 
   const handleSubmit = async (values: FormikValues) => {
-    console.log("Form values:", values);
     const result = await createBill(values);
     onBillModalClose();
   };
@@ -61,9 +60,7 @@ const Payments: React.FC = () => {
   useEffect(() => {
     const fetchPaymentData = async () => {
       try {
-        const result = await paymentFetch(id);
-        console.log("paymet",result);
-        
+        const result = await paymentFetch(id);        
         setData(result);
       } catch (error) {
         console.error("Error fetching payment data:", error);
