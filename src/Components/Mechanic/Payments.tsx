@@ -36,8 +36,16 @@ export const StatusBadge: React.FC<{ status: Payment["status"] }> = ({
 };
 
 const Payments: React.FC = () => {
-  const { isOpen: isBillModalOpen, onOpen: onBillModalOpen, onClose: onBillModalClose } = useDisclosure();
-  const { isOpen: isPaymentModalOpen, onOpen: onPaymentModalOpen, onClose: onPaymentModalClose } = useDisclosure();
+  const {
+    isOpen: isBillModalOpen,
+    onOpen: onBillModalOpen,
+    onClose: onBillModalClose,
+  } = useDisclosure();
+  const {
+    isOpen: isPaymentModalOpen,
+    onOpen: onPaymentModalOpen,
+    onClose: onPaymentModalClose,
+  } = useDisclosure();
   const [size, setSize] = useState<(typeof sizes)[number]>("5xl");
   const [data, setData] = useState<any>([]);
   const [selectedPayment, setSelectedPayment] = useState<any>(null);
@@ -47,10 +55,10 @@ const Payments: React.FC = () => {
     onBillModalOpen();
   };
 
-  const variants: ("bordered")[] = ["bordered"];
+  const variants: "bordered"[] = ["bordered"];
 
   const handleSubmit = async (values: FormikValues) => {
-    const result = await createBill(values);
+    await createBill(values);
     onBillModalClose();
   };
 
@@ -60,7 +68,7 @@ const Payments: React.FC = () => {
   useEffect(() => {
     const fetchPaymentData = async () => {
       try {
-        const result = await paymentFetch(id);        
+        const result = await paymentFetch(id);
         setData(result);
       } catch (error) {
         console.error("Error fetching payment data:", error);
@@ -81,11 +89,7 @@ const Payments: React.FC = () => {
     <div className="">
       <div className="flex flex-wrap gap-3 justify-end mb-6">
         {sizes.map((size) => (
-          <Button
-            key={size}
-            onPress={() => handleOpen(size)}
-            color="primary"
-          >
+          <Button key={size} onPress={() => handleOpen(size)} color="primary">
             Generate New Bill
           </Button>
         ))}
@@ -97,13 +101,17 @@ const Payments: React.FC = () => {
             <Tabs key={variant} variant={variant} aria-label="Tabs variants">
               <Tab key="Pending" title="Pending">
                 <PaymentsTable
-                  payments={data.filter((payment: any) => payment.status === "pending")}
+                  payments={data.filter(
+                    (payment: any) => payment.status === "pending"
+                  )}
                   onViewClick={handleViewClick}
                 />
               </Tab>
               <Tab key="Completed" title="Completed">
                 <PaymentsTable
-                  payments={data.filter((payment: any) => payment.status === "Completed")}
+                  payments={data.filter(
+                    (payment: any) => payment.status === "Completed"
+                  )}
                   onViewClick={handleViewClick}
                 />
               </Tab>

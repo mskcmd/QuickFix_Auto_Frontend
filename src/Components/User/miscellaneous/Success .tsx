@@ -19,7 +19,7 @@ const SuccessPage = () => {
 
   const confirmPayment = async (paymentId: string) => {
     try {
-      const result = await updatePaymnt( paymentId,'Completed')
+      await updatePaymnt( paymentId,'Completed')
     } catch (error) {
       console.error('Error updating payment status:', error);
     }

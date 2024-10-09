@@ -8,11 +8,9 @@ import {
   TableCell,
   User,
   Chip,
-  Tooltip,
 } from "@nextui-org/react";
 import { useAppSelector } from "../../app/store";
 import { fetchUsers } from "../../Api/mechanic";
-import { EyeIcon } from "lucide-react";
 
 interface BookingUser {
   _id: string;

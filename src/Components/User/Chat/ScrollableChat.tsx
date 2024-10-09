@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Avatar, Text, Tooltip } from "@chakra-ui/react";
+import { Box, Text, Tooltip } from "@chakra-ui/react";
 
 
 interface ScrollableChatProps {

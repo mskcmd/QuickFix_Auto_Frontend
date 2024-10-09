@@ -7,7 +7,7 @@ import {
   Button,
   Image,
 } from "@nextui-org/react";
-import { Service, Services } from "../../../Type/MType";
+import { Services } from "../../../Type/MType";
 
 interface ServiceCardProps {
   service: Services;

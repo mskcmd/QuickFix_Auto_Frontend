@@ -38,7 +38,7 @@ const FeedbackModal = ({ isOpen, onClose, mechId, paymentId,fetchFeedback}: any)
     setLoading(true);
     try {
       console.log(values, id, mechId, paymentId);
-      const result = await createFeedback(values, id, mechId, paymentId);
+      await createFeedback(values, id, mechId, paymentId);
       toast.success('Feedback submitted successfully!'); // Success toast
       fetchFeedback()
       onClose();

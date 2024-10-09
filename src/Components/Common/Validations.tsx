@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import exp from "constants";
 import * as Yup from "yup";
 
 const MOBILE_NUM_REGEX = /^[0-9]{10}$/;

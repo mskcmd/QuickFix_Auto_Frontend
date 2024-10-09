@@ -1,4 +1,5 @@
-import React, { useEffect, useLayoutEffect, useState } from "react";
+import React, { useLayoutEffect, useState } from "react";
+import { FaCar, FaWrench, FaOilCan, FaBatteryFull, FaBolt } from "react-icons/fa"; // Example icons from react-icons
 import Sidebar from "./Sidebar";
 import ShowShops from "./ShowShops";
 import TopFreelancers from "./TopFreelancers";
@@ -99,7 +100,7 @@ const CarServices: React.FC = () => {
   useLayoutEffect(() => {
     fetchService();
     fetchFreelancers();
-  }, []);
+  }, [selectedService]);
 
   return (
     <div className="container mx-auto px-4 py-8 bg-gray-50">
@@ -125,11 +126,21 @@ const CarServices: React.FC = () => {
   );
 };
 
-// Helper function to get an icon based on the service name
 const getIconForService = (serviceName: string) => {
-  // You can implement logic here to return appropriate icons based on the service name
-  // For now, we'll return a placeholder function
-  return () => <span>🔧</span>;
+  switch (serviceName.toLowerCase()) {
+    case "car wash":
+      return <FaCar />;
+    case "oil change":
+      return <FaOilCan />;
+    case "battery replacement":
+      return <FaBatteryFull />;
+    case "engine repair":
+      return <FaWrench />;
+    case "electrical":
+      return <FaBolt />;
+    default:
+      return <FaWrench />; // Default icon
+  }
 };
 
 export default CarServices;

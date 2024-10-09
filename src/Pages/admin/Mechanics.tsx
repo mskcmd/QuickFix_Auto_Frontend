@@ -1,4 +1,4 @@
-import React, { useEffect, useLayoutEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FaSearch } from "react-icons/fa";
 import Pagination from "../../Components/Admin/Commen/Pagination";
 import { getMechData, handlemechBlock } from "../../Api/admin";

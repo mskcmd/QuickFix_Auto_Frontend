@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Navigate, Outlet, useNavigate } from "react-router-dom";
+import { Navigate, Outlet } from "react-router-dom";
 import { useAppSelector } from "../../../app/store";
 import { getmechData } from "../../../Api/mechanic";
 import { toast } from "react-toastify";

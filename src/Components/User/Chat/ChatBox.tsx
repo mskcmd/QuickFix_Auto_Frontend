@@ -26,7 +26,7 @@ function ChatBox({ fetchAgain, setFetchAgain }: MyChatProps) {
     };
 
     fetchLastMessage();
-  }, [selectedChat]);
+  }, [selectedChat,lastMessage]);
 
   return (
     <Box
