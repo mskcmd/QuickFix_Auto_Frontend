@@ -3,9 +3,8 @@ import Header from "../../Components/User/Header";
 import Footer from "../../Components/User/Footer";
 import BookingForm from "../../Components/User/BookingForm";
 import { FAQSection } from "../../Components/User/FAQSection";
-import { BlogPreview } from "../../Components/User/BlogPreview";
+import  BlogPreview  from "../../Components/User/BlogPreview";
 import image from "../../../public/Designer.png";
-// import CarAnimation from '../../animations/car';
 
 const Home: React.FC = () => {
   const bookingFormRef = useRef<HTMLDivElement>(null);

@@ -28,18 +28,26 @@ interface BlogPost {
 const BlogPreview: React.FC = () => {
   const [blogs, setBlogs] = useState<BlogPost[]>([]);
   const [selectedBlog, setSelectedBlog] = useState<BlogPost | null>(null);
-  const [loading, setLoading] = useState(true); // Loading state
+  const [loading, setLoading] = useState(true);
   const { isOpen, onOpen, onClose } = useDisclosure();
   const navigate = useNavigate();
   
   const fetchBlogData = async () => {
     try {
-      const result: BlogPost[] = await fetchBlogs();
-      setBlogs(result);
+      const result = await fetchBlogs();
+      console.log("result",result);
+      
+      if (Array.isArray(result)) {
+        setBlogs(result);
+      } else {
+        console.error("Fetched data is not an array:", result);
+        setBlogs([]);
+      }
     } catch (error) {
       console.error("Error fetching blogs:", error);
+      setBlogs([]);
     } finally {
-      setLoading(false); // Stop loading after data is fetched
+      setLoading(false);
     }
   };
 
@@ -61,7 +69,7 @@ const BlogPreview: React.FC = () => {
     navigate("/blog");
   };
 
-  const displayedBlogs = blogs.slice(0, 3); // Show 3 blogs initially
+  const displayedBlogs = blogs.slice(0, 3);
 
   return (
     <div className="bg-[#ece8d9] py-20">
@@ -76,19 +84,16 @@ const BlogPreview: React.FC = () => {
         </motion.h2>
 
         {loading ? (
-          // Show loading spinner while fetching
           <div className="flex justify-center items-center">
             <div className="spinner-border text-primary" role="status">
               <span className="sr-only">Loading...</span>
             </div>
           </div>
         ) : blogs.length === 0 ? (
-          // Show a message if there are no blogs available
           <div className="text-center text-xl font-semibold text-gray-700">
             No blog posts available at the moment. Please check back later.
           </div>
         ) : (
-          // Show blog posts when available
           <>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
               {displayedBlogs.map((post) => (
@@ -164,7 +169,7 @@ const BlogPreview: React.FC = () => {
                       <Link to={`/mechanicData/${selectedBlog?.mechanic}`}>
                         <Button className="bg-blue-500 hover:bg-blue-600 text-white text-xs font-bold py-2 px-3 rounded transition duration-300 text-center">
                           View Details
-                        </Button>{" "}
+                        </Button>
                       </Link>
                     </div>
                   </div>
@@ -189,4 +194,4 @@ const BlogPreview: React.FC = () => {
   );
 };
 
-export { BlogPreview };
+export default BlogPreview;
