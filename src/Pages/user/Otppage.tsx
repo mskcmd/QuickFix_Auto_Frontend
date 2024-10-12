@@ -3,7 +3,7 @@ import { resendOtp, verifyOtp } from "../../Api/user";
 import { useNavigate } from "react-router-dom";
 import { UserData } from "../../app/slice/AuthSlice";
 import { useAppSelector } from "../../app/store";
-import { toast } from "react-toastify";
+import toast from "react-hot-toast";
 
 interface OTPComponentProps {}
 

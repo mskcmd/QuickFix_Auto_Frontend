@@ -28,15 +28,19 @@ const LoginPage: React.FC = () => {
       const handleSubmit = async () => {
         try {
           const data = await Login(values.email, values.password);
+          console.log("data", data?.data.data.isVerified);
+
           if (data?.data.isverified == false) {
             return toast.error(data?.data.message);
           }
           if (data?.data.IsData == false) {
             return toast.error(data?.data.message);
-          }          
-          dispatch(setUserCredential(data?.data.data));
-          navigate("/home");
-          toast.success("Login succussfilly");
+          }
+          if (data?.data.data.isVerified == true) {
+            dispatch(setUserCredential(data?.data));
+            navigate("/home");
+            toast.success("Login succussfilly");
+          }
         } catch (error) {
           console.log(error);
           toast.error("somthing went wrong while login");

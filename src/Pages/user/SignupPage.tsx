@@ -140,6 +140,12 @@ const SignupPage: React.FC = () => {
                 {errors.cpassword}
               </div>
             )}
+                <Button
+            type="submit"
+            className="w-full py-2 px-4 mt-4 bg-black text-white font-semibold rounded-md hover:text-indigo-800"
+          >
+            Submit
+          </Button>
           </form>
           <div className="mt-2">
             <p className="text-center mt-1 text-gray-600">
@@ -151,12 +157,7 @@ const SignupPage: React.FC = () => {
               </Link>
             </p>
           </div>
-          <Button
-            type="submit"
-            className="w-full py-2 px-4 mt-4 bg-black text-white font-semibold rounded-md hover:text-indigo-800"
-          >
-            Submit
-          </Button>
+
           <div className="mt-2 flex items-center justify-center">
             <div className="border-t border-gray-600 flex-grow"></div>
             <p className="text-sm text-gray-500 mx-4">or</p>

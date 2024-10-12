@@ -7,7 +7,9 @@ import { BookingFormData } from "../Pages/user/MechBooking";
 import errorHandler from "./errorHandler";
 
 export const signup = async ({ name, email, phone, password }: FromData) => {
-    try {
+    try {     
+        console.log("register....");
+           
         const result = await Api.post(userRoutes.signup, { name, email, phone, password })
         if (result.status == 200) {
             return result
@@ -32,9 +34,9 @@ export const verifyOtp = async (otpnum: string) => {
 }
 
 export const Login = async (email: string, password: string) => {
-    try {
-        const result = await Api.post(userRoutes.Login, { email, password })
-        return result
+    try {        
+        const result = await Api.post(userRoutes.Login, { email, password })        
+        return result.data
     } catch (error) {
         console.log(error as Error);
         errorHandler(error as Error);
