@@ -8,6 +8,7 @@ import LandingPage from "./Pages/user/LandingPage";
 import { ToastContainer } from "react-toastify";
 import { Toaster } from "react-hot-toast";
 
+
 function App() {
   return (
     <>
