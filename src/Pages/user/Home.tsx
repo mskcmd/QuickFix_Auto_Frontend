@@ -25,7 +25,7 @@ const Home: React.FC = () => {
         {/* <CarAnimation /> */}
 
         <div className="absolute inset-0 flex flex-col justify-center items-center text-white text-center px-4">
-          <h1 className="text-5xl md:text-7xl font-bold mb-4 animate-fade-in-down">
+          <h1 className="text-5xl md:text-7xl font-bold mb-4 animate-fade-in-down ">
             Quickfix Car Services
           </h1>
           <p className="text-xl md:text-2xl mb-8 animate-fade-in-up">
