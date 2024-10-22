@@ -8,7 +8,6 @@ import errorHandler from "./errorHandler";
 
 export const signup = async ({ name, email, phone, password }: FromData) => {
     try {     
-        console.log("register....");
            
         const result = await Api.post(userRoutes.signup, { name, email, phone, password })
         if (result.status == 200) {

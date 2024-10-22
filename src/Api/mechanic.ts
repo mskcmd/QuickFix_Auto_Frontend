@@ -371,6 +371,32 @@ export const userGrowths = async (id: string) => {
     }
 }
 
+export const updateMechanicProfile = async (id: string, formData: any) => {
+    try {
+        console.log(id, formData);
+        const updatedFormData = new FormData();  // Changed the name to avoid conflict
+
+        updatedFormData.append("id", id);
+        updatedFormData.append("name", formData.name);
+        updatedFormData.append("email", formData.email);
+        updatedFormData.append("phone", formData.phone);
+
+        if (formData.image) {
+            updatedFormData.append('image', formData.image);
+        }
+
+        const result = await Api.post(mechanicRoute.updateMechanicProfile, updatedFormData, {
+            headers: {
+                'Content-Type': 'multipart/form-data',
+            },
+        });
+        return result;
+    } catch (error) {
+        console.log(error as Error);
+        errorHandler(error as Error);
+    }
+};
+
 
 
 

@@ -65,7 +65,7 @@ const LoginPage: React.FC = () => {
         />
       </div>
       <div className="flex flex-col justify-center h-[85vh] w-[70vh] bg-white p-8 shadow-2xl rounded-r-lg z-10">
-        <h2 className="text-4xl font-bold mb-8 text-center text-gray-800">
+        <h2 className="text-4xl font-bold mb-8 text-center font-sans text-gray-800">
           Login
         </h2>
         <div className="mb-6">

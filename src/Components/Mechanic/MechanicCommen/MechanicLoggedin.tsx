@@ -2,12 +2,14 @@ import React, { useEffect, useState } from "react";
 import { Navigate, Outlet } from "react-router-dom";
 import { useAppSelector } from "../../../app/store";
 import { getmechData } from "../../../Api/mechanic";
-import { toast } from "react-toastify";
-import 'react-toastify/dist/ReactToastify.css'; // Import toast styles
+import "react-toastify/dist/ReactToastify.css"; // Import toast styles
 import RegisterOne from "../../../Pages/mechanic/RegisterOne";
+import toast from "react-hot-toast";
 
 // Define the type for a single item in the mechanic data
 export type MechanicDataItem = {
+  append(arg0: string, profileImage: (arg0: string, profileImage: any) => unknown): unknown;
+  profileImage(arg0: string, profileImage: any): unknown;
   isCompleted: boolean;
   email: string;
   isBlocked: boolean;
@@ -30,11 +32,21 @@ const MechanicLoggedin: React.FC = () => {
     const fetchMechanicData = async () => {
       if (mechanicData?.mechnicId) {
         try {
-          const result: MechanicDataItem[] = await getmechData(mechanicData.mechnicId);
+          const result: MechanicDataItem[] = await getmechData(
+            mechanicData.mechnicId
+          );
           if (result.length > 0) {
             setIsCompleted(result[0].isCompleted);
             if (!result[0].isCompleted) {
-              toast.warning("Please complete your profile before proceeding.");
+              toast("Please complete your profile before proceeding.", {
+                icon: "⚠️", 
+                duration: 2000, 
+                style: {
+                  border: "1px solid #FFA500",
+                  padding: "16px",
+                  color: "#FFA500",
+                },
+              });
             }
           }
         } catch (error) {
@@ -46,12 +58,10 @@ const MechanicLoggedin: React.FC = () => {
     fetchMechanicData();
   }, [mechanicData]);
 
-  // If mechanicData is not available, navigate to the home page
   if (!mechanicData) {
     return <Navigate to="/" />;
   }
 
-  // If isCompleted is false, render RegisterOne component and show the toast
   if (isCompleted === false) {
     return (
       <>
@@ -60,7 +70,6 @@ const MechanicLoggedin: React.FC = () => {
     );
   }
 
-  // If the mechanic data exists and isCompleted is true, render Outlet for child routes
   return <Outlet />;
 };
 

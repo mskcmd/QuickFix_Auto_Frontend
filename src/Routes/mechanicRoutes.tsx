@@ -1,5 +1,6 @@
 import { Route, Routes } from "react-router-dom";
 import { Suspense, lazy } from "react";
+import EditProfile from "../Components/Mechanic/miscellaneous/Profile/EditProfile.tsx";
 
 // Lazy-loaded components
 const MechanicLoggedOut = lazy(
@@ -68,6 +69,7 @@ function mechanicRoutes() {
         <Route element={<MechanicLoggedin />}>
           <Route path="profile" element={<MechanicProfile />} />
           <Route path="profile/detailedProfile" element={<DetailedProfile />} />
+          <Route path="profile/EditProfile" element={<EditProfile />} />
           <Route path="home/messages" element={<ChatPage />} />
           <Route path="home/notifications" element={<NotificationPage />} />
 
