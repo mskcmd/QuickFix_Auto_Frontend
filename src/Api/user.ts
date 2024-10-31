@@ -7,8 +7,8 @@ import { BookingFormData } from "../Pages/user/MechBooking";
 import errorHandler from "./errorHandler";
 
 export const signup = async ({ name, email, phone, password }: FromData) => {
-    try {     
-           
+    try {
+
         const result = await Api.post(userRoutes.signup, { name, email, phone, password })
         if (result.status == 200) {
             return result
@@ -33,8 +33,11 @@ export const verifyOtp = async (otpnum: string) => {
 }
 
 export const Login = async (email: string, password: string) => {
-    try {        
-        const result = await Api.post(userRoutes.Login, { email, password })        
+    try {
+        console.log("two", email, password);
+        const result = await Api.post(userRoutes.Login, { email, password })
+        console.log("three", result);
+        console.log("four", result.data);
         return result.data
     } catch (error) {
         console.log(error as Error);
@@ -130,7 +133,7 @@ export const searchMechShop = async (formData: any): Promise<any | null> => {
 };
 
 export const booking = async (formData: BookingFormData) => {
-    try {        
+    try {
         const result = await Api.post(userRoutes.booking, formData);
         return result;
     } catch (error) {
@@ -333,7 +336,7 @@ export const bookingdata = async (id: string) => {
     try {
         const result = await Api.get(userRoutes.bookingdata, { params: { id } })
         return result.data
-        
+
     } catch (error) {
         console.log(error as Error);
         errorHandler(error as Error);

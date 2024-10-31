@@ -27,6 +27,7 @@ const LoginPage: React.FC = () => {
     onSubmit: (values) => {
       const handleSubmit = async () => {
         try {
+          console.log("one",values.email, values.password);
           const data = await Login(values.email, values.password);
           console.log("data", data?.data.data.isVerified);
 
