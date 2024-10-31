@@ -247,6 +247,8 @@ export const searchServices = async (search: string, id: string) => {
 export const createBill = async (value: FormikValues) => {
     try {
         const result = await Api.post(mechanicRoute.CreateBill, value);
+        console.log(result.data);
+
         return result.data;
     } catch (error) {
         console.log(error as Error);
@@ -371,29 +373,14 @@ export const userGrowths = async (id: string) => {
     }
 }
 
-export const updateMechanicProfile = async (id: string, formData: any) => {
+export const fetchMechData = async (id: string) => {
     try {
-        console.log(id, formData);
-        const updatedFormData = new FormData();  // Changed the name to avoid conflict
-
-        updatedFormData.append("id", id);
-        updatedFormData.append("name", formData.name);
-        updatedFormData.append("email", formData.email);
-        updatedFormData.append("phone", formData.phone);
-
-        if (formData.image) {
-            updatedFormData.append('image', formData.image);
-        }
-
-        const result = await Api.post(mechanicRoute.updateMechanicProfile, updatedFormData, {
-            headers: {
-                'Content-Type': 'multipart/form-data',
-            },
-        });
-        return result;
+        console.log(id);
+        const result = await Api.get(mechanicRoute.fetchMechData, { params: { id } })
+        return result.data
     } catch (error) {
-        console.log(error as Error);
-        errorHandler(error as Error);
+        // console.log(error as Error);
+        // errorHandler(error as Error);
     }
 };
 

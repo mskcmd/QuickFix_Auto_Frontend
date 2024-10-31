@@ -8,6 +8,7 @@ import { RootState } from "../../app/store";
 import Header from "../../Components/User/Header";
 import { Button, Card, CardBody, CardFooter } from "@nextui-org/react";
 import BookingForm from "../../Components/User/UserCommen/BookingForm";
+import { Calendar, Eye } from "lucide-react";
 
 // Types
 interface MechanicProfile {
@@ -29,9 +30,10 @@ const MechanicCard: React.FC<{ mechanic: MechanicProfile }> = ({
   mechanic,
 }) => {
   // Extract average rating safely
-  const r = mechanic?.averageRating && mechanic.averageRating.length > 0
-    ? mechanic.averageRating[0].averageRating
-    : 0; // Default to 0 if not available
+  const r =
+    mechanic?.averageRating && mechanic.averageRating.length > 0
+      ? mechanic.averageRating[0].averageRating
+      : 0; // Default to 0 if not available
 
   const formatDays = (daysArray: string[]) => {
     if (daysArray.length === 0) return "Not specified";
@@ -118,7 +120,8 @@ const MechanicCard: React.FC<{ mechanic: MechanicProfile }> = ({
             />
           ))}
           <span className="text-sm text-gray-600 ml-2">
-            {r > 0 ? `(${r})` : "(No Ratings)"} {/* Updated to show a message when no ratings */}
+            {r > 0 ? `(${r})` : "(No Ratings)"}{" "}
+            {/* Updated to show a message when no ratings */}
           </span>
         </div>
       </CardBody>
@@ -127,19 +130,22 @@ const MechanicCard: React.FC<{ mechanic: MechanicProfile }> = ({
           <Button
             as={Link}
             to={`/mechanicData/${mechanic._id}`}
-            color="primary"
             className="flex-1"
+            color="primary"
+            startContent={<Eye size={16} />}
           >
             View Details
           </Button>
-          <Button
-            as={Link}
-            to={`/booking/${mechanic._id}`}
-            color="success"
-            className="flex-1"
-          >
-            Book Now
-          </Button>
+
+          <Link to={`/booking/${mechanic._id}`}>
+            <Button
+              color="success"
+              className="flex-1"
+              startContent={<Calendar size={16} />}
+            >
+              Book Now
+            </Button>
+          </Link>
         </div>
       </CardFooter>
     </Card>
@@ -204,4 +210,3 @@ const MechanicListingPage: React.FC = () => {
 };
 
 export default MechanicListingPage;
-

@@ -72,6 +72,7 @@ function UserRoutes() {
             </Suspense>
           } 
         />
+        
         <Route path="chatInterface" element={<Suspense fallback={<SkeletonChatPage/>}><ChatPage /></Suspense>} />
         <Route path="services" element={<Suspense fallback={<SkeletonService/>}><Service /></Suspense>} />
         <Route path="blog" element={<Suspense fallback={<BlogSkeleton/>}><Blog /></Suspense>} />

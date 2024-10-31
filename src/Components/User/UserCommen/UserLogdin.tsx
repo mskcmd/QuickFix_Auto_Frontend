@@ -16,6 +16,7 @@ const UserLogdin = () => {
     const fetchData = async () => {
       try {
         const result = await getProfile();
+
         if (result?.data.isBlocked) {
           setData(true);
         }

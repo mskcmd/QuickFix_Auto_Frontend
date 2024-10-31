@@ -1,231 +1,301 @@
-import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { Input, Button, Card, Avatar, Divider } from "@nextui-org/react";
-import { FaCamera, FaUserCircle } from "react-icons/fa";
+import { useEffect, useState } from "react";
+import { fetchMechData } from "../../../../Api/mechanic";
 import { useAppSelector } from "../../../../app/store";
-import { getmechData, updateMechanicProfile } from "../../../../Api/mechanic";
 import Header from "../../Heder";
 
-export type MechanicDataItem = {
-  email: string;
-  name: string;
-  phone: string;
-  image?: string;
-  _id: string;
-};
+function EditProfile() {
+  const mechanicData: any = useAppSelector((state) => state.auth.mechanicData);
+  const id: string = mechanicData.mechnicId;
 
-const EditProfile: React.FC = () => {
-  const navigate = useNavigate();
-  const [formData, setFormData] = useState<Partial<MechanicDataItem>>({});
-  const [errors, setErrors] = useState<Partial<MechanicDataItem>>({});
-  const [isLoading, setIsLoading] = useState(false);
-  const [imagePreview, setImagePreview] = useState<string | undefined>();
-  const mechanicData:any = useAppSelector((state) => state.auth.mechanicData);
+  const [data, setData] = useState([]);
+  console.log("data", data);
+
+  const fetchAllMechData = async () => {
+    try {
+      const result = await fetchMechData(id);
+      setData(result);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   useEffect(() => {
-    const fetchMechanicData = async () => {
-      if (mechanicData?.mechnicId) {
-        try {
-          setIsLoading(true);
-          const result = await getmechData(mechanicData.mechnicId);
-          if (result.length > 0) {
-            const { name, email, phone, image } = result[0];
-            setFormData({ name, email, phone, image });
-            setImagePreview(image);
-          }
-        } catch (error) {
-          console.error("Failed to fetch mechanic data:", error);
-        } finally {
-          setIsLoading(false);
-        }
-      }
-    };
-
-    fetchMechanicData();
-  }, [mechanicData]);
-
-  const validateForm = () => {
-    const newErrors: Partial<MechanicDataItem> = {};
-
-    if (!formData.name?.trim()) {
-      newErrors.name = "Name is required";
-    }
-
-    if (!formData.email?.trim()) {
-      newErrors.email = "Email is required";
-    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
-      newErrors.email = "Invalid email format";
-    }
-
-    if (!formData.phone?.trim()) {
-      newErrors.phone = "Phone number is required";
-    } else if (!/^\d{10}$/.test(formData.phone)) {
-      newErrors.phone = "Phone number must be 10 digits";
-    }
-
-    setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
-  };
-
-  const handleInputChange = (value: string, name: string) => {
-    setFormData((prev) => ({ ...prev, [name]: value }));
-    if (errors[name as keyof MechanicDataItem]) {
-      setErrors((prev) => ({ ...prev, [name]: undefined }));
-    }
-  };
-
-  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setImagePreview(reader.result as string);
-        setFormData((prev) => ({
-          ...prev,
-          image: reader.result as string,
-        }));
-      };
-      reader.readAsDataURL(file);
-    }
-  };
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-
-    if (!validateForm()) {
-      return;
-    }
-
-    try {
-      setIsLoading(true);
-    //   Add your API call here to update the profile
-      await updateMechanicProfile(mechanicData.mechnicId, formData);      
-    //   navigate(-1);
-    } catch (error) {
-      console.error("Failed to update profile:", error);
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  if (isLoading) {
-    return (
-      <div className="flex justify-center items-center h-screen">
-        <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-blue-500"></div>
-      </div>
-    );
-  }
+    fetchAllMechData();
+  }, []);
 
   return (
-    <div className="overflow-hidden">
+    <div>
       <Header />
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50 py-12 px-4 sm:px-6 lg:px-8 overflow-hidden">
-        <Card className="max-w-md mx-auto shadow-xl">
-          <form onSubmit={handleSubmit} className="p-4">
-            <div className="flex flex-col items-center space-y-6">
-              <div className="relative group">
-                <Avatar
-                  src={imagePreview}
-                  alt="Profile"
-                  className="w-32 h-32"
-                  fallback={
-                    <FaUserCircle className="w-full h-full text-default-500" />
-                  }
+
+      <div className="min-h-screen bg-gradient-to-br from-white to-slate-50 flex items-center justify-center p-4">
+        <div className="bg-white rounded-xl shadow-xl p-6 w-full max-w-6xl">
+        
+
+          <form className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+            {/* Type Selection */}
+            <div className="col-span-1 sm:col-span-1">
+              <label className="block text-sm font-medium text-gray-700">
+                Are you
+              </label>
+              <select className="mt-1 block w-full py-2 px-3 rounded-md border-gray-300 shadow-md focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+                <option value="">Select...</option>
+                <option value="shop">Shop</option>
+                <option value="freelancer">Freelancer</option>
+                <option value="company">Company</option>
+              </select>
+            </div>
+
+            {/* License Number */}
+            <div className="col-span-1 sm:col-span-1">
+              <label className="block text-sm font-medium text-gray-700">
+                License Number
+              </label>
+              <input
+                type="text"
+                className="mt-1 block w-full py-2 px-3 rounded-md border-gray-300 shadow-md focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+              />
+            </div>
+
+            {/* Experience */}
+            <div className="col-span-1 sm:col-span-1">
+              <label className="block text-sm font-medium text-gray-700">
+                Years of Experience
+              </label>
+              <input
+                type="number"
+                className="mt-1 block w-full py-2 px-3 rounded-md border-gray-300 shadow-md focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+              />
+            </div>
+
+            <div className="col-span-1 sm:col-span-1">
+              <label className="block text-sm font-medium text-gray-700">
+                Name{" "}
+              </label>
+              <input
+                type="number"
+                className="mt-1 block w-full py-2 px-3 rounded-md border-gray-300 shadow-md focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+              />
+            </div>
+
+            <div className="col-span-1 sm:col-span-1">
+              <label className="block text-sm font-medium text-gray-700">
+                Email{" "}
+              </label>
+              <input
+                type="email"
+                className="mt-1 block w-full py-2 px-3 rounded-md border-gray-300 shadow-md focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+              />
+            </div>
+
+            <div className="col-span-1 sm:col-span-1">
+              <label className="block text-sm font-medium text-gray-700">
+                Phone Number{" "}
+              </label>
+              <input
+                type="number"
+                className="mt-1 block w-full py-2 px-3 rounded-md border-gray-300 shadow-md focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+              />
+            </div>
+
+            {/* Specialization */}
+            <div className="col-span-1 sm:col-span-1">
+              <label className="block text-sm font-medium text-gray-700">
+                Specialization
+              </label>
+              <input
+                type="text"
+                className="mt-1 block w-full py-2 px-3 rounded-md border-gray-300 shadow-md focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+              />
+            </div>
+
+            {/* Location */}
+            <div className="col-span-1 sm:col-span-2">
+              <label className="block text-sm font-medium text-gray-700">
+                Location
+              </label>
+              <div className="flex">
+                <input
+                  type="text"
+                  className="mt-1 block w-full py-2 px-3 rounded-l-md border-gray-300 shadow-md focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                  readOnly
                 />
-                <label
-                  htmlFor="image"
-                  className="absolute bottom-0 right-0 p-2 bg-primary rounded-full cursor-pointer opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                <button
+                  type="button"
+                  className="mt-1 px-4 py-2 bg-indigo-600 text-white rounded-r-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                 >
-                  <FaCamera className="w-5 h-5 text-white" />
-                  <input
-                    type="file"
-                    id="image"
-                    className="hidden"
-                    accept="image/*"
-                    onChange={handleImageChange}
-                  />
-                </label>
-              </div>
-
-              <Divider className="my-2" />
-
-              <div className="w-full space-y-4">
-                <Input
-                  isRequired
-                  label="Full Name"
-                  placeholder="Enter your name"
-                  value={formData.name || ""}
-                  onValueChange={(value) => handleInputChange(value, "name")}
-                  errorMessage={errors.name}
-                  isInvalid={!!errors.name}
-                  variant="bordered"
-                  radius="lg"
-                  classNames={{
-                    input: "text-lg",
-                    label: "text-base",
-                  }}
-                />
-
-                <Input
-                  isRequired
-                  type="email"
-                  label="Email"
-                  placeholder="Enter your email"
-                  value={formData.email || ""}
-                  onValueChange={(value) => handleInputChange(value, "email")}
-                  errorMessage={errors.email}
-                  isInvalid={!!errors.email}
-                  variant="bordered"
-                  radius="lg"
-                  classNames={{
-                    input: "text-lg",
-                    label: "text-base",
-                  }}
-                />
-
-                <Input
-                  isRequired
-                  type="tel"
-                  label="Phone Number"
-                  placeholder="Enter your phone number"
-                  value={formData.phone || ""}
-                  onValueChange={(value) => handleInputChange(value, "phone")}
-                  errorMessage={errors.phone}
-                  isInvalid={!!errors.phone}
-                  variant="bordered"
-                  radius="lg"
-                  classNames={{
-                    input: "text-lg",
-                    label: "text-base",
-                  }}
-                />
-              </div>
-
-              <div className="flex gap-4 w-full justify-end mt-6">
-                <Button
-                  variant="flat"
-                  color="danger"
-                  onClick={() => navigate(-1)}
-                  radius="lg"
-                >
-                  Cancel
-                </Button>
-                <Button
-                  type="submit"
-                  color="primary"
-                  radius="lg"
-                  className="px-8"
-                  isLoading={isLoading}
-                >
-                  Save Changes
-                </Button>
+                  Choose
+                </button>
               </div>
             </div>
+
+            {/* Services */}
+            <div className="col-span-1 sm:col-span-2">
+              <label className="block text-sm font-medium text-gray-700">
+                Services
+              </label>
+              <div className="flex flex-wrap gap-2 mb-2">
+                <span className="bg-indigo-100 text-indigo-800 text-sm font-medium px-2.5 py-0.5 rounded flex items-center">
+                  Example Service
+                  <button
+                    type="button"
+                    className="ml-2 text-indigo-600 hover:text-indigo-800"
+                  >
+                    ×
+                  </button>
+                </span>
+              </div>
+              <div className="flex">
+                <input
+                  type="text"
+                  className="mt-1 block w-full py-2 px-3 rounded-l-md border-gray-300 shadow-md focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                  placeholder="Enter a service and press Enter"
+                />
+                <button
+                  type="button"
+                  className="mt-1 px-4 py-2 bg-indigo-600 text-white rounded-r-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                >
+                  Add
+                </button>
+              </div>
+            </div>
+
+            {/* Working Hours */}
+            <div className="col-span-1 sm:col-span-2 md:col-span-3">
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Working Hours
+              </label>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
+                <div>
+                  <p className="text-sm text-gray-600 mb-2">
+                    Select working days:
+                  </p>
+                  {["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"].map(
+                    (day) => (
+                      <label
+                        key={day}
+                        className="inline-flex items-center mr-4 mb-2"
+                      >
+                        <input
+                          type="checkbox"
+                          className="form-checkbox h-5 w-5 text-indigo-600"
+                        />
+                        <span className="ml-2 text-gray-700">{day}</span>
+                      </label>
+                    )
+                  )}
+                </div>
+                <div>
+                  <div className="flex items-center space-x-4 mb-4">
+                    <div>
+                      <label className="block text-sm text-gray-600">
+                        Start Time
+                      </label>
+                      <input
+                        type="time"
+                        className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm text-gray-600">
+                        End Time
+                      </label>
+                      <input
+                        type="time"
+                        className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Description */}
+            <div className="sm:col-span-2 md:col-span-3">
+              <label className="block text-sm font-medium text-gray-700">
+                Description
+              </label>
+              <textarea
+                className="mt-1 block w-full py-2 px-3 rounded-md border-gray-300 shadow-md focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                rows={4}
+              />
+            </div>
+
+            {/* Image Upload */}
+            <div className="sm:col-span-2 md:col-span-3 grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="md:col-span-1">
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  Profile Images
+                </label>
+                <div className="flex items-center justify-center w-full">
+                  <label className="flex flex-col items-center justify-center w-full h-24 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100">
+                    <div className="flex flex-col items-center justify-center pt-3 pb-2">
+                      <svg
+                        className="w-6 h-6 mb-1 text-gray-500"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth="2"
+                          d="M12 4v16m8-8H4"
+                        />
+                      </svg>
+                      <p className="text-xs text-gray-500">Add Images</p>
+                    </div>
+                    <input type="file" className="hidden" multiple />
+                  </label>
+                </div>
+              </div>
+
+              {/* Certificate Upload */}
+              <div className="md:col-span-1">
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  Upload Certificate
+                </label>
+                <div className="flex items-center justify-center w-full">
+                  <label className="flex flex-col items-center justify-center w-full h-24 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100">
+                    <div className="flex flex-col items-center justify-center pt-3 pb-2">
+                      <svg
+                        className="w-6 h-6 mb-1 text-gray-500"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth="2"
+                          d="M12 4v16m8-8H4"
+                        />
+                      </svg>
+                      <p className="text-xs text-gray-500">
+                        Upload Certificate
+                      </p>
+                    </div>
+                    <input
+                      type="file"
+                      className="hidden"
+                      accept=".pdf,.doc,.docx"
+                    />
+                  </label>
+                </div>
+              </div>
+            </div>
+
+            {/* Submit Button */}
+            <button
+              type="submit"
+              className="col-span-1 sm:col-span-2 md:col-span-3 py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+            >
+              Register
+            </button>
           </form>
-        </Card>
+        </div>
       </div>
     </div>
   );
-};
+}
 
 export default EditProfile;

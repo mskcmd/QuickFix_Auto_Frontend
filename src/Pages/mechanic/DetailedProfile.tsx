@@ -12,6 +12,7 @@ import {
   FaClock,
 } from "react-icons/fa";
 import Header from "../../Components/Mechanic/Heder";
+import { Link } from "react-router-dom";
 
 interface MechanicDetailData {
   name: string;
@@ -61,8 +62,14 @@ const DetailedProfile: React.FC = () => {
   const formatDays = (daysArray: string[]) => {
     const days = JSON.parse(daysArray[0]);
     if (days.length === 7) return "Every day";
-    if (days.length === 5 && days.includes("Monday") && days.includes("Friday")) return "Weekdays";
-    if (days.length === 2 && days.includes("Saturday") && days.includes("Sunday")) return "Weekends";
+    if (days.length === 5 && days.includes("Monday") && days.includes("Friday"))
+      return "Weekdays";
+    if (
+      days.length === 2 &&
+      days.includes("Saturday") &&
+      days.includes("Sunday")
+    )
+      return "Weekends";
     return days.join(", ");
   };
 
@@ -86,9 +93,11 @@ const DetailedProfile: React.FC = () => {
               alt={data.name}
             />
             <div className="absolute top-0 right-0 m-4">
-              <button className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-full flex items-center">
-                <FaEdit className="mr-2" /> Edit Profile
-              </button>
+              <Link to="EditProfile">
+                <button className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-full flex items-center">
+                  <FaEdit className="mr-2" /> Edit Profile
+                </button>
+              </Link>
             </div>
           </div>
 
@@ -193,7 +202,10 @@ const DetailedProfile: React.FC = () => {
               </h3>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {data.mechanicData.workingHours.map((schedule, index) => (
-                  <div key={index} className="bg-white p-4 rounded-md shadow-sm">
+                  <div
+                    key={index}
+                    className="bg-white p-4 rounded-md shadow-sm"
+                  >
                     <p className="font-medium text-lg text-gray-800 mb-2">
                       {formatDays(schedule.days)}
                     </p>

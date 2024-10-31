@@ -58,7 +58,10 @@ const Payments: React.FC = () => {
   const variants: "bordered"[] = ["bordered"];
 
   const handleSubmit = async (values: FormikValues) => {
-    await createBill(values);
+    
+    const result = await createBill(values);
+    console.log("values",result);
+
     onBillModalClose();
   };
 

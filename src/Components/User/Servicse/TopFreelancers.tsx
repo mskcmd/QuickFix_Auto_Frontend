@@ -1,7 +1,7 @@
-import React from 'react';
+import React from "react";
 import { Card, CardBody, Avatar, Chip, Button } from "@nextui-org/react";
-import { Clock, Eye, Calendar } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { Clock, Eye, Calendar } from "lucide-react";
+import { Link } from "react-router-dom";
 
 interface Freelancer {
   _id: string;
@@ -17,7 +17,13 @@ interface TopFreelancersProps {
   freelancers: any[];
 }
 
-const FreelancerCard: React.FC<Freelancer> = ({ _id,specialization, yearsOfExperience, profileImages, workingHours }) => (
+const FreelancerCard: React.FC<Freelancer> = ({
+  _id,
+  specialization,
+  yearsOfExperience,
+  profileImages,
+  workingHours,
+}) => (
   <Card className="w-full">
     <CardBody className="flex flex-col p-4">
       <div className="flex items-center mb-4">
@@ -41,22 +47,22 @@ const FreelancerCard: React.FC<Freelancer> = ({ _id,specialization, yearsOfExper
         </p>
       </div>
       <div className="flex justify-between mt-2">
-        <Button 
-          size="sm" 
-          variant="flat" 
+        <Button
+          size="sm"
+          variant="flat"
           color="primary"
           startContent={<Eye size={16} />}
         >
           View Profile
         </Button>
         <Link to={`/booking/${_id}`}>
-        <Button 
-          size="sm" 
-          color="success"
-          startContent={<Calendar size={16} />}
-        >
-          Book Now
-        </Button>
+          <Button
+            size="sm"
+            color="success"
+            startContent={<Calendar size={16} />}
+          >
+            Book Now
+          </Button>
         </Link>
       </div>
     </CardBody>
@@ -67,7 +73,7 @@ const TopFreelancers: React.FC<TopFreelancersProps> = ({ freelancers }) => (
   <div className="mt-8">
     <h2 className="text-2xl font-semibold mb-4">Top Freelancers</h2>
     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-      {freelancers.map(freelancer => (
+      {freelancers.map((freelancer) => (
         <FreelancerCard key={freelancer._id} {...freelancer} />
       ))}
     </div>

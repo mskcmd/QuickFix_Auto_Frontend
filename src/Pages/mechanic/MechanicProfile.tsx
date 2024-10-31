@@ -83,12 +83,7 @@ const BasicProfile: React.FC = () => {
               >
                 View Details
               </Link>
-              <Link 
-                to="EditProfile" 
-                className="inline-flex items-center px-4 py-2 border border-indigo-600 text-sm font-medium rounded-md text-indigo-600 bg-white hover:bg-indigo-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-colors duration-300"
-              >
-                <FaEdit className="mr-2" /> Edit Profile
-              </Link>
+          
             </div>
           </div>
         </div>

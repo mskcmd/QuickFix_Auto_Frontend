@@ -49,6 +49,7 @@ function mechanicRoutes() {
   return (
     <Suspense fallback={<div>Loading...</div>}>
       <Routes>
+
         <Route element={<MechanicLoggedOut />}>
           <Route
             path="login"
@@ -69,7 +70,7 @@ function mechanicRoutes() {
         <Route element={<MechanicLoggedin />}>
           <Route path="profile" element={<MechanicProfile />} />
           <Route path="profile/detailedProfile" element={<DetailedProfile />} />
-          <Route path="profile/EditProfile" element={<EditProfile />} />
+          <Route path="profile/detailedProfile/EditProfile" element={<EditProfile />} />
           <Route path="home/messages" element={<ChatPage />} />
           <Route path="home/notifications" element={<NotificationPage />} />
 

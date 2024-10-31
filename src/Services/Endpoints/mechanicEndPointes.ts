@@ -27,7 +27,7 @@ const mechanicRoute = {
     paymentFetch:"/mechanic/paymentFetch",
     fetchmonthlyRevenue:"mechanic/fetchRevenue",
     userGrowths:"mechanic/fetchuserGrowths",
-    updateMechanicProfile:"mechanic/updateMechanicProfile",
+    fetchMechData:"mechanic/fetchMechData",
 
 
 

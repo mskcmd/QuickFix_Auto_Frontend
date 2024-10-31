@@ -1,5 +1,7 @@
 import { AxiosError } from "axios";
 import toast from "react-hot-toast";
+import { useDispatch } from "react-redux";
+import { userLogout } from "../app/slice/AuthSlice";
 
 type ErrorResponse = {
     message: string,
@@ -7,6 +9,7 @@ type ErrorResponse = {
 }
 
 const errorHandler = async (error: Error | AxiosError) => {
+    const dispatch = useDispatch();
 
     const axiosError = error as AxiosError;
 
@@ -16,10 +19,12 @@ const errorHandler = async (error: Error | AxiosError) => {
             toast.error(errorResponse.message);
         } else if (errorResponse.message === "Professional is blocked by admin!") {
             toast.error(errorResponse.message);
+        } else if (errorResponse.message === "Refresh token not available") {
+            dispatch(userLogout());
+            toast.error(errorResponse.message);
         } else {
             toast.error(errorResponse.message);
         }
-
     } else {
         toast.error('Something went wrong. Please try again!');
     }
@@ -27,3 +32,4 @@ const errorHandler = async (error: Error | AxiosError) => {
 }
 
 export default errorHandler
+

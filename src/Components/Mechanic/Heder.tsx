@@ -37,8 +37,7 @@ const Header: React.FC = () => {
         <div className="hidden md:flex items-center space-x-4">
           <Link to="messages">
             <NavButton
-              icon={<HiMiniChatBubbleLeftRight size={24} />}
-              count={0}
+              icon={<HiMiniChatBubbleLeftRight size={24} />} count={0}             
             />
           </Link>
 
