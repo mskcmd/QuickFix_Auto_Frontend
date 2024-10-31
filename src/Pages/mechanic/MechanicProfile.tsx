@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import Header from '../../Components/Mechanic/Heder';
 import Footer from '../../Components/User/Footer';
-import { FaEnvelope, FaPhone, FaEdit, FaUserCircle } from 'react-icons/fa';
+import { FaEnvelope, FaPhone, FaUserCircle } from 'react-icons/fa';
 import { getmechData } from '../../Api/mechanic';
 import { useAppSelector } from '../../app/store';
 
